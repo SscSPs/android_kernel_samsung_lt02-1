@@ -96,7 +96,7 @@ static int FW_VERSION;
 #if defined(CONFIG_MACH_ARUBA_DUOS_CTC) || defined(CONFIG_MACH_ARUBA_OPEN) || defined(CONFIG_MACH_ARUBA_TD) \
 	|| defined(CONFIG_MACH_LT02) || defined(CONFIG_MACH_COCOA7)
 #define SET_DOWNLOAD_CONFIG		1
-//#define SET_DOWNLOAD_ISP
+//#define SET_DOWNLOAD_ISP   
 #endif
 
 #define TS_READ_VERSION_ADDR		0x1B
@@ -189,16 +189,16 @@ extern unsigned int system_rev;
 static const uint16_t SCR_ABS_UPPER_SPEC[MAX_RX_][MAX_TX_] = {
 	{1424,1494,1499,1506,1505,1504,1515,1529,1547,1556,1573,1587,1591,1599,1609,1616,1620,1620,1620,1523},
 	{1425,1492,1498,1507,1507,1508,1520,1537,1556,1571,1586,1604,1612,1620,1632,1641,1644,1645,1647,1546},
-	{1418,1486,1491,1499,1498,1497,1508,1522,1541,1550,1562,1577,1584,1588,1596,1603,1608,1610,1610,1515},
-	{1425,1494,1499,1507,1504,1505,1517,1532,1550,1558,1569,1583,1593,1595,1602,1609,1615,1617,1618,1524},
-	{1425,1494,1499,1506,1503,1505,1517,1532,1551,1558,1568,1583,1593,1595,1601,1608,1613,1616,1617,1524},
-	{1425,1494,1499,1506,1503,1505,1516,1532,1550,1556,1565,1579,1592,1594,1598,1604,1610,1613,1614,1522},
-	{1424,1494,1500,1506,1501,1506,1518,1534,1553,1556,1566,1580,1592,1594,1598,1604,1609,1612,1614,1523},
-	{1432,1504,1509,1515,1509,1515,1528,1545,1563,1565,1575,1588,1602,1604,1607,1612,1618,1621,1623,1532},
-	{1429,1503,1509,1513,1507,1515,1529,1546,1563,1565,1574,1588,1601,1604,1606,1612,1617,1620,1622,1532},
-	{1417,1496,1501,1502,1497,1507,1521,1539,1554,1558,1566,1579,1593,1595,1598,1603,1608,1611,1613,1522},
-	{1422,1502,1508,1507,1508,1520,1537,1558,1573,1582,1590,1607,1623,1628,1634,1642,1649,1650,1649,1548},
-	{1407,1491,1495,1492,1493,1505,1520,1539,1546,1558,1552,1571,1586,1588,1592,1597,1603,1605,1606,1513},
+	{1418,1486,1491,1499,1498,1497,1508,1522,1541,1550,1562,1577,1584,1588,1596,1603,1608,1610,1610,1515}, 
+	{1425,1494,1499,1507,1504,1505,1517,1532,1550,1558,1569,1583,1593,1595,1602,1609,1615,1617,1618,1524}, 
+	{1425,1494,1499,1506,1503,1505,1517,1532,1551,1558,1568,1583,1593,1595,1601,1608,1613,1616,1617,1524}, 
+	{1425,1494,1499,1506,1503,1505,1516,1532,1550,1556,1565,1579,1592,1594,1598,1604,1610,1613,1614,1522}, 
+	{1424,1494,1500,1506,1501,1506,1518,1534,1553,1556,1566,1580,1592,1594,1598,1604,1609,1612,1614,1523}, 
+	{1432,1504,1509,1515,1509,1515,1528,1545,1563,1565,1575,1588,1602,1604,1607,1612,1618,1621,1623,1532}, 
+	{1429,1503,1509,1513,1507,1515,1529,1546,1563,1565,1574,1588,1601,1604,1606,1612,1617,1620,1622,1532}, 
+	{1417,1496,1501,1502,1497,1507,1521,1539,1554,1558,1566,1579,1593,1595,1598,1603,1608,1611,1613,1522}, 
+	{1422,1502,1508,1507,1508,1520,1537,1558,1573,1582,1590,1607,1623,1628,1634,1642,1649,1650,1649,1548}, 
+	{1407,1491,1495,1492,1493,1505,1520,1539,1546,1558,1552,1571,1586,1588,1592,1597,1603,1605,1606,1513}, 
 };
 
 static const uint16_t SCR_ABS_LOWER_SPEC[MAX_RX_][MAX_TX_] = {
@@ -988,7 +988,7 @@ static ssize_t tsp_call_release_touch(struct device *dev, struct device_attribut
 	TSP_reboot();
 	return snprintf (buf, sizeof(buf), "0\n");
 }
-#if 0
+#if 0 
 static ssize_t tsp_touchtype_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	char temp[15];
@@ -1317,7 +1317,7 @@ static void check_intensity_data(struct mms_ts_data *ts)
 			ret = mms_i2c_write(ts->client, setLowLevelData, 6);
 			ret = mms_i2c_read(ts->client, 0xBF,
 				1, read_data_buf);
-			ts->intensity[(i * exciting_ch) + j]
+			ts->intensity[(i * exciting_ch) + j] 
 				= read_data_buf[0];
 			lntensity_data[(i * exciting_ch) + j]
 				= read_data_buf[0];
@@ -1698,7 +1698,7 @@ static ssize_t firmware_store(struct device *dev, struct device_attribute *attr,
 	ts_power_enable(0);
 	msleep(500);
 	ts_power_enable(1);
-
+	
 	printk(KERN_INFO "firmware store END\n");
 	return 0;
 }
@@ -1915,9 +1915,9 @@ static ssize_t touch_led_control(struct device *dev,
 #if defined(CONFIG_MACH_ARUBA_DUOS_CTC) || defined(CONFIG_MACH_ARUBA_OPEN)
 	unsigned char data;
 	int int_data;
-	int errnum;
+	int errnum;	
 		printk("touch_led_control start\n");
-
+		
 	if (sscanf(buf, "%c\n", &data) == 1) {
 //		int_data = atoi(&data);
 //		data = data *0x10;
@@ -1930,7 +1930,7 @@ static ssize_t touch_led_control(struct device *dev,
 			gpio_set_value(KEY_LED_GPIO, 0);
 		}
 
-
+		
 	} else
 		printk("touch_led_control Error\n");
 
@@ -2204,7 +2204,7 @@ static void fw_update(void *device_data)
 	struct mms_ts_data *ts = (struct mms_ts_data *)device_data;
 	struct i2c_client *client = ts->client;
 	int ret, i;
-
+	
 	set_default_result(ts);
 	for (i = 0; i < DOWNLOAD_RETRY_CNT; i++) {
 #ifdef SET_DOWNLOAD_CONFIG
@@ -2220,7 +2220,7 @@ static void fw_update(void *device_data)
 			break;
 		}
 #endif
-#else
+#else		
 		ret = MFS_ISC_update();
 		printk(KERN_ERR "mcsdl_download_binary_data by kyestring : [%d]\n",
 			ret);
@@ -2250,11 +2250,11 @@ static void fw_update(void *device_data)
 			ts->cmd_state = 2;
 			break;
 		}
-#endif
+#endif		
 	}
 	return;
 do_not_need_update:
-	ts->cmd_state = 2;
+	ts->cmd_state = 2;	
 	return;
 }
 static void get_fw_ver_bin(void *device_data)
@@ -3278,7 +3278,7 @@ static int mms_ts_probe(struct i2c_client *client, const struct i2c_device_id *i
 	else
 	{
 		printk("gpio request fail!\n");
-	}
+	}	
 	gpio_request(TSP_SDA,"tsp_sda");
 	gpio_request(TSP_SCL,"tsp_scl");
 	gpio_request(TSP_TYPE1,"tsp_type1");
@@ -3307,9 +3307,9 @@ static int mms_ts_probe(struct i2c_client *client, const struct i2c_device_id *i
 		mdelay(30);
 		ts_power_enable(1);
 		mdelay(200);
-
+			
 #ifdef SET_DOWNLOAD_ISP
-		ret =	mms_flash_fw(client);//, mms_pdata);
+		ret = 	mms_flash_fw(client);//, mms_pdata);
 #else
 		ret = mms100_ISC_download_mbinary(client);
 #endif
@@ -3568,7 +3568,7 @@ static int mms_ts_probe(struct i2c_client *client, const struct i2c_device_id *i
 		pr_err("Failed to create device file(%s)!\n",
 				dev_attr_brightness.attr.name);
 	tsp_enabled = true;
-	pm_runtime_enable(&client->dev);
+	pm_runtime_enable(&client->dev);	
 	return 0;
 #if 0
 	TSP_boost(ts, is_boost);
@@ -3665,16 +3665,16 @@ static const struct i2c_device_id mms_ts_id[] = {
 	{ }
 };
 
- #if defined(CONFIG_PM) && !defined(CONFIG_HAS_EARLYSUSPEND)
- static const struct dev_pm_ops mms_ts_pm_ops =
+ #if defined(CONFIG_PM) && !defined(CONFIG_HAS_EARLYSUSPEND) 
+ static const struct dev_pm_ops mms_ts_pm_ops = 
 {
     #if defined(CONFIG_PM_RUNTIME)
     SET_RUNTIME_PM_OPS(mms_ts_suspend, mms_ts_resume,NULL)
     #else
     .suspend        = mms_ts_suspend,
     .resume         = mms_ts_resume,
-    #endif
-};
+    #endif 
+}; 
 #endif
 
 static struct i2c_driver mms_ts_driver = {
@@ -3682,7 +3682,7 @@ static struct i2c_driver mms_ts_driver = {
     .name = "mms_ts",
 #if defined(CONFIG_PM) && !defined(CONFIG_HAS_EARLYSUSPEND)
     .pm	= &mms_ts_pm_ops,
-#endif
+#endif		
     },
     .id_table = mms_ts_id,
     .probe = mms_ts_probe,

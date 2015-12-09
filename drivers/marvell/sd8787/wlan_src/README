@@ -631,7 +631,7 @@ txbufcfg
 	This command can be used to get current buffer size.
 
 	eg:
-	iwpriv mlanX txbufcfg	  - This will display the current buffer size.
+	iwpriv mlanX txbufcfg 	  - This will display the current buffer size.
 
 	Note:- The actual tx buf size will depends on AP's capability and max transmit buffer size.
 
@@ -1201,24 +1201,24 @@ drvdbg
 	Where the parameter <n> is the generic debug message control bit mask.
 	The following types of driver debug messages can be dynamically enabled or
 	disabled by setting or clearing the corresponding bits,
-		bit 0:  MMSG		PRINTM(MMSG,...)
+		bit 0:  MMSG  		PRINTM(MMSG,...)
 		bit 1:  MFATAL		PRINTM(MFATAL,...)
 		bit 2:  MERROR		PRINTM(MERROR,...)
-		bit 3:  MDATA		PRINTM(MDATA,...)
-		bit 4:  MCMND		PRINTM(MCMND,...)
+		bit 3:  MDATA 		PRINTM(MDATA,...)
+		bit 4:  MCMND 		PRINTM(MCMND,...)
 		bit 5:  MEVENT		PRINTM(MEVENT,...)
-		bit 6:  MINTR		PRINTM(MINTR,...)
-		bit 7:  MIOCTL		PRINTM(MIOCTL,...)
+		bit 6:  MINTR 		PRINTM(MINTR,...)
+		bit 7:  MIOCTL 		PRINTM(MIOCTL,...)
 		...
 		bit 16: MDAT_D		PRINTM(MDAT_D,...), DBG_HEXDUMP(MDAT_D,...)
 		bit 17: MCMD_D		PRINTM(MCMD_D,...), DBG_HEXDUMP(MCMD_D,...)
 		bit 18: MEVT_D		PRINTM(MEVT_D,...), DBG_HEXDUMP(MEVT_D,...)
 		bit 19: MFW_D		PRINTM(MFW_D,...),  DBG_HEXDUMP(MFW_D,...)
-		bit 20: MIF_D		PRINTM(MIF_D,...),  DBG_HEXDUMP(MIF_D,...)
+		bit 20: MIF_D 		PRINTM(MIF_D,...),  DBG_HEXDUMP(MIF_D,...)
 		...
 		bit 28: MENTRY		PRINTM(MENTRY,...), ENTER(), LEAVE()
-		bit 29: MWARN		PRINTM(MWARN,...)
-		bit 30: MINFO		PRINTM(MINFO,...)
+		bit 29: MWARN 		PRINTM(MWARN,...)
+		bit 30: MINFO 		PRINTM(MINFO,...)
 
 	If CONFIG_DEBUG=2, all kinds of debug messages can be configured.
 

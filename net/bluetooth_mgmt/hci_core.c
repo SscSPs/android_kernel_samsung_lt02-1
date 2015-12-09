@@ -1777,7 +1777,7 @@ int hci_cancel_le_scan(struct hci_dev *hdev)
 int hci_register_dev(struct hci_dev *hdev)
 {
 	struct list_head *head = &hci_dev_list, *p;
-#ifdef CONFIG_BT_W8787
+#ifdef CONFIG_BT_W8787				
 	int i, id=0, error;
 #else
 	int i, id = 0;
@@ -1786,7 +1786,7 @@ int hci_register_dev(struct hci_dev *hdev)
 	BT_DBG("%p name %s bus %d owner %p", hdev, hdev->name,
 						hdev->bus, hdev->owner);
 
-#ifdef CONFIG_BT_W8787
+#ifdef CONFIG_BT_W8787				
 	if (!hdev->open || !hdev->close )
 #else
 	if (!hdev->open || !hdev->close || !hdev->destruct)
@@ -1997,9 +1997,9 @@ int hci_recv_frame(struct sk_buff *skb)
 	struct hci_dev *hdev = (struct hci_dev *) skb->dev;
 	if (!hdev || (!test_bit(HCI_UP, &hdev->flags)
 				&& !test_bit(HCI_INIT, &hdev->flags))) {
-#ifndef CONFIG_BT_W8787
+#ifndef CONFIG_BT_W8787				
 	hci_uart_tty_read_hook(skb);
-#endif
+#endif		
 		kfree_skb(skb);
 		return -ENXIO;
 	}
@@ -2836,3 +2836,7 @@ int hci_cancel_inquiry(struct hci_dev *hdev)
 
 	return hci_send_cmd(hdev, HCI_OP_INQUIRY_CANCEL, 0, NULL);
 }
+
+
+
+

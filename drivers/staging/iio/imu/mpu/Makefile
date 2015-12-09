@@ -25,3 +25,4 @@ inv-mpu-iio-objs += inv_slave_bma250.o
 #CFLAGS_dmpDefaultMPU6050.o += -Idrivers/staging/iio
 CFLAGS_inv_slave_bma250.o   += -Idrivers/staging/iio
 endif
+

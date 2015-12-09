@@ -73,7 +73,7 @@ static ssize_t gpio_write_proc(struct file *filp,
 		gpio_direction_output(mute_gpio, 1);	/*pull high to mute */
 	else if(messages[0]==0)
 		gpio_direction_output(mute_gpio, 0);	/* pull low  to un-mute */
-
+		
 	return len;
 }
 
@@ -89,11 +89,11 @@ static void create_gpio_proc_file(void)
 
 	gpio_proc_file->read_proc = gpio_read_proc;
 	gpio_proc_file->write_proc = (write_proc_t  *)gpio_write_proc;
-
+	
 	mute_gpio = mfp_to_gpio(MFP_PIN_GPIO31);
 	if (!mute_gpio)  {
 		printk(KERN_ERR "mfp_to_gpio  failed,"
-			"gpio: mute_gpio :%d\n", mute_gpio);
+			"gpio: mute_gpio :%d\n", mute_gpio);	
 		//return;
 	}
 	gpio_direction_output(mute_gpio, 0);	/* pull low to un-mute */

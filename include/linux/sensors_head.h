@@ -13,3 +13,4 @@ void sensors_unregister(struct device *dev,
 	struct device_attribute *attributes[]);
 
 #endif
+

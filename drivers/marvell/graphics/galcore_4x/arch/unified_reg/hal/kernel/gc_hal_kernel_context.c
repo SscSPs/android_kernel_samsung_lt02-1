@@ -1,17 +1,17 @@
 /****************************************************************************
 *
 *    Copyright (c) 2005 - 2012 by Vivante Corp.
-*
+*    
 *    This program is free software; you can redistribute it and/or modify
 *    it under the terms of the GNU General Public License as published by
 *    the Free Software Foundation; either version 2 of the license, or
 *    (at your option) any later version.
-*
+*    
 *    This program is distributed in the hope that it will be useful,
 *    but WITHOUT ANY WARRANTY; without even the implied warranty of
 *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 *    GNU General Public License for more details.
-*
+*    
 *    You should have received a copy of the GNU General Public License
 *    along with this program; if not write to the Free Software
 *    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -126,7 +126,7 @@
 
 #define gcdSTATE_MASK \
 	(((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x03 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | 0xC0FFEE)
-
+	
 #if !defined(VIVANTE_NO_3D)
 static gctSIZE_T
 _TerminateStateBlock(
@@ -181,7 +181,7 @@ _FlushPipe(
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16))) | (((gctUINT32)((gctUINT32)(1)&((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0))) | (((gctUINT32)((gctUINT32)(0x0E03)&((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0)));
-
+	
         *buffer++
             = (Pipe == gcvPIPE_2D)
 	?   ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 3:3) - (0 ? 3:3) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 3:3) - (0 ? 3:3) + 1))))))) << (0 ? 3:3))) | (((gctUINT32)(0x1 & ((gctUINT32) ((((1 ? 3:3) - (0 ? 3:3) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 3:3) - (0 ? 3:3) + 1))))))) << (0 ? 3:3)))
@@ -195,15 +195,15 @@ _FlushPipe(
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16))) | (((gctUINT32)((gctUINT32)(1)&((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0))) | (((gctUINT32)((gctUINT32)(0x0E02)&((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0)));
-
+	
         *buffer++
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8))) | (((gctUINT32)(0x07 & ((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8)));
-
+	
         /* Stall from FE to PE. */
         *buffer++
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x09 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)));
-
+	
         *buffer
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8))) | (((gctUINT32)(0x07 & ((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8)));
@@ -232,15 +232,15 @@ _SemaphoreStall(
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16))) | (((gctUINT32)((gctUINT32)(1)&((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0))) | (((gctUINT32)((gctUINT32)(0x0E02)&((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0)));
-
+	
         *buffer++
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8))) | (((gctUINT32)(0x07 & ((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8)));
-
+	
         /* Stall from FE to PE. */
         *buffer++
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x09 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)));
-
+	
         *buffer
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 4:0) - (0 ? 4:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 4:0) - (0 ? 4:0) + 1))))))) << (0 ? 4:0)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8))) | (((gctUINT32)(0x07 & ((gctUINT32) ((((1 ? 12:8) - (0 ? 12:8) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 12:8) - (0 ? 12:8) + 1))))))) << (0 ? 12:8)));
@@ -271,7 +271,7 @@ _SwitchPipe(
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x01 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0))) | (((gctUINT32)((gctUINT32)(0x0E00)&((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16))) | (((gctUINT32)((gctUINT32)(1)&((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16)));
-
+	
         *buffer
             = (Pipe == gcvPIPE_2D)
                 ? 0x1
@@ -377,7 +377,7 @@ _State(
         /* Update last load state. */
         buffer[Context->lastIndex] =
 	((((gctUINT32)(buffer[Context->lastIndex])) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16))) | (((gctUINT32)((gctUINT32)(Context->lastSize + Size)&((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16)));
-
+	
         /* Walk all the states. */
         for (i = 0; i < Size; i += 1)
         {
@@ -591,9 +591,9 @@ _InitializeContextBuffer(
     index += _SwitchPipe(Context, index, gcvPIPE_3D);
 
     /* Current context pointer. */
-#if gcdDEBUG
+#if gcdDEBUG 
 	index += _State( Context, index,0x03850 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
-
+	
 #endif
 
     index += _FlushPipe(Context, index, gcvPIPE_3D);
@@ -608,7 +608,7 @@ _InitializeContextBuffer(
 		index += _State( Context, index,0x03834 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x03838 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x0384C >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
-
+	
     /* Front End states. */
     fe2vsCount = 12;
     if (	(((((gctUINT32)(Context->hardware->identity.chipMinorFeatures1)) >> (0 ? 23:23)) &((gctUINT32) ((((1 ? 23:23) - (0 ? 23:23) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 23:23) - (0 ? 23:23) + 1))))))))
@@ -631,7 +631,7 @@ _InitializeContextBuffer(
 		index += _State( Context, index,0x00700 >> 2,0x00000000,16,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00740 >> 2,0x00000000,16,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00780 >> 2,0x3F800000,16,gcvFALSE,gcvFALSE);
-
+	
     /* Vertex Shader states. */
 	index += _State( Context, index,0x00800 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00804 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
@@ -648,7 +648,7 @@ _InitializeContextBuffer(
 
     index += _CLOSE_RANGE();
 	index += _State( Context, index,0x05000 >> 2,0x00000000,vertexUniforms * 4,gcvFALSE,gcvFALSE);
-
+	
     /* Primitive Assembly states. */
 	index += _State( Context, index,0x00A00 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
 		index += _State( Context, index,0x00A04 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
@@ -668,7 +668,7 @@ _InitializeContextBuffer(
 		index += _State( Context, index,0x00A80 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00A84 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
 		index += _State( Context, index,0x00A8C >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
-
+	
     /* Setup states. */
 	index += _State( Context, index,0x00C00 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
 		index += _State( Context, index,0x00C04 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
@@ -680,14 +680,14 @@ _InitializeContextBuffer(
 		index += _State( Context, index,0x00C1C >> 2,0x42000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00C20 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
 		index += _State( Context, index,0x00C24 >> 2,0x00000000,1,gcvTRUE,gcvFALSE);
-
+	
     /* Raster states. */
 	index += _State( Context, index,0x00E00 >> 2,0x00000001,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00E10 >> 2,0x00000000,4,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00E04 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00E40 >> 2,0x00000000,16,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x00E08 >> 2,0x00000031,1,gcvFALSE,gcvFALSE);
-
+	
     /* Pixel Shader states. */
 	index += _State( Context, index,0x01000 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x01004 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
@@ -702,7 +702,7 @@ _InitializeContextBuffer(
 
     index += _CLOSE_RANGE();
 	index += _State( Context, index,0x07000 >> 2,0x00000000,fragmentUniforms * 4,gcvFALSE,gcvFALSE);
-
+	
     /* Texture states. */
 	index += _State( Context, index,0x02000 >> 2,0x00000000,12,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x02040 >> 2,0x00000000,12,gcvFALSE,gcvFALSE);
@@ -749,7 +749,7 @@ _InitializeContextBuffer(
 		index += _State( Context, index,0x10380 >> 2,0x00321000,32,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x10400 >> 2,0x00000000,32,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x10480 >> 2,0x00000000,32,gcvFALSE,gcvFALSE);
-
+	
 	if ((((((gctUINT32)(Context->hardware->identity.chipMinorFeatures2)) >> (0 ? 15:15)) &((gctUINT32) ((((1 ? 15:15) - (0 ? 15:15) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:15) - (0 ? 15:15) + 1))))))))
 	        {
 	index += _State( Context, index,0x12000 >> 2,0x00000000,256,gcvFALSE,gcvFALSE);
@@ -861,10 +861,10 @@ _InitializeContextBuffer(
 		index += _State( Context, index,0x014A4 >> 2,0x000E400C,1,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x01580 >> 2,0x00000000,3,gcvFALSE,gcvFALSE);
 		index += _State( Context, index,0x014B8 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
-
+	
     /* Composition states. */
 	index += _State( Context, index,0x03008 >> 2,0x00000000,1,gcvFALSE,gcvFALSE);
-
+	
     if (Context->hardware->identity.pixelPipes == 1)
     {
 	index += _State( Context, index,0x01430 >> 2,0x00000000,1,gcvFALSE,gcvTRUE);
@@ -873,9 +873,9 @@ _InitializeContextBuffer(
     else
     {
 	index += _State( Context, index,((0x01460 >> 2) + (0<<3)),0x00000000,Context->hardware->identity.pixelPipes,gcvFALSE,gcvTRUE);
-
+	
 	index += _State( Context, index,((0x01480 >> 2) + (0<<3)),0x00000000,Context->hardware->identity.pixelPipes,gcvFALSE,gcvTRUE);
-
+	
         for (i = 0; i < 2; i++)
         {
 	index += _State( Context, index,((0x01500 >> 2) + (i<<3)),0x00000000,Context->hardware->identity.pixelPipes,gcvFALSE,gcvTRUE);
@@ -899,15 +899,15 @@ _InitializeContextBuffer(
     if (Context->hardware->identity.pixelPipes > 1)
     {
 	index += _State( Context, index,((0x016C0 >> 2) + (0<<3)),0x00000000,Context->hardware->identity.pixelPipes,gcvFALSE,gcvTRUE);
-
+	
 	index += _State( Context, index,((0x016E0 >> 2) + (0<<3)),0x00000000,Context->hardware->identity.pixelPipes,gcvFALSE,gcvTRUE);
-
+	
 	index += _State( Context, index,0x01700 >> 2,0x00000000,Context->hardware->identity.pixelPipes,gcvFALSE,gcvFALSE);
 	    }
 
     /* Tile status. */
 	index += _State( Context, index,0x01654 >> 2,0x00200000,1,gcvFALSE,gcvFALSE);
-
+	
     index += _CLOSE_RANGE();
 	index += _State( Context, index,0x01658 >> 2,0x00000000,1,gcvFALSE,gcvTRUE);
 		index += _State( Context, index,0x0165C >> 2,0x00000000,1,gcvFALSE,gcvTRUE);
@@ -940,7 +940,7 @@ _InitializeContextBuffer(
         buffer[index + 0]
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x08 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0))) | (((gctUINT32)((gctUINT32)(0)&((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0)));
-
+	
         buffer[index + 1]
             = 0;
     }
@@ -971,7 +971,7 @@ _InitializeContextBuffer(
         buffer[index + 0]
 	= ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x08 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)))
 		| ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0))) | (((gctUINT32)((gctUINT32)(0)&((gctUINT32) ((((1 ? 15:0) - (0 ? 15:0) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 15:0) - (0 ? 15:0) + 1))))))) << (0 ? 15:0)));
-
+	
         buffer[index + 1]
             = 0;
     }
@@ -1693,7 +1693,7 @@ gckCONTEXT_Update(
             /* Set the proper state count. */
             buffer->logical[base - 1]
 	= ((((gctUINT32)(buffer->logical[base - 1])) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16))) | (((gctUINT32)((gctUINT32)(elementCount)&((gctUINT32) ((((1 ? 25:16) - (0 ? 25:16) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 25:16) - (0 ? 25:16) + 1))))))) << (0 ? 25:16)));
-
+	
             /* Determine the number of NOP commands. */
             nopCount
                 = (fe2vsCount / 2)
@@ -1712,7 +1712,7 @@ gckCONTEXT_Update(
 
                 /* Generate a NOP command. */
 	*nop = ((((gctUINT32)(0)) & ~(((gctUINT32)(((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27))) | (((gctUINT32)(0x03 & ((gctUINT32) ((((1 ? 31:27) - (0 ? 31:27) + 1) == 32) ? ~0 : (~(~0 << ((1 ? 31:27) - (0 ? 31:27) + 1))))))) << (0 ? 31:27)));
-
+	
                 /* Advance. */
                 nop += 2;
             }

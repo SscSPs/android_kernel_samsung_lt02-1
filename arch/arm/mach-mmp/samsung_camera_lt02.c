@@ -2,7 +2,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
- *
+ * 
  * Created for samsung by Vincent Wan <zswan@marvell.com>,2012/03/31
  * Created for samsung harrison project based on pxa986, by Vincent Wan, 2013/02/17
  */
@@ -288,7 +288,7 @@ static int sr352_power(struct device *dev, int flag)
 
 		//Cam_Printk("---sr130pc10_power power OFF -----the (9-1) step-----camera: Sub Sensor AVDD OFF-----------\n");
 		gpio_direction_output(SUB_EN_VT_2dot8V, 0);	/* disable */
-
+		
 		//Cam_Printk("---sr352_power power OFF -----the (9-2) step-----camera:  Main Sensor AVDD OFF-----------\n");
 		regulator_disable(V_3M_A2dot8V_LDO8);
 
@@ -537,11 +537,11 @@ static int sr352_pin_init(void){
 
 	pwd_main_en = mfp_to_gpio(MFP_PIN_GPIO14);
 	pwd_main_rst = mfp_to_gpio(MFP_PIN_GPIO15);
-
+		
 	if( (!pwd_main_en) || (! pwd_main_rst)) {
 		printk(KERN_ERR "mfp_to_gpio  failed,"
-				"gpio: pwd_main_en :%d, pwd_main_rst:%d\n",
-						pwd_main_en, pwd_main_rst);
+				"gpio: pwd_main_en :%d, pwd_main_rst:%d\n", 
+						pwd_main_en, pwd_main_rst);	
 		return -1;
 	}
 
@@ -568,12 +568,12 @@ static int sr130pc10_pin_init(void){
 	pwd_sub_rst = mfp_to_gpio(MFP_PIN_GPIO82);
 	SUB_EN_VT_1dot8V = mfp_to_gpio(MFP_PIN_GPIO104);
 	SUB_EN_VT_2dot8V = mfp_to_gpio(MFP_PIN_GPIO103);
-
-	if( (!pwd_sub_en) || (! pwd_sub_rst)
+		
+	if( (!pwd_sub_en) || (! pwd_sub_rst) 
 						|| (!SUB_EN_VT_1dot8V) || (!SUB_EN_VT_2dot8V)) {
 		printk(KERN_ERR "mfp_to_gpio  failed,"
-				"gpio: pwd_sub_en :%d, pwd_sub_rst:%d, SUB_EN_VT_1dot8V:%d,  SUB_EN_VT_2dot8V:%d\n",
-					pwd_sub_en, pwd_sub_rst, SUB_EN_VT_1dot8V, SUB_EN_VT_2dot8V);
+				"gpio: pwd_sub_en :%d, pwd_sub_rst:%d, SUB_EN_VT_1dot8V:%d,  SUB_EN_VT_2dot8V:%d\n", 
+					pwd_sub_en, pwd_sub_rst, SUB_EN_VT_1dot8V, SUB_EN_VT_2dot8V);	
 		return -1;
 	}
 

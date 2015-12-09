@@ -132,7 +132,7 @@ void wlan_11n_cleanup_txbastream_tbl(mlan_private * priv, t_u8 * ra);
  *
  *  @param priv     A pointer to mlan_private
  *  @param mac      station mac address
- *  @return	    MTRUE or MFALSE
+ *  @return 	    MTRUE or MFALSE
  */
 static INLINE t_u8
 is_station_11n_enabled(mlan_private * priv, t_u8 * mac)

@@ -47,14 +47,14 @@
 	The following debug info are provided in /proc/mwlan/uapX/debug.
 
 	drvdbg = <bit masks of driver debug message control>
-		bit 0:  MMSG		PRINTM(MMSG,...)
+		bit 0:  MMSG  		PRINTM(MMSG,...)
 		bit 1:  MFATAL		PRINTM(MFATAL,...)
 		bit 2:  MERROR		PRINTM(MERROR,...)
-		bit 3:  MDATA		PRINTM(MDATA,...)
-		bit 4:  MCMND		PRINTM(MCMND,...)
+		bit 3:  MDATA 		PRINTM(MDATA,...)
+		bit 4:  MCMND 		PRINTM(MCMND,...)
 		bit 5:  MEVENT		PRINTM(MEVENT,...)
-		bit 6:  MINTR		PRINTM(MINTR,...)
-		bit 7:  MIOCTL		PRINTM(MIOCTL,...)
+		bit 6:  MINTR 		PRINTM(MINTR,...)
+		bit 7:  MIOCTL 		PRINTM(MIOCTL,...)
 		...
 		bit 16: MDAT_D		PRINTM(MDAT_D,...), DBG_HEXDUMP(MDAT_D,...)
 		bit 17: MCMD_D		PRINTM(MCMD_D,...), DBG_HEXDUMP(MCMD_D,...)
@@ -63,8 +63,8 @@
 		bit 20: MIF_D		PRINTM(MIF_D,...),  DBG_HEXDUMP(MIF_D,...)
 		...
 		bit 28: MENTRY		PRINTM(MENTRY,...), ENTER(), LEAVE()
-		bit 29: MWARN		PRINTM(MWARN,...)
-		bit 30: MINFO		PRINTM(MINFO,...)
+		bit 29: MWARN 		PRINTM(MWARN,...)
+		bit 30: MINFO 		PRINTM(MINFO,...)
 	wmm_ac_vo = <number of packets sent to device from WMM AcVo queue>
 	wmm_ac_vi = <number of packets sent to device from WMM AcVi queue>
 	wmm_ac_be = <number of packets sent to device from WMM AcBE queue>
@@ -145,8 +145,8 @@ NAME
 uaputl.exe [options] <command> [command parameters]]
 
 Options:
-	--help	Display help
-	-v	Display version
+	--help 	Display help
+	-v    	Display version
 	-i <interface>
 	-d <debug_level=0|1|2>
 
@@ -828,7 +828,7 @@ sys_cfg_mcbc_data_rate
 	./uaputl.exe sys_cfg_mcbc_data_rate 22
 		Set AP MCBC data rate to 11 M
 
-	./uaputl.exe sys_cfg_mcbc_data_rate 0
+   	./uaputl.exe sys_cfg_mcbc_data_rate 0
 		Set AP MCBC data rate to auto
 
 	./uaputl.exe sys_cfg_mcbc_data_rate
@@ -1002,7 +1002,7 @@ sys_cfg_cipher
 			0		  None
 			4		  TKIP
 			8		 AES CCMP
-	empty - Get current key types
+    	empty - Get current key types
 
 	Valid combinations of [PAIRWISE_CIPHER GROUP_CIPHER] are:
 		[0 0], [4 4], [8 8], [12 4].
@@ -1072,7 +1072,7 @@ sys_cfg_group_rekey_timer
 
     The supported options are:
         GROUP_REKEY_TIMER is represented in seconds. This is only applicable
-			 if the protocol is WPA or WPA2. Value of 0 will disable group re-key.
+        		 if the protocol is WPA or WPA2. Value of 0 will disable group re-key.
 
         empty - Get current group rekey timer
 
@@ -1317,7 +1317,7 @@ regrdwr
 
 memaccess
 ---------
-	"./uaputl.exe memaccess <ADDR> [value]"
+ 	"./uaputl.exe memaccess <ADDR> [value]"
 	This commands is used to read/write to a memory address
 
 	ADDR specifies the address of the location that is to be read/write
@@ -1343,19 +1343,19 @@ rdeeprom
     offset: 0,4,8,..., multiple of 4
     bytecount: 4-20, multiple of 4
 
-	Example:
+   	Example:
     ./uaputl.exe rdeeprom 200 12
         read 12 bytes from offset 200 ON EEPROM
 
 cfg_data
 --------
-	"./uaputl.exe cfg_data <type> [*.conf]"
+ 	"./uaputl.exe cfg_data <type> [*.conf]"
 
     This command is used to set/get the configuration data to/from the firmware.
 
     type: 2 -- cal data
 
-	Example:
+   	Example:
         ./uaputl.exe cfg_data 2 cal_data.conf
             read cal_data from cal_data.conf and download to firmware.
         ./uaputl.exe cfg_data 2
@@ -1430,10 +1430,10 @@ pscfg
 	./uaputl.exe pscfg 0
 		Disable AP's power mode.
 
-	./uaputl.exe pscfg 2
+   	./uaputl.exe pscfg 2
 		Enable inactivity based power save mode.
 
-	./uaputl.exe pscfg 2 1 400000 20000 20000 10000 10000
+   	./uaputl.exe pscfg 2 1 400000 20000 20000 10000 10000
 		Enable inactivity based power save mode, enable protection, set inactivity timeout 400000 us
         set minimum sleep duration to 20000 us, maximum sleep duration to 20000 us
         and set minimum awake duration to 10000us, maximum awake duration to 10000 us
@@ -1518,7 +1518,7 @@ sys_cfg_custom_ie
                      2 - IE Index is 2
                      MAX IE Index depends on device memory.
 
-		    -1 - Append/Delete IE automatically
+               	    -1 - Append/Delete IE automatically
                          Delete will delete the IE from the matching IE buffer
                          Append will append the IE to the buffer with the same mask
         MASK :       Management subtype mask value as per bit definitions

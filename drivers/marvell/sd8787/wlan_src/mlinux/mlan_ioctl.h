@@ -1845,9 +1845,9 @@ typedef struct _mlan_power_cfg_t {
 } mlan_power_cfg_t;
 
 /** max power table size */
-#define MAX_POWER_TABLE_SIZE	128
+#define MAX_POWER_TABLE_SIZE 	128
 /** The HT BW40 bit in Tx rate index */
-#define TX_RATE_HT_BW40_BIT	MBIT(7)
+#define TX_RATE_HT_BW40_BIT 	MBIT(7)
 
 /** Type definition of mlan_power_cfg_ext for MLAN_OID_POWER_CFG_EXT */
 typedef struct _mlan_power_cfg_ext {
@@ -2806,13 +2806,13 @@ typedef struct _mlan_ds_misc_country_code {
 /** action for clear */
 #define SUBSCRIBE_EVT_ACT_BITWISE_CLR         0x0003
 /** BITMAP for subscribe event rssi low */
-#define SUBSCRIBE_EVT_RSSI_LOW			MBIT(0)
+#define SUBSCRIBE_EVT_RSSI_LOW  		MBIT(0)
 /** BITMAP for subscribe event snr low */
 #define SUBSCRIBE_EVT_SNR_LOW			MBIT(1)
 /** BITMAP for subscribe event max fail */
 #define SUBSCRIBE_EVT_MAX_FAIL			MBIT(2)
 /** BITMAP for subscribe event beacon missed */
-#define SUBSCRIBE_EVT_BEACON_MISSED	MBIT(3)
+#define SUBSCRIBE_EVT_BEACON_MISSED 	MBIT(3)
 /** BITMAP for subscribe event rssi high */
 #define SUBSCRIBE_EVT_RSSI_HIGH			MBIT(4)
 /** BITMAP for subscribe event snr high */

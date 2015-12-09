@@ -865,3 +865,4 @@ int inv_set_accel_bias_dmp(struct inv_mpu_iio_s *st);
 	inv_i2c_single_write_base(st, st->plat_data.secondary_i2c_addr, \
 		reg, data)
 #endif  /* #ifndef _INV_MPU_IIO_H_ */
+

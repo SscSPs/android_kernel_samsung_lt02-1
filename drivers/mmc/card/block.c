@@ -1222,7 +1222,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 		} else if ((rq_data_dir(req) == WRITE) &&
 			(brq->data.error == -EILSEQ)) {
 			pr_warning("try to write again as CRC error\n");
-			return MMC_BLK_RETRY;
+			return MMC_BLK_RETRY;	
 
 		} else {
 			return MMC_BLK_CMD_ERR;

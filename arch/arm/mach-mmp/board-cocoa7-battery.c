@@ -343,7 +343,7 @@ static void sec_bat_initial_check(void)
 	}
 }
 
-#if 0
+#if 0 
 static int sec_bat_check_cable_callback(void)
 {
 /*	struct usb_gadget *gadget =
@@ -813,3 +813,6 @@ void __init pxa986_cocoa7_charger_init(void)
 
 //	temp_adc_client = s3c_adc_register(&sec_device_battery, NULL, NULL, 0);
 }
+
+
+

@@ -841,3 +841,5 @@ void pxa910_diag_gserial_cleanup(void)
 
 	pr_debug("%s: cleaned up ttyGS* support\n", __func__);
 }
+
+

@@ -3319,7 +3319,7 @@ unsigned long global_reclaimable_pages(void)
  * work, and the allocation attempt will fail.
  *
  * returns:	0, if no pages reclaimed
- *		else, the number of pages reclaimed
+ * 		else, the number of pages reclaimed
  */
 static unsigned long rtcc_do_try_to_free_pages(struct zonelist *zonelist, struct scan_control *sc, struct shrink_control *shrink)
 {
@@ -3419,7 +3419,7 @@ unsigned long rtcc_reclaim_pages(unsigned long nr_to_reclaim, int swappiness, un
 	rc.nr_file = nr_to_reclaim - rc.nr_anon;
 	rc.nr_swapped = 0;
 	sc.rc = &rc;
-
+	
 	if (swappiness <= 1)
 		sc.may_swap = 0;
 

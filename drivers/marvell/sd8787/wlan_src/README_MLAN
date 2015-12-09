@@ -2027,7 +2027,7 @@ txbufcfg
 	This command can be used to get current buffer size.
 
 	eg:
-	mlanutl mlanX txbufcfg	  - This will display the current buffer size.
+	mlanutl mlanX txbufcfg 	  - This will display the current buffer size.
 
 	Note:- The actual tx buf size will depends on AP's capability and max transmit buffer size.
 

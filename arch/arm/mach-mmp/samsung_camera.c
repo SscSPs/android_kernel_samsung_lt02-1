@@ -2,7 +2,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
- *
+ * 
  * Created for samsung by Vincent Wan <zswan@marvell.com>,2012/03/31
  */
 #include <linux/init.h>
@@ -92,7 +92,7 @@ struct mmp_cam_pdata mv_cam_data_forssg = {
 	.dphy3_algo = 0,
 
 };
-
+	
 /* ONLY for SSG S5K camera, __MUST__ keep it here */
 struct s5k_cam_mclk s5k_cam_mclk_en ;
 
@@ -164,14 +164,14 @@ static int s5k43_power(struct device *dev, int flag)
 #ifdef CONFIG_SOC_CAMERA_SR030PC50
 		gpio_direction_output(pwd_main1, 1);	/* enable */
 
-		Cam_Printk(" ---camera power ON -----the (4) step-----camera: reset ON-----------\n");
+		Cam_Printk(" ---camera power ON -----the (4) step-----camera: reset ON-----------\n");		
 		gpio_direction_output(pwd_main2, 0);	/* enable */
 		msleep(2);
 		gpio_direction_output(pwd_main2, 1);	/* enable */
 #else
 		gpio_direction_output(camera_power_standby, 1);	/* enable */
 
-		Cam_Printk(" ---camera power ON -----the (4) step-----camera: reset ON-----------\n");
+		Cam_Printk(" ---camera power ON -----the (4) step-----camera: reset ON-----------\n");		
 		gpio_direction_output(camera_power_reset, 0);	/* enable */
 		msleep(2);
 		gpio_direction_output(camera_power_reset, 1);	/* enable */
@@ -179,30 +179,30 @@ static int s5k43_power(struct device *dev, int flag)
 		/*for s5k power off maybe pull down the data pin, so we have to reset i2c controller */
 		s5k_cam_mclk_en.i2c_pxa_reset(s5k_cam_mclk_en.i2c);
 	}
-	else
+	else 
 	{
 #ifdef CONFIG_SOC_CAMERA_SR030PC50
-		Cam_Printk("---camera power OFF -----the (1) step-----camera: reset OFF-----------\n");
+		Cam_Printk("---camera power OFF -----the (1) step-----camera: reset OFF-----------\n");	
 		gpio_direction_output(pwd_main2, 0);	/* disable */
 
 		// mipi disable
-		Cam_Printk("---camera power OFF -----the (2) step-----camera: disable sensor mclk-----------\n");
+		Cam_Printk("---camera power OFF -----the (2) step-----camera: disable sensor mclk-----------\n");	
 		s5k_cam_mclk_en.disable_clk(s5k_cam_mclk_en.pcdev);
-
-		Cam_Printk("---camera power OFF -----the (3) step-----camera: standby OFF-----------\n");
+		
+		Cam_Printk("---camera power OFF -----the (3) step-----camera: standby OFF-----------\n");	
 		gpio_direction_output(pwd_main1, 0);	/* disable */
 #else
-		Cam_Printk("---camera power OFF -----the (1) step-----camera: reset OFF-----------\n");
+		Cam_Printk("---camera power OFF -----the (1) step-----camera: reset OFF-----------\n");	
 		gpio_direction_output(camera_power_reset, 0);	/* disable */
 
 		// mipi disable
-		Cam_Printk("---camera power OFF -----the (2) step-----camera: disable sensor mclk-----------\n");
+		Cam_Printk("---camera power OFF -----the (2) step-----camera: disable sensor mclk-----------\n");	
 		s5k_cam_mclk_en.disable_clk(s5k_cam_mclk_en.pcdev);
 
-		Cam_Printk("---camera power OFF -----the (3) step-----camera: standby OFF-----------\n");
+		Cam_Printk("---camera power OFF -----the (3) step-----camera: standby OFF-----------\n");	
 		gpio_direction_output(camera_power_standby, 0);	/* disable */
 #endif
-		Cam_Printk("---camera power OFF -----the (4) step-----camera: LDO OFF-----------\n");
+		Cam_Printk("---camera power OFF -----the (4) step-----camera: LDO OFF-----------\n");	
 		regulator_disable(vcamera_ana_1);
 		regulator_disable(vcamera_ana);
 		regulator_disable(vcamera_vbuck5);
@@ -259,13 +259,13 @@ void camera_flash_on_off(int value) // Flash
 	}
 }
 
-static ssize_t store_flash(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
-{
+static ssize_t store_flash(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)  
+{ 
  int value;
  sscanf(buf, "%d", &value);
-
+ 
        camera_flash_on_off(value);
-
+       
  return size;
 }
 
@@ -275,7 +275,7 @@ static ssize_t store_flash(struct device *dev, struct device_attribute *attr, co
 
 	return sprintf(buf, "SOC");
 }
-
+ 
 static DEVICE_ATTR(rear_flash, S_IRUGO | S_IWUSR | S_IWOTH | S_IXOTH, NULL, store_flash);
 static DEVICE_ATTR(rear_type, S_IRUGO | S_IWUSR | S_IWGRP | S_IXOTH,  rear_camera_type, NULL);
 /*-- AT_Command[Flash mode] --*/
@@ -286,10 +286,10 @@ void __init init_samsung_cam(void)
 
 	pwd_main1 = mfp_to_gpio(MFP_PIN_GPIO14);
 	pwd_main2 = mfp_to_gpio(MFP_PIN_GPIO15);
-
+		
 	if( (!pwd_main1) || (! pwd_main2)) {
 		printk(KERN_ERR "mfp_to_gpio  failed,"
-				"gpio: pwd_main1 :%d, pwd_main2:%d\n", pwd_main1, pwd_main2);
+				"gpio: pwd_main1 :%d, pwd_main2:%d\n", pwd_main1, pwd_main2);	
 		return;
 	}
 
@@ -306,7 +306,7 @@ void __init init_samsung_cam(void)
 		pwd_main2 = 0;
 		return;
 	}
-
+	
 	platform_device_register(&camera[ID_S5K4ECGX]);
 
 	pxa988_add_cam(&mv_cam_data_forssg);
@@ -320,10 +320,10 @@ void __init init_samsung_cam(void)
 	camera_power_reset = mfp_to_gpio(MFP_PIN_GPIO15);
 	camera_flash_en = mfp_to_gpio(MFP_PIN_GPIO20);
 	camera_flash_set = mfp_to_gpio(MFP_PIN_GPIO8)||mfp_to_gpio(MFP_PIN_GPIO97);
-
+		
 	if( (!camera_power_standby) || (! camera_power_reset)) {
 		printk(KERN_ERR "mfp_to_gpio  failed,"
-				"gpio: pwd_main1 :%d, pwd_main2:%d\n", camera_power_standby, camera_power_reset);
+				"gpio: pwd_main1 :%d, pwd_main2:%d\n", camera_power_standby, camera_power_reset);	
 		return;
 	}
 
@@ -352,23 +352,23 @@ void __init init_samsung_cam(void)
 		camera_flash_set = 0;
 		return;
 	}
-
+	
 	platform_device_register(&camera[ID_S5K4ECGX]);
 
 	pxa988_add_cam(&mv_cam_data_forssg);
 
 /*++ AT_Command[Flash mode] : dhee79.lee@samsung.com_20121012 ++*/
 	camera_class = class_create(THIS_MODULE, "camera");
-
-	if (IS_ERR(camera_class))
+	
+	if (IS_ERR(camera_class)) 
 	{
 	 printk("Failed to create camera_class!\n");
 	 return PTR_ERR( camera_class );
 }
-
-
+	
+	
 	dev_t = device_create(camera_class, NULL, 0, "%s", "rear");
-
+	
 	if (device_create_file(dev_t, &dev_attr_rear_flash) < 0)
 	 printk("Failed to create device file(%s)!\n", dev_attr_rear_flash.attr.name);
 	if (device_create_file(dev_t, &dev_attr_rear_type) < 0)

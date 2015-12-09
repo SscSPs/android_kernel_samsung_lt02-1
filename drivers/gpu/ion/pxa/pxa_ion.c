@@ -183,3 +183,4 @@ static struct platform_driver pxa_ion_driver = {
 module_platform_driver(pxa_ion_driver);
 
 MODULE_LICENSE("GPL v2");
+

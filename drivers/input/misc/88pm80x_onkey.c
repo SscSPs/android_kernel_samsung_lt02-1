@@ -146,8 +146,8 @@ static ssize_t keys_read(struct device *dev, struct device_attribute *attr, char
 	int count;
 
 //	printk("is_key_pressed = %d . is_power_key_pressed = %d\n",is_key_pressed,is_power_key_pressed);
-	if(is_power_key_pressed !=0 )
-	{
+	if(is_power_key_pressed !=0 ) 
+	{	
 		count = sprintf(buf,"%s\n","PRESS");
 	}
 	else
@@ -232,9 +232,9 @@ static int __devinit pm80x_onkey_probe(struct platform_device *pdev)
 #endif
 #if 1
 	{struct device *dev_t;
-
+	
 	dev_t = device_create(sec_class, NULL, 0, "%s", "sec_power_key");
-
+	
 	if(device_create_file(dev_t, &dev_attr_sec_power_key_pressed) < 0)
 		 printk("Failed to create device file(%s)!\n", dev_attr_sec_power_key_pressed.attr.name);
 	}

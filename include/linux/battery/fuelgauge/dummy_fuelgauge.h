@@ -29,7 +29,7 @@ extern int MainTrim(struct i2c_client *client);
 /*        STC311x DEVICE SELECTION                                                  */
 /* STC3115 version only                                                             */
 /* -------------------------------------------------------------------------------- */
-#define STC3115
+#define STC3115 
 #define BATD_UC8
 /* ******************************************************************************** */
 
@@ -99,12 +99,12 @@ extern int MainTrim(struct i2c_client *client);
 #define STC311x_REG_RELAX_MAX            0x17    /* Voltage relaxation max count */
 
 /*Bit mask definition*/
-#define STC311x_VMODE			 0x01	 /* Voltage mode bit mask     */
+#define STC311x_VMODE   		 0x01	 /* Voltage mode bit mask     */
 #define STC311x_ALM_ENA			 0x08	 /* Alarm enable bit mask     */
 #define STC311x_GG_RUN			 0x10	 /* Alarm enable bit mask     */
 #define STC311x_FORCE_CC		 0x20	 /* Force CC bit mask     */
 #define STC311x_FORCE_VM		 0x40	 /* Force VM bit mask     */
-#define STC311x_SOFTPOR			 0x11	 /* soft reset     */
+#define STC311x_SOFTPOR 		 0x11	 /* soft reset     */
 #define STC311x_CLR_VM_ADJ   0x02  /* Clear VM ADJ register bit mask */
 #define STC311x_CLR_CC_ADJ   0x04  /* Clear CC ADJ register bit mask */
 
@@ -259,7 +259,7 @@ int Capacity_Adjust;
 /* -------------------------------------------------------------------------------- */
 
 #define STC3100_BATTERY_FULL 95
-#define STC311x_DELAY	1000
+#define STC311x_DELAY	1000  
 
 /* ******************************************************************************** */
 
@@ -269,7 +269,7 @@ static struct i2c_client *sav_client;
 
 struct stc311x_chip {
 	struct i2c_client		*client;
-	struct delayed_work		work;
+	struct delayed_work		work;  
 	struct power_supply		battery;
 	struct stc311x_platform_data	*pdata;
 
@@ -294,19 +294,19 @@ struct sec_fg_info {
 	void (*power_supply_unregister)(struct power_supply *psy);
 
 	int Vmode;       /* 1=Voltage mode, 0=mixed mode */
-	int Alm_SOC;     /* SOC alm level %*/
-	int Alm_Vbat;    /* Vbat alm level mV*/
-	int CC_cnf;      /* nominal CC_cnf */
-	int VM_cnf;      /* nominal VM cnf */
-	int Cnom;        /* nominal capacity in mAh */
-	int Rsense;      /* sense resistor mOhms*/
-	int RelaxCurrent; /* current for relaxation in mA (< C/20) */
-	int Adaptive;     /* 1=Adaptive mode enabled, 0=Adaptive mode disabled */
-	int CapDerating[7];   /* capacity derating in 0.1%, for temp = 60, 40, 25, 10,   0, -10 °C,-20°C */
-	int OCVOffset[16];    /* OCV curve adjustment */
+  	int Alm_SOC;     /* SOC alm level %*/
+  	int Alm_Vbat;    /* Vbat alm level mV*/
+  	int CC_cnf;      /* nominal CC_cnf */
+  	int VM_cnf;      /* nominal VM cnf */
+  	int Cnom;        /* nominal capacity in mAh */
+  	int Rsense;      /* sense resistor mOhms*/
+  	int RelaxCurrent; /* current for relaxation in mA (< C/20) */
+  	int Adaptive;     /* 1=Adaptive mode enabled, 0=Adaptive mode disabled */
+  	int CapDerating[7];   /* capacity derating in 0.1%, for temp = 60, 40, 25, 10,   0, -10 °C,-20°C */
+  	int OCVOffset[16];    /* OCV curve adjustment */
 	int OCVOffset2[16];    /* OCV curve adjustment */
-	int (*ExternalTemperature) (void); /*External temperature fonction, return °C*/
-	int ForceExternalTemperature; /* 1=External temperature, 0=STC3115 temperature */
+  	int (*ExternalTemperature) (void); /*External temperature fonction, return °C*/
+  	int ForceExternalTemperature; /* 1=External temperature, 0=STC3115 temperature */
 };
 
 #endif

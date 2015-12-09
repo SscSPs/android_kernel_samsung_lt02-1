@@ -31,3 +31,4 @@ cm_call_smi:
 #endif
 	smc #0
 	ldmia   sp!, {r1-r12,pc}
+

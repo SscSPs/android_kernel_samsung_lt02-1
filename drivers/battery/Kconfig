@@ -229,3 +229,4 @@ config CHARGER_PM8917
 	 for PM8917 charger driver.
 	 This driver source code implemented
 	 all functions for PM8917 charger.
+

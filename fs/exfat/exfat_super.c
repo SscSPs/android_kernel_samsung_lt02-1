@@ -176,7 +176,7 @@ void exfat_time_fat2unix(struct exfat_sb_info *sbi, struct timespec *ts,
 
 	ts->tv_sec =  tp->Second  + tp->Minute * SECS_PER_MIN
 			+ tp->Hour * SECS_PER_HOUR
-			+ (year * 365 + ld + accum_days_in_year[(tp->Month)]
+			+ (year * 365 + ld + accum_days_in_year[(tp->Month)] 
 			+ (tp->Day - 1) + DAYS_DELTA_DECADE) * SECS_PER_DAY;
 
 	if(!sbi->options.tz_utc)

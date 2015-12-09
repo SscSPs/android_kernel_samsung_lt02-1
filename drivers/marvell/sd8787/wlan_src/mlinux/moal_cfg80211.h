@@ -37,7 +37,7 @@
 /* define for custom ie operation */
 #define MLAN_CUSTOM_IE_AUTO_IDX_MASK    0xffff
 #define MLAN_CUSTOM_IE_DELETE_MASK      0x0
-#define MLAN_CUSTOM_IE_NEW_MASK		0x8000
+#define MLAN_CUSTOM_IE_NEW_MASK      	0x8000
 #define TLV_TYPE_MGMT_IE                0x0169
 #define MGMT_MASK_ASSOC_REQ             0x01
 #define MGMT_MASK_REASSOC_REQ           0x04
