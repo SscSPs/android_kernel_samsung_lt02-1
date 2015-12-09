@@ -26,16 +26,17 @@
 #include <asm/cacheflush.h>
 #include <asm/hardware/cache-l2x0.h>
 
+#define TAUROS3_SL2_AUX2	0x820
+
 #define CACHE_LINE_SIZE		32
 
-void __iomem *l2x0_base;
+static void __iomem *l2x0_base;
 static DEFINE_RAW_SPINLOCK(l2x0_lock);
 static u32 l2x0_way_mask;	/* Bitmask of active ways */
 static u32 l2x0_size;
 static u32 l2x0_cache_id;
 static unsigned int l2x0_sets;
 static unsigned int l2x0_ways;
-static unsigned long sync_reg_offset = L2X0_CACHE_SYNC;
 
 static inline bool is_pl310_rev(int rev)
 {
@@ -73,7 +74,12 @@ static inline void cache_sync(void)
 {
 	void __iomem *base = l2x0_base;
 
-	writel_relaxed(0, base + sync_reg_offset);
+#ifdef CONFIG_PL310_ERRATA_753970
+	/* write to an unmmapped register */
+	writel_relaxed(0, base + L2X0_DUMMY_REG);
+#else
+	writel_relaxed(0, base + L2X0_CACHE_SYNC);
+#endif
 	cache_wait(base + L2X0_CACHE_SYNC, 1);
 }
 
@@ -92,13 +98,10 @@ static inline void l2x0_inv_line(unsigned long addr)
 }
 
 #if defined(CONFIG_PL310_ERRATA_588369) || defined(CONFIG_PL310_ERRATA_727915)
-static inline void debug_writel(unsigned long val)
-{
-	if (outer_cache.set_debug)
-		outer_cache.set_debug(val);
-}
 
-static void pl310_set_debug(unsigned long val)
+#define debug_writel(val)	outer_cache.set_debug(val)
+
+static void l2x0_set_debug(unsigned long val)
 {
 	writel_relaxed(val, l2x0_base + L2X0_DEBUG_CTRL);
 }
@@ -108,7 +111,7 @@ static inline void debug_writel(unsigned long val)
 {
 }
 
-#define pl310_set_debug	NULL
+#define l2x0_set_debug	NULL
 #endif
 
 #ifdef CONFIG_PL310_ERRATA_588369
@@ -149,11 +152,11 @@ static void l2x0_for_each_set_way(void __iomem *reg)
 	unsigned long flags;
 
 	for (way = 0; way < l2x0_ways; way++) {
-		raw_spin_lock_irqsave(&l2x0_lock, flags);
+		spin_lock_irqsave(&l2x0_lock, flags);
 		for (set = 0; set < l2x0_sets; set++)
 			writel_relaxed((way << 28) | (set << 5), reg);
 		cache_sync();
-		raw_spin_unlock_irqrestore(&l2x0_lock, flags);
+		spin_unlock_irqrestore(&l2x0_lock, flags);
 	}
 }
 #endif
@@ -333,6 +336,7 @@ static void l2x0_disable(void)
 
 static void l2x0_unlock(u32 cache_id)
 {
+#ifndef CONFIG_CPU_MMP3
 	int lockregs;
 	int i;
 
@@ -348,19 +352,34 @@ static void l2x0_unlock(u32 cache_id)
 		writel_relaxed(0x0, l2x0_base + L2X0_LOCKDOWN_WAY_I_BASE +
 			       i * L2X0_LOCKDOWN_STRIDE);
 	}
+#endif
 }
 
 void __init l2x0_init(void __iomem *base, u32 aux_val, u32 aux_mask)
 {
 	u32 aux;
 	u32 way_size = 0;
-	u32 prefetch_ctrl = 0;
+	u32 debug_ctrl;
+	__u32 prefetch_ctrl = 0;
 	const char *type;
+
+#ifdef CONFIG_CPU_MMP3
+	u32 aux2;
+#endif
 
 	l2x0_base = base;
 
 	l2x0_cache_id = readl_relaxed(l2x0_base + L2X0_CACHE_ID);
 	aux = readl_relaxed(l2x0_base + L2X0_AUX_CTRL);
+
+	/* In case l2x controller is enabled, the aux ctrl register
+	 * can't be set. So the original value should be stored in
+	 * the l2x0_saved_regs for restoring when resume. */
+	l2x0_saved_regs.aux_ctrl = aux;
+	l2x0_saved_regs_phys_addr = virt_to_phys(&l2x0_saved_regs);
+
+	aux &= aux_mask;
+	aux |= aux_val;
 
 	/* Determine the number of ways */
 	switch (l2x0_cache_id & L2X0_CACHE_ID_PART_MASK) {
@@ -370,19 +389,6 @@ void __init l2x0_init(void __iomem *base, u32 aux_val, u32 aux_mask)
 		else
 			l2x0_ways = 8;
 		type = "L310";
-#ifdef CONFIG_PL310_ERRATA_753970
-		/* Unmapped register. */
-		sync_reg_offset = L2X0_DUMMY_REG;
-#endif
-
-		outer_cache.set_debug = pl310_set_debug;
-
-		/*
-		 * Set bit 22 in the auxiliary control register. If this bit
-		 * is cleared, PL310 treats Normal Shared Non-cacheable
-		 * accesses as Cacheable no-allocate.
-		 */
-		aux_val |= 1 << 22;
 		break;
 	case L2X0_CACHE_ID_PART_L210:
 		l2x0_ways = (aux >> 13) & 0xf;
@@ -397,6 +403,43 @@ void __init l2x0_init(void __iomem *base, u32 aux_val, u32 aux_mask)
 
 	l2x0_way_mask = (1 << l2x0_ways) - 1;
 
+#ifdef CONFIG_CACHE_L2X0_PREFETCH
+	/* Configure double line fill and prefetch */
+
+	prefetch_ctrl = 0;
+	prefetch_ctrl |= (1u << 30); /* DLF (double linefill) enabled*/
+	prefetch_ctrl |= (1u << 29); /* instruction prefetch enabled */
+	prefetch_ctrl |= (1u << 28); /* data prefetch enabled */
+	prefetch_ctrl |= (0u << 27); /* DLF on WRAP read enabled*/
+	prefetch_ctrl |= (0u << 24); /* no discard prefetch reads*/
+	prefetch_ctrl |= (0u << 23); /* no 8x64-bit burst on read miss*/
+	prefetch_ctrl |= (0u << 21); /* use same AXI ID on exclusive seq */
+	if (CONFIG_CACHE_TAUROS3_PREFETCH_OFFSET <= 7)
+		prefetch_ctrl |= CONFIG_CACHE_TAUROS3_PREFETCH_OFFSET;
+	else if (CONFIG_CACHE_TAUROS3_PREFETCH_OFFSET <= 15)
+		prefetch_ctrl |= 15;
+	else if (CONFIG_CACHE_TAUROS3_PREFETCH_OFFSET <= 23)
+		prefetch_ctrl |= 23;
+	else
+		prefetch_ctrl |= 31;
+	writel_relaxed(prefetch_ctrl, l2x0_base + L2X0_PREFETCH_CTRL);
+#endif
+
+	debug_ctrl = readl_relaxed(l2x0_base + L2X0_DEBUG_CTRL);
+#ifdef CONFIG_CACHE_TAUROS3_WRITETHROUGH
+	debug_ctrl |= (1 << 1);
+	writel_relaxed(debug_ctrl, l2x0_base + L2X0_DEBUG_CTRL);
+#endif
+
+#ifdef CONFIG_CPU_MMP3
+	aux2 = readl_relaxed(l2x0_base + TAUROS3_SL2_AUX2);
+#ifdef CONFIG_CACHE_TAUROS3_ENABLE_FULL_WRITE_LINE
+	aux2 |= (1 << 13);
+	writel_relaxed(aux2, l2x0_base + TAUROS3_SL2_AUX2);
+	aux2 = readl_relaxed(l2x0_base + TAUROS3_SL2_AUX2);
+#endif
+#endif
+
 	/*
 	 * L2 cache Size =  Way size * Number of ways
 	 */
@@ -404,23 +447,6 @@ void __init l2x0_init(void __iomem *base, u32 aux_val, u32 aux_mask)
 	way_size = SZ_1K << (way_size + 3);
 	l2x0_size = l2x0_ways * way_size;
 	l2x0_sets = way_size / CACHE_LINE_SIZE;
-
-#ifdef CONFIG_CACHE_L2X0_PREFETCH
-	/* Configure double line fill and prefetch */
-	prefetch_ctrl |= (1u << 30); /* DLF (double linefill) enabled*/
-	prefetch_ctrl |= (1u << 29); /* instruction prefetch enabled */
-	prefetch_ctrl |= (1u << 28); /* data prefetch enabled */
-
-	if (CONFIG_CACHE_L2X0_PREFETCH_OFFSET <= 7)
-		prefetch_ctrl |= CONFIG_CACHE_L2X0_PREFETCH_OFFSET;
-	else if (CONFIG_CACHE_L2X0_PREFETCH_OFFSET <= 15)
-		prefetch_ctrl |= 15;
-	else if (CONFIG_CACHE_L2X0_PREFETCH_OFFSET <= 23)
-		prefetch_ctrl |= 23;
-	else
-		prefetch_ctrl |= 31;
-	writel_relaxed(prefetch_ctrl, l2x0_base + L2X0_PREFETCH_CTRL);
-#endif
 
 	/*
 	 * Check if l2x0 controller is already enabled.
@@ -431,11 +457,10 @@ void __init l2x0_init(void __iomem *base, u32 aux_val, u32 aux_mask)
 		/* Make sure that I&D is not locked down when starting */
 		l2x0_unlock(l2x0_cache_id);
 
-		aux &= aux_mask;
-		aux |= aux_val;
-
 		/* l2x0 controller is disabled */
 		writel_relaxed(aux, l2x0_base + L2X0_AUX_CTRL);
+
+		l2x0_saved_regs.aux_ctrl = aux;
 
 		l2x0_inv_all();
 
@@ -445,26 +470,31 @@ void __init l2x0_init(void __iomem *base, u32 aux_val, u32 aux_mask)
 	/*
 	 * l2x0 controller is enabled at this time
 	 */
-	l2x0_saved_regs.ctrl = 1;
+	//l2x0_saved_regs.ctrl = 1;
 
-	/* Re-read it in case some bits are reserved. */
-	aux = readl_relaxed(l2x0_base + L2X0_AUX_CTRL);
+#ifndef CONFIG_CPU_MMP3
+	/* Enable power features in contrller */
+	writel_relaxed(0x3, l2x0_base + L2X0_POWER_CTRL);
+#endif
 
-	/* Save the value for resuming. */
-	l2x0_saved_regs.aux_ctrl = aux;
-	l2x0_saved_regs_phys_addr = virt_to_phys(&l2x0_saved_regs);
-
+#ifndef CONFIG_CACHE_TAUROS3_DISABLE_MEMORY_MAPPED_FUNCTIONS
 	outer_cache.inv_range = l2x0_inv_range;
 	outer_cache.clean_range = l2x0_clean_range;
 	outer_cache.flush_range = l2x0_flush_range;
-	outer_cache.sync = l2x0_cache_sync;
 	outer_cache.flush_all = l2x0_flush_all;
 	outer_cache.inv_all = l2x0_inv_all;
 	outer_cache.disable = l2x0_disable;
+	outer_cache.set_debug = l2x0_set_debug;
+#endif
 
 	printk(KERN_INFO "%s cache controller enabled\n", type);
 	printk(KERN_INFO "l2x0: %d ways, CACHE_ID 0x%08x, AUX_CTRL 0x%08x, Cache size: %d B\n",
 			l2x0_ways, l2x0_cache_id, aux, l2x0_size);
+	printk(KERN_INFO "l2x0: PREFETCH_CTRL 0x%08x\n", prefetch_ctrl);
+	printk(KERN_INFO "l2x0: DEBUG_CTRL 0x%08x\n", debug_ctrl);
+#ifdef CONFIG_CPU_MMP3
+	printk(KERN_INFO "tauros3: SL2_AUX2 0x%08x\n", aux2);
+#endif
 }
 
 void pl310_save(void)
@@ -472,7 +502,6 @@ void pl310_save(void)
 	u32 l2x0_revision = readl_relaxed(l2x0_base + L2X0_CACHE_ID) &
 		L2X0_CACHE_ID_RTL_MASK;
 
-	l2x0_saved_regs.ctrl = readl_relaxed(l2x0_base + L2X0_CTRL);
 	l2x0_saved_regs.tag_latency = readl_relaxed(l2x0_base +
 		L2X0_TAG_LATENCY_CTRL);
 	l2x0_saved_regs.data_latency = readl_relaxed(l2x0_base +
@@ -501,16 +530,11 @@ void pl310_suspend(void)
 {
 	pl310_save();
 
-	__cpuc_flush_dcache_area((void *)&l2x0_saved_regs,
-				sizeof(l2x0_saved_regs));
+	flush_cache_all();
 	outer_clean_range(l2x0_saved_regs_phys_addr,
 			  l2x0_saved_regs_phys_addr + sizeof(l2x0_saved_regs));
 }
 
-void flush_l2x0_lock(void)
-{
-	__cpuc_flush_dcache_area(&l2x0_lock, sizeof(l2x0_lock));
-}
 static void l2x0_resume(void)
 {
 	if (!(readl_relaxed(l2x0_base + L2X0_CTRL) & 1)) {
