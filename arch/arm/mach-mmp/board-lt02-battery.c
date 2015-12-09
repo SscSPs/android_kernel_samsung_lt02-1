@@ -909,3 +909,6 @@ void __init pxa986_lt02_charger_init(void)
 			ARRAY_SIZE(sec_brdinfo_fuelgauge));
 
 }
+
+
+
