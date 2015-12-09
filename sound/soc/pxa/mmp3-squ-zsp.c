@@ -175,7 +175,7 @@ static void zmq_send_cmd(struct mmp_zsp_runtime_data *prtd,
 					sync timeout: %s:\
 					stream = %d, cmdid = %d\
 					zmq_sync = %x*********\n",
-					__func__, prtd->stream_id,
+					__func__, prtd->stream_id, 
 					cmdid, atomic_read(&prtd->zmq_sync));
 		}
 	}
@@ -267,11 +267,11 @@ static void zmq_send_cmd(struct mmp_zsp_runtime_data *prtd,
 	kzmq_write(prtd->zmq_deliver, pmsg, len);
 	if (sync) {
 		if (!wait_for_completion_timeout(&prtd->zmq_cmd_completion,
-					3 * HZ))
+				       	3 * HZ))
 			printk(KERN_EMERG "******** ZSP command ack\
 				timeout: %s:stream = %d, cmdid = %d \
 				zmq_sync = %x*********\n",
-				__func__, prtd->stream_id, cmdid,
+				__func__, prtd->stream_id, cmdid, 
 				atomic_read(&prtd->zmq_sync));
 	}
 	mutex_unlock(&prtd->zmq_cmd_mutex);
@@ -289,9 +289,9 @@ static int zmq_setup(struct mmp_zsp_runtime_data *prtd)
 	}
 	while (atomic_read(&prtd->zmq_sync)) {
 		if (!wait_for_completion_timeout(&prtd->zmq_cmd_completion,
-					10 * HZ))
+				       	10 * HZ))
 			printk(KERN_EMERG "******** ZSP command\
-					sync timeout: %s:\
+				       	sync timeout: %s:\
 					stream = %d, *********\n",
 					__func__, prtd->stream_id);
 	}
@@ -426,9 +426,9 @@ static void zsp_msg_handler(struct work_struct *work)
 
 	substream = prtd->substream;
 	while (1) {
-		kzmq_read((void *)prtd->zmq_deliver,
+		kzmq_read((void *)prtd->zmq_deliver, 
 			(void *)&zsp_data_received,
-			sizeof(ack_audio_stream_t));
+		       	sizeof(ack_audio_stream_t));
 		switch (zsp_data_received.command_id) {
 		case AUDIO_STREAM_CMDID_ACQUIRE:
 			/* suppose it is OK, tbd later */
@@ -489,7 +489,7 @@ static void zsp_msg_handler(struct work_struct *work)
 				prtd->zmq_deliver = NULL;
 				prtd->zmq_state = ZMQ_CLOSED;
 				atomic_sub((1 << AUDIO_STREAM_CMDID_RELEASE),
-						&prtd->zmq_sync);
+					       	&prtd->zmq_sync);
 				complete_all(&prtd->zmq_cmd_completion);
 				return;
 			} else {
@@ -498,7 +498,7 @@ static void zsp_msg_handler(struct work_struct *work)
 				prtd->zmq_deliver = NULL;
 				prtd->zmq_state = ZMQ_CLOSED;
 				atomic_sub((1 << AUDIO_STREAM_CMDID_RELEASE),
-						&prtd->zmq_sync);
+					       	&prtd->zmq_sync);
 				complete_all(&prtd->zmq_cmd_completion);
 				return;
 
@@ -507,12 +507,12 @@ static void zsp_msg_handler(struct work_struct *work)
 			/* unknown command */
 			break;
 		}
-		if ((zsp_data_received.command_id !=
-				AUDIO_STREAM_CMDID_DATARXTXREQ)&&
-				(zsp_data_received.command_id !=
+		if ((zsp_data_received.command_id != 
+				AUDIO_STREAM_CMDID_DATARXTXREQ)&& 
+				(zsp_data_received.command_id != 
 				 AUDIO_STREAM_CMDID_DATARXTX)) {
 			atomic_sub((1 << zsp_data_received.command_id),
-					&prtd->zmq_sync);
+				       	&prtd->zmq_sync);
 			complete_all(&prtd->zmq_cmd_completion);
 		}
 	}
@@ -606,9 +606,9 @@ static int mmp_zsp_pcm_close(struct snd_pcm_substream *substream)
 	mutex_lock(&prtd->zsp_call_mutex);
 	while (atomic_read(&prtd->zmq_sync)) {
 		if (!wait_for_completion_timeout(&prtd->zmq_cmd_completion,
-					10 * HZ))
+				       	10 * HZ))
 			printk(KERN_EMERG "******** ZSP command sync timeout:\
-					%s:stream = %d, *********\n",
+				       	%s:stream = %d, *********\n",
 					__func__, prtd->stream_id);
 	}
 
@@ -766,7 +766,7 @@ int mmp_zsp_pcm_suspend(struct snd_soc_dai *dai)
 						__func__, prtd->stream_id);
 				}
 				if (prtd->zmq_deliver) {
-					zmq_send_cmd(prtd,
+					zmq_send_cmd(prtd, 
 					AUDIO_STREAM_CMDID_RELEASE, 0, 1);
 					prtd->zmq_state = ZMQ_SUSPENDED;
 				}

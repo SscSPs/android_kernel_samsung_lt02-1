@@ -162,7 +162,7 @@ static int pxa_ssp_suspend(struct snd_soc_dai *cpu_dai)
 	int status;
 	struct ssp_priv *priv = snd_soc_dai_get_drvdata(cpu_dai);
 	struct ssp_device *ssp = priv->ssp;
-
+	
 
 	/*
 	 * do not handle GSSP scenario, due to 1) GSSP clock is closed
