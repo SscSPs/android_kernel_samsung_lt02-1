@@ -441,7 +441,7 @@ static int ccic_config_image(struct mmp_camera_dev *pcdev)
 	 */
 #if defined(CONFIG_MACH_LT02) || defined(CONFIG_MACH_COCOA7)
 	if (pdata->bus_type != V4L2_MBUS_CSI2_LANES) {
-
+		
 		ccic_reg_set_bit(pcdev, REG_CTRL0, C0_VPOL_LOW | C0_VEDGE_CTRL);
 		dev_info(dev, "camera: ccic_config_image set the REG_CTRL0 for parallel sensor!!!\n");
 	}
@@ -1870,3 +1870,4 @@ MODULE_AUTHOR("Angela Wan <jwan@marvell.com>");
 MODULE_AUTHOR("Albert Wang <twang13@marvell.com>");
 MODULE_LICENSE("GPL");
 MODULE_SUPPORTED_DEVICE("Video");
+
