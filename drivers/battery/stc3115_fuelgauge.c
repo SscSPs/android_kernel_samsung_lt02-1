@@ -128,7 +128,7 @@ static int STC31xx_WriteByte(struct i2c_client *client, int RegAddress, unsigned
   int res;
   unsigned char data[2];
 
-  data[0]= Value;
+  data[0]= Value; 
   res = STC31xx_Write(client, 1, RegAddress, data);
 
   return(res);
@@ -1408,3 +1408,9 @@ ssize_t sec_hal_fg_store_attrs(struct device *dev,
 
 	return ret;
 }
+
+
+
+
+
+
