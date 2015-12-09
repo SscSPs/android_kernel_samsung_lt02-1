@@ -8,3 +8,4 @@ config SENSORS_CORE
 	help
 	  Say Y here to enable debugging messages for power supply class
 	  and drivers.
+

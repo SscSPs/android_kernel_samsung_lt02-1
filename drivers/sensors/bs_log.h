@@ -22,7 +22,7 @@
 		__func__, __LINE__, ##args)
 #else
 #define PERR(fmt, args...)
-#endif
+#endif 
 
 #if (LOG_LEVEL >= LOG_LEVEL_N)
 #define PNOTICE(fmt, args...) printk(KERN_NOTICE\
