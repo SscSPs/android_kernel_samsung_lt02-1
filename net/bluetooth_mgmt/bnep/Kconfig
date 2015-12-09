@@ -21,3 +21,4 @@ config BT_BNEP_PROTO_FILTER
 	depends on BT_BNEP
 	help
 	  This option enables the protocol filter support for BNEP.
+
