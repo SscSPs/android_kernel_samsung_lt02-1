@@ -14,3 +14,4 @@ yaffs-y += yaffs_yaffs1.o
 yaffs-y += yaffs_yaffs2.o
 yaffs-y += yaffs_bitmap.o
 yaffs-y += yaffs_verify.o
+

@@ -222,3 +222,4 @@ int nandmtd2_query_block(struct yaffs_dev *dev, int block_no,
 	else
 		return YAFFS_FAIL;
 }
+
