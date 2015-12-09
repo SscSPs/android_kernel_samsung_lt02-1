@@ -364,7 +364,7 @@ void panic(const char *fmt, ...)
 	/* For Better Debugging */
 	printk(KERN_EMERG "%s\n", linux_banner);
 	print_board_revision();
-
+	
 	printk(KERN_EMERG "Kernel panic - not syncing: %s\n",buf);
 
 	__raw_writel(0x1f80000, 0xfe282cd0);
@@ -475,7 +475,7 @@ void panic(const char *fmt, ...)
 		 * rebooting the system it will be rebooted.
 		 */
 
-		/* L1 & L2 Cache Flush */
+	 	/* L1 & L2 Cache Flush */
 		flush_cache_all();
 		outer_flush_all();
 		emergency_restart();
