@@ -1087,7 +1087,7 @@ woal_inform_bss_from_scan_result(moal_private * priv,
 #endif
 #endif
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 39)
-			/** Andorid's Location service is expecting timestamp
+			/** Andorid's Location service is expecting timestamp 
 			 * to be local time (in microsecond) since boot;
 			 * and not the TSF found in the beacon. */
 			get_monotonic_boottime(&tstamp);
@@ -2132,8 +2132,8 @@ woal_cfg80211_scan(struct wiphy *wiphy, struct net_device *dev,
 	     i++) {
 		chan = priv->scan_request->channels[i];
 #ifdef FIRST_SCAN_2G_ONLY
-		if (!priv->phandle->first_scan_done &&
-		    priv->bss_type != MLAN_BSS_TYPE_WIFIDIRECT &&
+		if (!priv->phandle->first_scan_done && 
+		    priv->bss_type != MLAN_BSS_TYPE_WIFIDIRECT && 
 		    chan->band != IEEE80211_BAND_2GHZ)
 			break;
 #endif

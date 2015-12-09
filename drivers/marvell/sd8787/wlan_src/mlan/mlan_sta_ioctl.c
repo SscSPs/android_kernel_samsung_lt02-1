@@ -5403,7 +5403,7 @@ wlan_find_bss(mlan_private * pmpriv, pmlan_ioctl_req pioctl_req)
 /**
  *  @brief MLAN station ioctl handler
  *
- *  @param adapter	A pointer to mlan_adapter structure
+ *  @param adapter 	A pointer to mlan_adapter structure
  *  @param pioctl_req	A pointer to ioctl request buffer
  *
  *  @return		MLAN_STATUS_SUCCESS/MLAN_STATUS_PENDING --success, otherwise fail

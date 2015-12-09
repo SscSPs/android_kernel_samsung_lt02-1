@@ -80,7 +80,7 @@ static bool is_icat_ready_notify(u8* pdata)
 
 /* function: gs_marvell_diag_rx
     reture value is used for TTY push filter in diag low level driver.
-
+   
 
     return value:
        1: do not need to push to TTY. (default)
@@ -155,3 +155,5 @@ MODULE_LICENSE("GPL");
 
 module_init(gs_module_init);
 module_exit(gs_module_exit);
+
+

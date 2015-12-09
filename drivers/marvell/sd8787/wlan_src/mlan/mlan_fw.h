@@ -817,7 +817,7 @@ typedef enum _WLAN_802_11_WEP_STATUS {
 #define HostCmd_CMD_802_11_SLEEP_PERIOD       0x0068
 
 /** Host Command ID: 802.11 BG scan config */
-#define HostCmd_CMD_802_11_BG_SCAN_CONFIG	  0x006b
+#define HostCmd_CMD_802_11_BG_SCAN_CONFIG  	  0x006b
 /** Host Command ID : 802.11 BG scan query */
 #define HostCmd_CMD_802_11_BG_SCAN_QUERY      0x006c
 
@@ -902,7 +902,7 @@ typedef enum _WLAN_802_11_WEP_STATUS {
 /** Host Command ID: Configure Tx Buf size */
 #define HostCmd_CMD_RECONFIGURE_TX_BUFF       0x00d9
 /** Host Command ID: AMSDU Aggr Ctrl */
-#define HostCmd_CMD_AMSDU_AGGR_CTRL		  0x00df
+#define HostCmd_CMD_AMSDU_AGGR_CTRL	      	  0x00df
 
 /** Host Command ID : 802.11 TX power configuration */
 #define HostCmd_CMD_TXPWR_CFG                 0x00d1
@@ -2738,14 +2738,14 @@ typedef MLAN_PACK_START struct _HostCmd_DS_802_11_RF_TX_POWER {
 } MLAN_PACK_END HostCmd_DS_802_11_RF_TX_POWER;
 
 /** Connection type infra */
-#define CONNECTION_TYPE_INFRA	0
+#define CONNECTION_TYPE_INFRA 	0
 /** Connection type adhoc */
 #define CONNECTION_TYPE_ADHOC	1
 #ifdef WIFI_DIRECT_SUPPORT
 /** BSS Mode: WIFIDIRECT Client */
-#define BSS_MODE_WIFIDIRECT_CLIENT	0
+#define BSS_MODE_WIFIDIRECT_CLIENT 	0
 /** BSS Mode: WIFIDIRECT GO */
-#define BSS_MODE_WIFIDIRECT_GO		2
+#define BSS_MODE_WIFIDIRECT_GO     	2
 #endif
 /** HostCmd_DS_SET_BSS_MODE */
 typedef MLAN_PACK_START struct _HostCmd_DS_SET_BSS_MODE {
