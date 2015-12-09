@@ -92,12 +92,12 @@
 #define STC311x_REG_RELAX_MAX            0x17    /* Voltage relaxation max count */
 
 /*Bit mask definition*/
-#define STC311x_VMODE			 0x01	 /* Voltage mode bit mask     */
+#define STC311x_VMODE   		 0x01	 /* Voltage mode bit mask     */
 #define STC311x_ALM_ENA			 0x08	 /* Alarm enable bit mask     */
 #define STC311x_GG_RUN			 0x10	 /* Alarm enable bit mask     */
 #define STC311x_FORCE_CC		 0x20	 /* Force CC bit mask     */
 #define STC311x_FORCE_VM		 0x40	 /* Force VM bit mask     */
-#define STC311x_SOFTPOR			 0x11	 /* soft reset     */
+#define STC311x_SOFTPOR 		 0x11	 /* soft reset     */
 #define STC311x_CLR_VM_ADJ   0x02  /* Clear VM ADJ register bit mask */
 #define STC311x_CLR_CC_ADJ   0x04  /* Clear CC ADJ register bit mask */
 

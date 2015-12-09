@@ -17,19 +17,22 @@ struct stc311x_platform_data {
 	void (*power_supply_unregister)(struct power_supply *psy);
 
 	int Vmode;       /* 1=Voltage mode, 0=mixed mode */
-	int Alm_SOC;     /* SOC alm level %*/
-	int Alm_Vbat;    /* Vbat alm level mV*/
-	int CC_cnf;      /* nominal CC_cnf */
-	int VM_cnf;      /* nominal VM cnf */
-	int Cnom;        /* nominal capacity in mAh */
-	int Rsense;      /* sense resistor mOhms*/
-	int RelaxCurrent; /* current for relaxation in mA (< C/20) */
-	int Adaptive;     /* 1=Adaptive mode enabled, 0=Adaptive mode disabled */
-	int CapDerating[7];   /* capacity derating in 0.1%, for temp = 60, 40, 25, 10,   0, -10 °C,-20°C */
-	int OCVOffset[16];    /* OCV curve adjustment */
+  	int Alm_SOC;     /* SOC alm level %*/
+  	int Alm_Vbat;    /* Vbat alm level mV*/
+  	int CC_cnf;      /* nominal CC_cnf */
+  	int VM_cnf;      /* nominal VM cnf */
+  	int Cnom;        /* nominal capacity in mAh */
+  	int Rsense;      /* sense resistor mOhms*/
+  	int RelaxCurrent; /* current for relaxation in mA (< C/20) */
+  	int Adaptive;     /* 1=Adaptive mode enabled, 0=Adaptive mode disabled */
+  	int CapDerating[7];   /* capacity derating in 0.1%, for temp = 60, 40, 25, 10,   0, -10 °C,-20°C */
+  	int OCVOffset[16];    /* OCV curve adjustment */
 	int OCVOffset2[16];    /* OCV curve adjustment */
-	int (*ExternalTemperature) (void); /*External temperature fonction, return °C*/
-	int ForceExternalTemperature; /* 1=External temperature, 0=STC3115 temperature */
+  	int (*ExternalTemperature) (void); /*External temperature fonction, return °C*/
+  	int ForceExternalTemperature; /* 1=External temperature, 0=STC3115 temperature */
 };
 
 #endif
+
+
+
