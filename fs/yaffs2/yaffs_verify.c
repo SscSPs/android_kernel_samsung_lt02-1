@@ -521,7 +521,7 @@ void yaffs_verify_free_chunks(struct yaffs_dev *dev)
 
 	if (difference) {
 		yaffs_trace(YAFFS_TRACE_ALWAYS,
-		 	"Freechunks verification failure %d %d %d",
+			"Freechunks verification failure %d %d %d",
 			dev->n_free_chunks, counted, difference);
 		yaffs_free_verification_failures++;
 	}
@@ -532,4 +532,3 @@ int yaffs_verify_file_sane(struct yaffs_obj *in)
 	in = in;
 	return YAFFS_OK;
 }
-

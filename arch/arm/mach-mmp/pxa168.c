@@ -14,7 +14,6 @@
 #include <linux/io.h>
 #include <linux/clk.h>
 #include <linux/platform_device.h>
-#include <linux/platform_data/mv_usb.h>
 
 #include <asm/mach/time.h>
 #include <asm/system_misc.h>
@@ -28,7 +27,6 @@
 #include <mach/mfp.h>
 #include <linux/dma-mapping.h>
 #include <mach/pxa168.h>
-#include <mach/regs-usb.h>
 
 #include "common.h"
 #include "clock.h"
@@ -95,7 +93,7 @@ static struct clk_lookup pxa168_clkregs[] = {
 	INIT_CLKREG(&clk_gpio, "pxa-gpio", NULL),
 	INIT_CLKREG(&clk_keypad, "pxa27x-keypad", NULL),
 	INIT_CLKREG(&clk_eth, "pxa168-eth", "MFUCLK"),
-	INIT_CLKREG(&clk_usb, NULL, "PXA168-USBCLK"),
+	INIT_CLKREG(&clk_usb, "pxa168-ehci", "PXA168-USBCLK"),
 	INIT_CLKREG(&clk_rtc, "sa1100-rtc", NULL),
 };
 
@@ -186,17 +184,17 @@ struct platform_device pxa168_device_gpio = {
 struct resource pxa168_usb_host_resources[] = {
 	/* USB Host conroller register base */
 	[0] = {
-		.start	= PXA168_U2H_REGBASE + U2x_CAPREGS_OFFSET,
-		.end	= PXA168_U2H_REGBASE + USB_REG_RANGE,
+		.start	= 0xd4209000,
+		.end	= 0xd4209000 + 0x200,
 		.flags	= IORESOURCE_MEM,
-		.name	= "capregs",
+		.name	= "pxa168-usb-host",
 	},
 	/* USB PHY register base */
 	[1] = {
-		.start	= PXA168_U2H_PHYBASE,
-		.end	= PXA168_U2H_PHYBASE + USB_PHY_RANGE,
+		.start	= 0xd4206000,
+		.end	= 0xd4206000 + 0xff,
 		.flags	= IORESOURCE_MEM,
-		.name	= "phyregs",
+		.name	= "pxa168-usb-phy",
 	},
 	[2] = {
 		.start	= IRQ_PXA168_USB2,
@@ -207,7 +205,7 @@ struct resource pxa168_usb_host_resources[] = {
 
 static u64 pxa168_usb_host_dmamask = DMA_BIT_MASK(32);
 struct platform_device pxa168_device_usb_host = {
-	.name = "pxa-sph",
+	.name = "pxa168-ehci",
 	.id   = -1,
 	.dev  = {
 		.dma_mask = &pxa168_usb_host_dmamask,
@@ -218,7 +216,7 @@ struct platform_device pxa168_device_usb_host = {
 	.resource      = pxa168_usb_host_resources,
 };
 
-int __init pxa168_add_usb_host(struct mv_usb_platform_data *pdata)
+int __init pxa168_add_usb_host(struct pxa168_usb_pdata *pdata)
 {
 	pxa168_device_usb_host.dev.platform_data = pdata;
 	return platform_device_register(&pxa168_device_usb_host);

@@ -2,7 +2,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
- * 
+ *
  * Created for samsung by Vincent Wan <zswan@marvell.com>,2012/03/31
  */
 #include <linux/platform_device.h>
@@ -10,8 +10,8 @@
 
 #define CAM_DEBUG
 
-#ifdef CAM_DEBUG 
-#define Cam_Printk(msg...) printk(msg)	
+#ifdef CAM_DEBUG
+#define Cam_Printk(msg...) printk(msg)
 #else
 #define Cam_Printk(msg...)
 #endif

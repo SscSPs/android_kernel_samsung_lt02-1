@@ -2693,7 +2693,7 @@ static void run_delta_read(void *device_data)
 
 static void run_reference_read(void *device_data)
 {
-      	struct zinitix_touch_dev *info = (struct zinitix_touch_dev *)device_data;
+	struct zinitix_touch_dev *info = (struct zinitix_touch_dev *)device_data;
 	char buff[16] = {0};
 
 	set_default_result(info);
@@ -2734,7 +2734,7 @@ static void run_reference_read(void *device_data)
 	printk(" raw_min= %u, raw_max= %u", min, max);
 	sprintf(buff, "%u,%u\n", min, max);
 	set_cmd_result(info, buff, strnlen(buff, sizeof(buff)));
-    
+
 	info->cmd_state = 2;
 }
 
@@ -4003,7 +4003,7 @@ static int zinitix_touch_probe(struct i2c_client *client,
 		zinitix_printk("Failed to create device file(%s)!\n"
 			, dev_attr_touchkey_threshold.attr.name);
 
-      
+
        sec_touchkey = device_create(sec_class, NULL, 0
 		, touch_dev, "sec_touchscreen");
 

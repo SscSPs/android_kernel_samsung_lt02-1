@@ -340,7 +340,7 @@ wlan_11n_ioctl_addba_param(IN pmlan_adapter pmadapter,
  *
  *  @param priv         A pointer to mlan_priv
  *  @param tid          tid
- *  @return 	        N/A
+ *  @return	        N/A
  */
 void
 wlan_11n_delba(mlan_private * priv, int tid)
@@ -949,9 +949,9 @@ wlan_is_txbastreamptr_valid(mlan_private * priv, TxBAStreamTbl * ptxtblptr)
 
 /**
  *  @brief This function will return the pointer to a entry in BA Stream
- * 	        table which matches the ba_status requested
+ *	        table which matches the ba_status requested
  *
- *  @param priv    	    A pointer to mlan_private
+ *  @param priv		    A pointer to mlan_private
  *  @param ba_status    Current status of the BA stream
  *
  *  @return             A pointer to first entry matching status in BA stream
@@ -1646,7 +1646,7 @@ wlan_ret_reject_addba_req(IN pmlan_private pmpriv,
 /**
  * @brief Get second channel offset
  *
- * @param chan 			  channel num
+ * @param chan			  channel num
  * @return                second channel offset
  */
 t_u8
@@ -2182,7 +2182,7 @@ wlan_send_delba(mlan_private * priv, pmlan_ioctl_req pioctl_req, int tid,
 
 /**
  *  @brief This function handles the command response of
- *  		delete a block ack request
+ *		delete a block ack request
  *
  *  @param priv		A pointer to mlan_private structure
  *  @param del_ba	A pointer to command response buffer

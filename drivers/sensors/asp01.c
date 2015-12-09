@@ -922,7 +922,7 @@ static void asp01_work_func(struct work_struct *work)
 		return;
 	struct asp01_data *data
 		= container_of(work, struct asp01_data, work);
-	
+
 	disable_irq(data->pdata->irq);
 
 	if (unlikely(!data->pdata)) {

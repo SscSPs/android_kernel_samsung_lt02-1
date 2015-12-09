@@ -67,4 +67,3 @@ source "net/bluetooth_mgmt/cmtp/Kconfig"
 source "net/bluetooth_mgmt/hidp/Kconfig"
 
 source "drivers/bluetooth/Kconfig"
-

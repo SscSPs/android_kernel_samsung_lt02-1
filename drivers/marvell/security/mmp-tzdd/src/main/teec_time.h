@@ -26,4 +26,3 @@ tee_stat_t teec_reg_time_cb(void);
 void teec_unreg_time_cb(void);
 
 #endif /* __TEEC_TIME_H__ */
-

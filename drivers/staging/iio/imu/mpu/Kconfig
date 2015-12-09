@@ -21,4 +21,3 @@ config INV_IIO_MPU3050_ACCEL_SLAVE_BMA250
 	  Right now, it is only bma250. For other acceleromter device,
 	  it can be added to this menu if the proper interface is filled.
 	  There are some interface function to be defined.
-

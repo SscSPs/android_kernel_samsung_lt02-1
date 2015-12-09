@@ -1034,7 +1034,7 @@ static bool sec_bat_check_fullcharged_condition(
 	else
 		full_check_type = battery->pdata->full_check_type_2nd;
 
-	switch (full_check_type) {	
+	switch (full_check_type) {
 	case SEC_BATTERY_FULLCHARGED_CHGINT:
 		return false;
 	case SEC_BATTERY_FULLCHARGED_CHGGPIO:

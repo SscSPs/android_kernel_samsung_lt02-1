@@ -2,13 +2,13 @@
  * Linux cfg80211 driver
  *
  * Copyright (C) 1999-2012, Broadcom Corporation
- * 
+ *
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
  * under the terms of the GNU General Public License version 2 (the "GPL"),
  * available at http://www.broadcom.com/licenses/GPLv2.php, with the
  * following added to such license:
- * 
+ *
  *      As a special exception, the copyright holders of this software give you
  * permission to link this software with independent modules, and to copy and
  * distribute the resulting executable under terms of your choice, provided that
@@ -16,7 +16,7 @@
  * the license of that module.  An independent module is a module which is not
  * derived from this software.  The special exception does not apply to any
  * modifications of the software.
- * 
+ *
  *      Notwithstanding the above, under no circumstances may you combine this
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
@@ -70,7 +70,7 @@ u32 wl_dbg_level = WL_DBG_ERR;
 
 #ifdef VSDB
 /* sleep time to keep STA's connecting or connection for continuous af tx or finding a peer */
-#define DEFAULT_SLEEP_TIME_VSDB 	200
+#define DEFAULT_SLEEP_TIME_VSDB		200
 #define OFF_CHAN_TIME_THRESHOLD_MS	200
 
 /* if sta is connected or connecting, sleep for a while before retry af tx or finding a peer */
@@ -414,7 +414,7 @@ int dhd_start_xmit(struct sk_buff *skb, struct net_device *net);
 
 #define CHECK_SYS_UP(wlpriv)						\
 do {									\
-	struct net_device *ndev = wl_to_prmry_ndev(wlpriv);       	\
+	struct net_device *ndev = wl_to_prmry_ndev(wlpriv);		\
 	if (unlikely(!wl_get_drv_status(wlpriv, READY, ndev))) {	\
 		WL_INFO(("device is not ready\n"));			\
 		return -EIO;						\
@@ -422,8 +422,8 @@ do {									\
 } while (0)
 
 
-#define IS_WPA_AKM(akm) ((akm) == RSN_AKM_NONE || 			\
-				 (akm) == RSN_AKM_UNSPECIFIED || 	\
+#define IS_WPA_AKM(akm) ((akm) == RSN_AKM_NONE ||			\
+				 (akm) == RSN_AKM_UNSPECIFIED ||	\
 				 (akm) == RSN_AKM_PSK)
 
 
@@ -8219,7 +8219,7 @@ s32 wl_cfg80211_attach(struct net_device *ndev, void *data)
 #if defined(COEX_DHCP)
 	if (wl_cfg80211_btcoex_init(wl))
 		goto cfg80211_attach_out;
-#endif 
+#endif
 
 	wlcfg_drv_priv = wl;
 
@@ -8248,7 +8248,7 @@ void wl_cfg80211_detach(void *para)
 
 #if defined(COEX_DHCP)
 	wl_cfg80211_btcoex_deinit(wl);
-#endif 
+#endif
 
 	wl_setup_rfkill(wl, FALSE);
 	if (wl->p2p_supported) {

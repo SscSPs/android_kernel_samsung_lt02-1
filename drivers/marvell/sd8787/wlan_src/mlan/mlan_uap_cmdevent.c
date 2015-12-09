@@ -272,7 +272,7 @@ wlan_uap_cmd_802_11_hs_cfg(IN pmlan_private pmpriv,
  *  @brief This function prepares command of Tx data pause
  *
  *  @param pmpriv		A pointer to mlan_private structure
- *  @param cmd	   		A pointer to HostCmd_DS_COMMAND structure
+ *  @param cmd			A pointer to HostCmd_DS_COMMAND structure
  *  @param cmd_action   the action: GET or SET
  *  @param pdata_buf    A pointer to data buffer
  *  @return         MLAN_STATUS_SUCCESS

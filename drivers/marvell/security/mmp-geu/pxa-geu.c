@@ -759,7 +759,7 @@ static long pxa_geu_ioctl(struct file *file, u_int cmd, u_long arg)
 				 || !access_ok(VERIFY_WRITE, geu_arg.arg1, geu_arg.arg2)) {
 				return -EFAULT;
 			}
-			ret = GEU_AES_process((unsigned char *)geu_arg.arg0, 
+			ret = GEU_AES_process((unsigned char *)geu_arg.arg0,
 									(unsigned char *)geu_arg.arg1, geu_arg.arg2);
 		}
 		break;
@@ -877,7 +877,7 @@ static int __init pxa_geu_init(void)
 		printk("GEU get clock fail\n");
 		return -EBUSY;
 	}
-	dma_buf_base = dma_alloc_coherent(NULL, GEU_DMA_SIZE, 
+	dma_buf_base = dma_alloc_coherent(NULL, GEU_DMA_SIZE,
 									(dma_addr_t *)&dma_phy_base, GFP_KERNEL);
 	if (dma_buf_base == NULL) {
 		printk("GEU: failed to allocate DMA memory\n");

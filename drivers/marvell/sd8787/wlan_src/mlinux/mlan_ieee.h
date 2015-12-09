@@ -323,7 +323,7 @@ typedef t_u8 WLAN_802_11_RATES[WLAN_SUPPORTED_RATES];
 /** AKM: 8021x */
 #define RSN_AKM_8021X		1
 /** AKM: PSK */
-#define RSN_AKM_PSK     	2
+#define RSN_AKM_PSK		2
 /** AKM: PSK SHA256 */
 #define RSN_AKM_PSK_SHA256	6
 #if defined(STA_SUPPORT)

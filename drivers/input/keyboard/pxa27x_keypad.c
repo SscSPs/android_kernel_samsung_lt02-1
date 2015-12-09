@@ -36,7 +36,7 @@
 #include <mach/hardware.h>
 #include <plat/pxa27x_keypad.h>
 #include <mach/gpio-edge.h>
-#include <plat/mfp.h> 
+#include <plat/mfp.h>
 
 #ifdef CONFIG_FAKE_SYSTEMOFF
 #include <linux/power/fake-sysoff.h>
@@ -109,7 +109,7 @@
 #define MAX_KEYPAD_KEYS		(MAX_MATRIX_KEY_NUM + MAX_DIRECT_KEY_NUM)
 
 #ifdef CONFIG_KERNEL_DEBUG_SEC
-int is_volumeUp_pressed;	
+int is_volumeUp_pressed;
 #endif
 extern struct class *sec_class;
 static int is_key_pressed;
@@ -267,12 +267,12 @@ scan:
 			input_report_key(input_dev, keypad->keycodes[code],
 					 new_state[col] & (1 << row));
 #ifdef CONFIG_KERNEL_DEBUG_SEC
- 			 if (keypad->keycodes[code] == KEY_VOLUMEUP)
-  			{
+			 if (keypad->keycodes[code] == KEY_VOLUMEUP)
+			{
 				is_volumeUp_pressed = new_state[col] & (1<<row);
 //				printk("%s is_volumeUp_pressed( %d ) \n",__func__,is_volumeUp_pressed);
-  			}
-#endif 			
+			}
+#endif
 		}
 	}
 	input_sync(input_dev);
@@ -366,7 +366,7 @@ static void pxa27x_keypad_scan_direct(struct pxa27x_keypad *keypad)
 		new_state = ~KPDK_DK(kpdk) & keypad->direct_key_mask;
 	else
 		new_state = KPDK_DK(kpdk) & keypad->direct_key_mask;
-	
+
 	bits_changed = keypad->direct_key_state ^ new_state;
 //	printk("kpdk=%x, KPDK_DK(kpdk) = %x, keypad->direct_key_mask is %x  keypad->direct_key_state is  %x\n",kpdk, KPDK_DK(kpdk),keypad->direct_key_mask,keypad->direct_key_state);
 #ifdef CONFIG_KERNEL_DEBUG_SEC
@@ -374,7 +374,7 @@ static void pxa27x_keypad_scan_direct(struct pxa27x_keypad *keypad)
 	{
 		if(sec_debug_mode_get()== 0x494d)
 		{
-			printk("%s, kernel panic!!!!!!!!!!!!!!!!!!!!!!!!!!\n", __func__);  
+			printk("%s, kernel panic!!!!!!!!!!!!!!!!!!!!!!!!!!\n", __func__);
 			panic("__forced_upload");
 		}
 	}
@@ -627,8 +627,8 @@ static ssize_t keys_read(struct device *dev, struct device_attribute *attr, char
 	int count;
 
 //	printk("is_key_pressed = %d\n",is_key_pressed);
-	if((is_key_pressed != 0) && is_key_pressed != 16) 
-	{	
+	if((is_key_pressed != 0) && is_key_pressed != 16)
+	{
 		count = sprintf(buf,"%s\n","PRESS");
 	}
 	else
@@ -742,7 +742,7 @@ static int __devinit pxa27x_keypad_probe(struct platform_device *pdev)
 			c = kzalloc(sizeof(struct gpio_edge_desc), GFP_KERNEL);
 			c->mfp = pdata->direct_wakeup_pad[i];
 			c->handler = trigger_keypad_wakeup;
-			c->type = MFP_LPM_EDGE_BOTH; 
+			c->type = MFP_LPM_EDGE_BOTH;
 			keypad->gpio_wakeup[i] = c;
 		}
 	}
@@ -759,9 +759,9 @@ static int __devinit pxa27x_keypad_probe(struct platform_device *pdev)
 	}
 #if 1
 	{struct device *dev_t;
-	
+
 	dev_t = device_create(sec_class, NULL, 0, "%s", "sec_key");
-	
+
 	if(device_create_file(dev_t, &dev_attr_sec_key_pressed) < 0)
 		 printk("Failed to create device file(%s)!\n", dev_attr_sec_key_pressed.attr.name);
 	}

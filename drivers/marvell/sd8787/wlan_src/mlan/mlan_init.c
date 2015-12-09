@@ -1089,7 +1089,7 @@ wlan_free_priv(mlan_private * pmpriv)
  *  @param pmadapter	A pointer to mlan_adapter structure
  *
  *  @return		MLAN_STATUS_SUCCESS
- *                      	The firmware initialization callback succeeded.
+ *				The firmware initialization callback succeeded.
  */
 mlan_status
 wlan_init_fw_complete(IN pmlan_adapter pmadapter)

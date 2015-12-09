@@ -329,7 +329,7 @@ done:
 /**
  *  @brief Aggregate multiple packets into one single AMSDU packet
  *
- *  @param priv 	A pointer to mlan_private structure
+ *  @param priv		A pointer to mlan_private structure
  *  @param pra_list	Pointer to the RA List table containing the pointers
  *                  to packets.
  *  @param headroom	Any interface specific headroom that may be need. TxPD

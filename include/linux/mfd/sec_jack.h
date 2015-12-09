@@ -48,13 +48,12 @@ struct sec_jack_platform_data {
 	int headset_flag;
 	void (*mic_set_power)(int on);
 
-	struct 	sec_jack_zone	*zones;
-	struct 	sec_jack_buttons_zone	*buttons_zones;
+	struct	sec_jack_zone	*zones;
+	struct	sec_jack_buttons_zone	*buttons_zones;
 	int	num_zones;
 	int	num_buttons_zones;
 
-	int 	press_release_th;
+	int	press_release_th;
 };
 
 #endif
-

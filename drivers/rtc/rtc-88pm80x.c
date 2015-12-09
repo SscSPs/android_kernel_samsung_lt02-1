@@ -140,7 +140,7 @@ static int pm80x_rtc_read_time(struct device *dev, struct rtc_time *tm)
 	unsigned long ticks, base, data;
 
 printk("pm80x_rtc_read_time\n");
-	
+
 	regmap_raw_read(info->map, PM800_USER_DATA2, buf, 4);
 	base = (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
 	dev_dbg(info->dev, "%x-%x-%x-%x\n", buf[0], buf[1], buf[2], buf[3]);
@@ -295,7 +295,7 @@ static int __devinit pm80x_rtc_probe(struct platform_device *pdev)
 	unsigned long ticks = 0;
 	int irq, ret;
 	unsigned long now_ticks = 0, default_ticks = 0;
-	struct rtc_time default_time; 
+	struct rtc_time default_time;
 
 	pdata = pdev->dev.platform_data;
 	if (pdata == NULL)
@@ -339,7 +339,7 @@ static int __devinit pm80x_rtc_probe(struct platform_device *pdev)
 	default_time.tm_min = 0;
 	default_time.tm_sec = 0;
 	rtc_tm_to_time(&default_time, &default_ticks);
-	
+
 	if((tm.tm_year < 70) || (tm.tm_year > 138) || (now_ticks <= default_ticks)) {
 		printk("%s now : %ld default : %ld\n", __func__, now_ticks, default_ticks);
 		tm.tm_year = 112;
@@ -354,7 +354,7 @@ static int __devinit pm80x_rtc_probe(struct platform_device *pdev)
 			goto out;
 		}
 	}
-#else	
+#else
 	if ((tm.tm_year < 70) || (tm.tm_year > 138)) {
 		tm.tm_year = 70;
 		tm.tm_mon = 0;

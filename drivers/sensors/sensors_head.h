@@ -27,4 +27,3 @@ int sensors_register(struct device **dev,
 void sensors_unregister(struct device *dev,
 	struct device_attribute *attributes[]);
 #endif
-

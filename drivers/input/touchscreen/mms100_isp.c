@@ -9,12 +9,12 @@
 #include <linux/input/mms136_ts.h>
 //#include "ARUBA_G1F_CORE53_R30_V07.c"
 
-#define GPIO_TOUCH_INT  		TSP_INT//27
-#define GPIO_TSP_SCL    		TSP_SCL//35
-#define GPIO_TSP_SDA      		TSP_SDA//40
+#define GPIO_TOUCH_INT			TSP_INT//27
+#define GPIO_TSP_SCL			TSP_SCL//35
+#define GPIO_TSP_SDA			TSP_SDA//40
 
 
-#define DIR_OUT(a,b) 	gpio_direction_output(a,b)
+#define DIR_OUT(a,b)	gpio_direction_output(a,b)
 #define DIR_IN(a)		gpio_direction_input(a)
 
 enum {
@@ -265,7 +265,7 @@ static int fw_download(const u8 *data, size_t len)
 	u32 val;
 	int ret = 0;
 	int i;
-	int addr = ISP_CAL_INFO_ADDR; 
+	int addr = ISP_CAL_INFO_ADDR;
 	u32 *buf = kzalloc(ISP_CAL_DATA_SIZE * 4, GFP_KERNEL);
 	struct i2c_adapter *adapter = to_i2c_adapter(mms_client->dev.parent);
 
@@ -368,9 +368,9 @@ int mms_flash_fw(struct i2c_client *client)
 //	ret += request_firmware(&(fw_mbin[0]),"tsp_melfas/aruba_duos/BOOT.fw", &_client->dev);
 
 
-	ret = request_firmware(&fw, fw_name, &client->dev); 
+	ret = request_firmware(&fw, fw_name, &client->dev);
 	if (ret) {
-		//dev_err(&client->dev, "error requesting firmware\n");		
+		//dev_err(&client->dev, "error requesting firmware\n");
 		printk(KERN_ERR "[TSP] %s ( %d)\n", __func__, __LINE__);
 		goto out;
 	}
@@ -385,7 +385,7 @@ out:
 
 	return ret;
 }
-#ifdef CONFIG_MACH_ARUBA_TD	
+#ifdef CONFIG_MACH_ARUBA_TD
 int mms_flash_fw2(struct i2c_client *client,const char* fw_name)
 {
 	int ret;
@@ -397,9 +397,9 @@ int mms_flash_fw2(struct i2c_client *client,const char* fw_name)
 
 
 #if 1
-	ret = request_firmware(&fw, fw_name, &client->dev); 
+	ret = request_firmware(&fw, fw_name, &client->dev);
 	if (ret) {
-		//dev_err(&client->dev, "error requesting firmware\n");		
+		//dev_err(&client->dev, "error requesting firmware\n");
 		printk(KERN_ERR "[TSP] %s ( %d)\n", __func__, __LINE__);
 		goto out;
 	}
@@ -411,11 +411,10 @@ int mms_flash_fw2(struct i2c_client *client,const char* fw_name)
 out:
 //	kfree(info);
 	release_firmware(fw);
-#endif 
+#endif
 
 //	ret = fw_download(MELFAS_binary, 31744);
 
 	return ret;
 }
 #endif
-

@@ -65,7 +65,7 @@ extern int hw_test;
  *  @param flag     The type of the buffer to be allocated
  *  @param ppbuf    Pointer to a buffer location to store buffer pointer allocated
  *
- *  @return    	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
+ *  @return	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
 mlan_status
 moal_malloc(IN t_void * pmoal_handle,
@@ -117,7 +117,7 @@ moal_mfree(IN t_void * pmoal_handle, IN t_u8 * pbuf)
  *  @param size     The size of the buffer to be allocated
  *  @param ppbuf    Pointer to a buffer location to store buffer pointer allocated
  *
- *  @return    	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
+ *  @return	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
 mlan_status
 moal_vmalloc(IN t_void * pmoal_handle, IN t_u32 size, OUT t_u8 ** ppbuf)
@@ -141,7 +141,7 @@ moal_vmalloc(IN t_void * pmoal_handle, IN t_u32 size, OUT t_u8 ** ppbuf)
  *  @param pmoal_handle Pointer to the MOAL context
  *  @param pbuf     Pointer to the buffer to be freed
  *
- *  @return    	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
+ *  @return	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
 mlan_status
 moal_vfree(IN t_void * pmoal_handle, IN t_u8 * pbuf)
@@ -163,7 +163,7 @@ moal_vfree(IN t_void * pmoal_handle, IN t_u8 * pbuf)
  *  @param byte     A constant byte
  *  @param num      Number of bytes to fill
  *
- *  @return    	    Pointer to the memory area
+ *  @return	    Pointer to the memory area
  */
 t_void *
 moal_memset(IN t_void * pmoal_handle,
@@ -207,7 +207,7 @@ moal_memcpy(IN t_void * pmoal_handle,
  *  @param psrc     Pointer to the src memory
  *  @param num      Number of bytes to move
  *
- *  @return    	    Pointer to the dest memory
+ *  @return	    Pointer to the dest memory
  */
 t_void *
 moal_memmove(IN t_void * pmoal_handle,
@@ -248,7 +248,7 @@ moal_memcmp(IN t_void * pmoal_handle,
  *  @param pmoal_handle Pointer to the MOAL context
  *  @param delay  delay in micro-second
  *
- *  @return    	  N/A
+ *  @return	  N/A
  */
 t_void
 moal_udelay(IN t_void * pmoal_handle, IN t_u32 delay)

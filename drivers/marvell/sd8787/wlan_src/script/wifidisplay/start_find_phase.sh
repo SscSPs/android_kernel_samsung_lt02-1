@@ -27,4 +27,3 @@ iwpriv wfd0 bssrole 0
 #enable wifi-display
 ./wifidirectutl wfd0 wifidisplay_mode 1
 ./wifidirectutl wfd0 wifidisplay_config config/wifidisplay.conf
-

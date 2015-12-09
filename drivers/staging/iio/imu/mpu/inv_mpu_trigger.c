@@ -94,4 +94,3 @@ void inv_mpu_remove_trigger(struct iio_dev *indio_dev)
 /**
  *  @}
  */
-

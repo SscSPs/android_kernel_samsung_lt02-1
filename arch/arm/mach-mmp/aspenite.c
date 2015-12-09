@@ -17,7 +17,6 @@
 #include <linux/mtd/partitions.h>
 #include <linux/mtd/nand.h>
 #include <linux/interrupt.h>
-#include <linux/platform_data/mv_usb.h>
 
 #include <asm/mach-types.h>
 #include <asm/mach/arch.h>
@@ -167,8 +166,8 @@ static struct mtd_partition aspenite_nand_partitions[] = {
 };
 
 static struct pxa3xx_nand_platform_data aspenite_nand_info = {
-	.attr		= ARBI_EN | NAKED_CMD,
-	.num_cs		= 1,
+	.enable_arbiter	= 1,
+	.num_cs = 1,
 	.parts[0]	= aspenite_nand_partitions,
 	.nr_parts[0]	= ARRAY_SIZE(aspenite_nand_partitions),
 };
@@ -222,21 +221,6 @@ static struct pxa27x_keypad_platform_data aspenite_keypad_info __initdata = {
 	.debounce_interval	= 30,
 };
 
-#if defined(CONFIG_USB_EHCI_MV)
-static char *pxa168_sph_clock_name[] = {
-	[0] = "PXA168-USBCLK",
-};
-
-static struct mv_usb_platform_data pxa168_sph_pdata = {
-	.clknum         = 1,
-	.clkname        = pxa168_sph_clock_name,
-	.mode           = MV_USB_MODE_HOST,
-	.phy_init	= pxa_usb_phy_init,
-	.phy_deinit	= pxa_usb_phy_deinit,
-	.set_vbus	= NULL,
-};
-#endif
-
 static void __init common_init(void)
 {
 	mfp_config(ARRAY_AND_SIZE(common_pin_config));
@@ -252,10 +236,6 @@ static void __init common_init(void)
 
 	/* off-chip devices */
 	platform_device_register(&smc91x_device);
-
-#if defined(CONFIG_USB_EHCI_MV)
-	pxa168_add_usb_host(&pxa168_sph_pdata);
-#endif
 }
 
 MACHINE_START(ASPENITE, "PXA168-based Aspenite Development Platform")

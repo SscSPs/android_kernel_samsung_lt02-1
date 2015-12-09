@@ -435,7 +435,7 @@ static u8 power_on_reason = 0;
 
 unsigned char pm80x_get_power_on_reason(void)
 {
-	return power_on_reason;	
+	return power_on_reason;
 }
 #endif
 unsigned char pmic_chip_id = 0;
@@ -868,10 +868,10 @@ static int __devinit device_800_init(struct pm80x_chip *chip,
 		ret = PMIC_GENERAL_USE_BOOT_BY_ONKEY;
 		printk("%s charger not detected %d\n", __func__, ret);
 	}
-#endif	
+#endif
 	/* read power on reason from PMIC general use register */
 	regmap_write(chip->regmap, PM800_USER_DATA3, PMIC_GENERAL_USE_BOOT_BY_HW_RESET);
-	power_on_reason	= (u8)val; 
+	power_on_reason	= (u8)val;
 #endif
 
 	/*

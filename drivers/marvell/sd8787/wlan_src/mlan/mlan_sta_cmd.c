@@ -1949,7 +1949,7 @@ wlan_ops_sta_prepare_cmd(IN t_void * priv,
 /**
  *  @brief  This function issues commands to initialize firmware
  *
- *  @param priv     	A pointer to mlan_private structure
+ *  @param priv		A pointer to mlan_private structure
  *  @param first_bss	flag for first BSS
  *
  *  @return		MLAN_STATUS_PENDING or MLAN_STATUS_FAILURE

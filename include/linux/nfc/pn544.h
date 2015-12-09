@@ -180,4 +180,3 @@ struct pn544_nfc_platform_data {
 
 
 #endif /* _PN544_H_ */
-

@@ -292,4 +292,3 @@ int set_power_mpu3050(struct inv_mpu_iio_s *st, bool power_on)
 /**
  *  @}
  */
-

@@ -310,7 +310,3 @@ EXPORT_SYMBOL(gRcvdCpPkt);
 EXPORT_SYMBOL(gRcvdCpLongPkt);
 EXPORT_SYMBOL(gUsbSentCpPkt);
 EXPORT_SYMBOL(gUsbSentCpPktError);
-
-
-
-

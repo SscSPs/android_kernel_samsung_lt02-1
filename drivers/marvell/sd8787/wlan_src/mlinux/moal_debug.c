@@ -428,10 +428,10 @@ static struct debug_data uap_items[] = {
 /**
  *  @brief Proc read function
  *
- *  @param sfp 	   pointer to seq_file structure
+ *  @param sfp	   pointer to seq_file structure
  *  @param data
  *
- *  @return 	   Number of output data or MLAN_STATUS_FAILURE
+ *  @return	   Number of output data or MLAN_STATUS_FAILURE
  */
 static int
 woal_debug_read(struct seq_file *sfp, void *data)
@@ -572,7 +572,7 @@ exit:
  *  @param count   data number to write
  *  @param off     Offset
  *
- *  @return 	   number of data
+ *  @return	   number of data
  */
 static ssize_t
 woal_debug_write(struct file *f, const char __user * buf, size_t count,
@@ -695,7 +695,7 @@ static const struct file_operations debug_proc_fops = {
  *
  *  @param priv	   A pointer to a moal_private structure
  *
- *  @return 	   N/A
+ *  @return	   N/A
  */
 void
 woal_debug_entry(moal_private * priv)
@@ -775,7 +775,7 @@ woal_debug_entry(moal_private * priv)
  *
  *  @param priv	 A pointer to a moal_private structure
  *
- *  @return 	 N/A
+ *  @return	 N/A
  */
 void
 woal_debug_remove(moal_private * priv)

@@ -500,7 +500,7 @@ static void l2cap_chan_del(struct l2cap_chan *chan, int err)
 				prev_rfc_conn[1] = NULL;
 			}
 #endif
-			
+
 			rfc_conn = NULL;
 			break;
 		case 0x11:
@@ -811,7 +811,7 @@ static void l2cap_do_start(struct l2cap_chan *chan)
 		if (!(conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_DONE))
 			return;
 
- 		if (l2cap_check_security(chan) && __l2cap_no_conn_pending(chan))
+		if (l2cap_check_security(chan) && __l2cap_no_conn_pending(chan))
 			l2cap_send_conn_req(chan);
 	} else {
 		struct l2cap_info_req req;
@@ -2554,7 +2554,7 @@ static inline int l2cap_connect_req(struct l2cap_conn *conn, struct l2cap_cmd_hd
 
                 memcpy(&conn->p_req->cmd, cmd, sizeof(*cmd));
                 memcpy(&conn->p_req->conn_req, req, sizeof(*req));
-        
+
                 mod_timer(&conn->encrypt_timer, jiffies +
                     msecs_to_jiffies(ENCRYPT_TIMEOUT));
 

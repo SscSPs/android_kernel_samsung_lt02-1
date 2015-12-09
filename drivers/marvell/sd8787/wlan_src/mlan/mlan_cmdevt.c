@@ -2984,7 +2984,7 @@ wlan_ret_tx_rate_cfg(IN pmlan_private pmpriv,
 
 /**
  *  @brief  This function issues adapter specific commands
- *  		to initialize firmware
+ *		to initialize firmware
  *
  *  @param pmadapter    A pointer to mlan_adapter structure
  *

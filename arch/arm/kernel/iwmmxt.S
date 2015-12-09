@@ -203,4 +203,4 @@ ENTRY(iwmmxt_save_state)
 	wstrd	wR14, [r0, #MMX_WR14]
 	wstrd	wR15, [r0, #MMX_WR15]
 
- 	mov	pc, lr
+	mov	pc, lr

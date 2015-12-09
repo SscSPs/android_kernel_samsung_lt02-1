@@ -236,4 +236,3 @@ module_exit(gpio_event_exit);
 
 MODULE_DESCRIPTION("GPIO Event Driver");
 MODULE_LICENSE("GPL");
-

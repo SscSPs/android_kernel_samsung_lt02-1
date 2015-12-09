@@ -215,7 +215,7 @@ done:
  * @param priv             Pointer to the mlan_private driver data struct
  * @param queue_priority   Queue_priority structure
  *
- * @return 	   N/A
+ * @return	   N/A
  */
 static void
 wlan_wmm_queue_priorities_tid(pmlan_private priv, t_u8 queue_priority[])
@@ -317,7 +317,7 @@ wlan_wmm_convert_tos_to_ac(pmlan_adapter pmadapter, t_u32 tos)
  *  @brief  Evaluate a given TID and downgrade it to a lower TID if the
  *          WMM Parameter IE received from the AP indicates that the AP
  *          is disabled (due to call admission control (ACM bit). Mapping
- * 	        of TID to AC is taken care internally
+ *	        of TID to AC is taken care internally
  *
  *  @param priv		Pointer to the mlan_private data struct
  *  @param tid      tid to evaluate for downgrading

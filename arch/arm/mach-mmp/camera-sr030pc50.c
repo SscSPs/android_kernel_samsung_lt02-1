@@ -2,7 +2,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
- * 
+ *
  * Created for samsung by Vincent Wan <zswan@marvell.com>,2012/03/31
  */
 #include <linux/init.h>
@@ -129,50 +129,50 @@ static int sr030_power(struct device *dev, int flag)
 	if (flag) {
 		Cam_Printk("---camera power ON -----the (1) step-----camera: io/ana/core ON-----------\n");
 		/*lyh: need to pull down the gpio14/gpio15 in boot*/
-		gpio_direction_output(vt_cam_reset, 0);	
-		gpio_direction_output(vt_cam_stby, 0);	
+		gpio_direction_output(vt_cam_reset, 0);
+		gpio_direction_output(vt_cam_stby, 0);
 
 		regulator_set_voltage(vcamera_io, 1800000, 1800000);
 		regulator_enable(vcamera_io);
 
 		regulator_set_voltage(vcamera_analog, 2800000, 2800000);
 		regulator_enable(vcamera_analog);
-		
+
 		regulator_set_voltage(vcamera_core, 1800000, 1800000);
 		regulator_enable(vcamera_core);
 
 
-		msleep(4);		
+		msleep(4);
 		Cam_Printk("---camera power ON -----the (2) step-----camera:  delay 4ms,  set sensor mclk = 24 MHz-----------\n");
 		sr030_cam_mclk_en.enable_clk(sr030_cam_mclk_en.pcdev);
 
-		
-		msleep(4);	
+
+		msleep(4);
 		Cam_Printk("---camera power ON -----the (3) step-----camera:  delay 4ms to stable PLL, standby ON-----------\n");
 		gpio_direction_output(vt_cam_stby, 1);	/* enable */
 
 
-		Cam_Printk(" ---camera power ON -----the (4) step-----camera: reset ON-----------\n");		
+		Cam_Printk(" ---camera power ON -----the (4) step-----camera: reset ON-----------\n");
 		msleep(30);
 		gpio_direction_output(vt_cam_reset, 1);	/* enable */
-		
+
 		/*lyh: TODO, maybe don't need to reset i2c for sr030*/
 		/*for s5k power off maybe pull down the i2c data pin, so we have to reset i2c controller */
 		sr030_cam_mclk_en.i2c_pxa_reset(sr030_cam_mclk_en.i2c);
-		
+
 	}else {
 
-		Cam_Printk("---camera power OFF -----the (1) step-----camera: reset OFF-----------\n");	
+		Cam_Printk("---camera power OFF -----the (1) step-----camera: reset OFF-----------\n");
 		gpio_direction_output(vt_cam_reset, 0);	/* disable */
 
 		// mipi disable
-		Cam_Printk("---camera power OFF -----the (2) step-----camera: disable sensor mclk-----------\n");	
+		Cam_Printk("---camera power OFF -----the (2) step-----camera: disable sensor mclk-----------\n");
 		sr030_cam_mclk_en.disable_clk(sr030_cam_mclk_en.pcdev);
-		
-		Cam_Printk("---camera power OFF -----the (3) step-----camera: standby OFF-----------\n");	
+
+		Cam_Printk("---camera power OFF -----the (3) step-----camera: standby OFF-----------\n");
 		gpio_direction_output(vt_cam_stby, 0);	/* disable */
 
-		Cam_Printk("---camera power OFF -----the (4) step-----camera: LDO OFF-----------\n");	
+		Cam_Printk("---camera power OFF -----the (4) step-----camera: LDO OFF-----------\n");
 		regulator_disable(vcamera_core);
 		regulator_disable(vcamera_analog);
 		regulator_disable(vcamera_io);
@@ -234,7 +234,7 @@ void __init register_camera_device(void)
 		vt_cam_reset = 0;
 		return;
 	}
-	
+
 	platform_device_register(&camera[ID_SR030PC50]);
 
 	pxa988_add_cam(&mv_cam_data_forssg);

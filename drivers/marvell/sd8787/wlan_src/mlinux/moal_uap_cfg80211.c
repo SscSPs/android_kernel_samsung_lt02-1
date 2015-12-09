@@ -802,7 +802,7 @@ woal_virt_if_setup(struct net_device *dev)
 
 /**
  * @brief This function adds a new interface. It will
- * 		allocate, initialize and register the device.
+ *		allocate, initialize and register the device.
  *
  *  @param handle    A pointer to moal_handle structure
  *  @param bss_index BSS index number

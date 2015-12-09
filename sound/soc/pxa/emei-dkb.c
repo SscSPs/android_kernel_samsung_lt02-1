@@ -107,7 +107,7 @@ static ssize_t gssp_master_write_proc(struct file *filp,
 			pr_err("Wrong input, please echo 1 for gssp master, 0 for codec master\n");
 			break;
 	}
-	
+
 	return len;
 }
 

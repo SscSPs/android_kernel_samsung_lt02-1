@@ -169,7 +169,7 @@ Change log:
 /** Private command ID to get thermal value */
 #define WOAL_THERMAL                25
 /** Private command ID to set/get hs cfg param */
-#define WOAL_CFG_HOTSPOT          	26
+#define WOAL_CFG_HOTSPOT		26
 
 /** Private command ID to get log */
 #define WOALGETLOG                  (WOAL_IOCTL + 7)

@@ -206,4 +206,3 @@ static int __init pxa988_cpuidle_init(void)
 }
 
 module_init(pxa988_cpuidle_init);
-
