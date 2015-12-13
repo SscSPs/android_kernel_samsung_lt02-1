@@ -11,4 +11,4 @@ ifeq ($(CONFIG_CPU_PXA1L88),y)
 cploaddev-objs += pxa988_cp.o
 endif
 
-obj-m	+= cploaddev.o
+obj-$(CONFIG_MRVL_MMP_MODEM)	+= cploaddev.o

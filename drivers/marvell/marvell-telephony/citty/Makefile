@@ -1,1 +1,1 @@
-obj-m  += citty.o
+obj-$(CONFIG_MRVL_MMP_MODEM)  += citty.o

@@ -1079,7 +1079,7 @@ static int __init msocket_init(void)
 	}
 
 	/* share memory area init */
-	if ((rc = shm_init()) < 0) {
+	if ((rc = mrvl_shm_init()) < 0) {
 		return rc;
 	}
 

@@ -10,4 +10,4 @@ gs_modem-objs := \
 	../ppp/ppp_log.o \
 	../ppp/ppp_platform.o \
 	modem_if.o
-obj-m  += gs_modem.o
+obj-$(CONFIG_MRVL_MMP_MODEM)  += gs_modem.o

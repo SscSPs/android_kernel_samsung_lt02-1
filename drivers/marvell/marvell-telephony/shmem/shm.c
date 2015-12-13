@@ -232,8 +232,8 @@ static int shm_rb_exit(struct shm_rbctl *rbctl)
 	return 0;
 }
 
-/* shm_init */
-int shm_init(void)
+/* Marvell shm_init */
+int mrvl_shm_init(void)
 {
 	int ret;
 	struct shm_rbctl *rbctl;

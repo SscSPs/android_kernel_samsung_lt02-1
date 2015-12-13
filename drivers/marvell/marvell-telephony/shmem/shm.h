@@ -316,7 +316,7 @@ static inline void shm_notify_ap_tx_stopped(struct shm_rbctl *rbctl)
  * functions exported by this module
  */
 /* init & exit */
-extern int shm_init(void);
+extern int mrvl_shm_init(void);
 extern void shm_exit(void);
 extern void shm_rb_data_init(struct shm_rbctl *rbctl);
 
