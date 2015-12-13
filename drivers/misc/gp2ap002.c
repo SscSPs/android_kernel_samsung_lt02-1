@@ -30,7 +30,6 @@
 #include <linux/gp2ap002_dev.h>
 #include <linux/gp2ap002.h>
 #include <linux/regulator/consumer.h>
-#include "gp2ap002.h"
 
 #define GP2A_DEBUG 0
 #define error(fmt, arg...) printk(KERN_DEBUG "--------" fmt "\n", ##arg)

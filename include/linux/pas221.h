@@ -20,13 +20,14 @@
 #ifndef __LINUX_PAS221_H
 #define __LINUX_PAS221
 
+extern struct class *sensors_class;
 #include <linux/types.h>
 
 #ifdef __KERNEL__
 struct pas221_platform_data {
 	int (*proximity_power)(bool); /* ldo power for the proximity */
-        unsigned int irq_gpio;
-        int irq;
+	unsigned int irq_gpio;
+	int irq;
 };
 #endif /* __KERNEL__ */
 

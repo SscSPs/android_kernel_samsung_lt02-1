@@ -315,7 +315,7 @@ static const struct file_operations pn544_dev_fops = {
 	.unlocked_ioctl = pn544_dev_ioctl,
 };
 
-int pn547test=1;
+int pn547test = 1;
 
 static int pn547_nfc_test(void)
 {
@@ -325,7 +325,7 @@ static int pn547_nfc_test(void)
 	 * Check the behavior and return one on success,
 	 * zero on failure.
 	 */
-	 printk("--------pn547_nfc_test--------\n");
+	 printk(KERN_DEBUG "--------pn547_nfc_test--------\n");
 	return 1;
 }
 
@@ -333,9 +333,10 @@ static int pn547_nfc_test(void)
 static ssize_t pn547_test(struct device *dev,
 			  struct device_attribute *attr, char *buf)
 {
-	//struct pn544_info *info = dev_get_drvdata(dev);
-	//struct i2c_client *client = info->i2c_dev;
-	//struct pn544_nfc_platform_data *pdata = client->dev.platform_data;
+	/* struct pn544_info *info = dev_get_drvdata(dev);
+	 * struct i2c_client *client = info->i2c_dev;
+	 * struct pn544_nfc_platform_data *pdata = client->dev.platform_data;
+	 */
 
 	return snprintf(buf, PAGE_SIZE, "%d\n", pn547_nfc_test());
 }
@@ -391,18 +392,18 @@ static int pn544_probe(struct i2c_client *client,
 	/* init mutex and queues */
 	init_waitqueue_head(&pn544_dev->read_wq);
 	mutex_init(&pn544_dev->read_mutex);
-	
+
 	/* If we don't have the test we don't need the sysfs file */
 	int r;
-	//if (pn547test == 1) {
-		r = device_create_file(&client->dev, &pn544_attr);
-		if (r) {
-			dev_err(&client->dev,
-				"sysfs registration failed, error %d\n", r);
-			goto err_exit;
-		}
-	//}
-	
+	/*if (pn547test == 1) { */
+	r = device_create_file(&client->dev, &pn544_attr);
+	if (r) {
+		dev_err(&client->dev,
+			"sysfs registration failed, error %d\n", r);
+		goto err_exit;
+	}
+	/*}*/
+
 	pn544_dev->pn544_device.minor = MISC_DYNAMIC_MINOR;
 	pn544_dev->pn544_device.name = "pn547";
 	pn544_dev->pn544_device.fops = &pn544_dev_fops;
@@ -454,10 +455,10 @@ static int pn544_remove(struct i2c_client *client)
 	pn544_dev = i2c_get_clientdata(client);
 	free_irq(client->irq, pn544_dev);
 	misc_deregister(&pn544_dev->pn544_device);
-	
-	if (pn547test == 1) {
-		device_remove_file(&client->dev, &pn544_attr);}
-		
+
+	if (pn547test == 1)
+		device_remove_file(&client->dev, &pn544_attr);
+
 	mutex_destroy(&pn544_dev->read_mutex);
 	gpio_free(pn544_dev->irq_gpio);
 	gpio_free(pn544_dev->ven_gpio);

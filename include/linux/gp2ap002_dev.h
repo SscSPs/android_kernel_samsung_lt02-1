@@ -6,5 +6,5 @@ struct gp2ap002_platform_data {
 	unsigned int irq_gpio;
 	int irq;
 };
-	
+
 #endif
