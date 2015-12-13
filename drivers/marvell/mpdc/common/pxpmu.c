@@ -41,7 +41,6 @@ static pmu_free_irq_t pmu_free_irq_func;
 
 #ifdef PRM_SUPPORT
 #include <mach/prm.h>
-#endif
 
 #define PRM_ALLOC_RES_COUNT	6
 static char *prm_client_name = "Marvell Performance Data Collector";
@@ -59,7 +58,8 @@ static prm_resource_id prm_resource[PRM_ALLOC_RES_COUNT] = {
 #include <linux/interrupt.h>
 #include <linux/errno.h>
 
-#include <linux/pmu.h>
+/*#include <linux/pmu.h>*/
+#include <asm/pmu.h>
 
 #endif  /* PRM_SUPPORT */
 

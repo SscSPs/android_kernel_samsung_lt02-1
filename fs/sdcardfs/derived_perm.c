@@ -165,6 +165,7 @@ inline void update_derived_permission(struct dentry *dentry)
 	 * 2. remove the root dentry update
 	 */
 	if (IS_ROOT(dentry))
+		printk(KERN_DEBUG "sdcardfs: %s: unused if statement hit\n", __func__);
 		/*setup_default_pre_root_state(dentry->d_inode);*/
 	else {
 		parent = dget_parent(dentry);
