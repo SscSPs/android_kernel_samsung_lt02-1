@@ -1,4 +1,0 @@
-TODO
-	* pxpmu.c needs to be cleaned up (remove unnecessary #if statements --
-	  look for LINUX_VERSION_CODE or KERNEL_VERSION)
-	  Checkout <asm/pmu.h> -> <linux/pmu.h>

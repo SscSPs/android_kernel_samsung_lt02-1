@@ -40,10 +40,7 @@ static pmu_free_irq_t pmu_free_irq_func;
 #endif
 
 #ifdef PRM_SUPPORT
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 28))
-	#include <mach/prm.h>
-#else
-	#include <asm/arch/prm.h>
+#include <mach/prm.h>
 #endif
 
 #define PRM_ALLOC_RES_COUNT	6
@@ -62,10 +59,7 @@ static prm_resource_id prm_resource[PRM_ALLOC_RES_COUNT] = {
 #include <linux/interrupt.h>
 #include <linux/errno.h>
 
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 34))
-#include <asm/pmu.h>
-
-#endif
+#include <linux/pmu.h>
 
 #endif  /* PRM_SUPPORT */
 
@@ -79,13 +73,6 @@ static irq_set_affinity_t irq_set_affinity_func;
 
 bool raw_allocate_pmu;
 #endif
-
-/*#if !defined(LINUX_VERSION_CODE) || (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 34))*/
-/*int g_pmu_irq_num = PX_IRQ_PMU;*/
-#ifndef PRM_SUPPORT
-/*static void * pmu_dev_id = NULL; */
-#endif
-/* #endif */
 
 #ifdef PRM_SUPPORT
 static int free_pmu_prm(void)
@@ -111,7 +98,6 @@ static int raw_free_pmu_non_prm(void)
 	return 0;
 }
 
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0))
 static int new_kernel_free_pmu_non_prm(void)
 {
 	if (!IS_ERR(pmu_dev) && (pmu_dev != NULL)) {
@@ -123,30 +109,6 @@ static int new_kernel_free_pmu_non_prm(void)
 
 	return 0;
 }
-
-#else
-
-static int free_pmu_non_prm(void)
-{
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 34))
-
-	if (!IS_ERR(pmu_dev) && (pmu_dev != NULL)) {
-		int ret;
-
-		ret = release_pmu(pmu_dev);
-
-		if (ret != 0)
-			return ret;
-	}
-
-	pmu_dev = NULL;
-
-	return 0;
-#else
-	return 0;
-#endif
-}
-#endif
 #endif /* PRM_SUPPORT */
 
 /*
@@ -160,15 +122,7 @@ int free_pmu(void)
 
 /* In the new kernel version, PMU related code has been merge into perf,
  * we need implement this code and call it directly  */
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0))
 	return new_kernel_free_pmu_non_prm();
-#else
-
-	if (raw_allocate_pmu)
-		return raw_free_pmu_non_prm();
-	else
-		return free_pmu_non_prm();
-#endif
 #endif
 }
 
@@ -255,58 +209,6 @@ void change_default_pmu_irq(void)
 }
 #endif
 
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0))
-static int raw_allocate_pmu_non_prm(void)
-{
-	int i;
-	int ret;
-	struct resource *pmu_resource;
-	unsigned int pmu_resource_num;
-
-	irq_set_affinity_func = (irq_set_affinity_t)kallsyms_lookup_name_func("irq_set_affinity");
-
-	pmu_dev = platform_device_alloc("cpa-pmu", 0 /* ARM_PMU_DEVICE_CPU */);
-
-	if (pmu_dev == NULL)
-		return -ENOMEM;
-
-	/* if the PMU IRQ is defined by the user */
-#ifdef PX_PMU_IRQ_STR
-	change_default_pmu_irq();
-#endif
-	get_pmu_resource(&pmu_resource, &pmu_resource_num);
-
-	ret = platform_device_add_resources(pmu_dev, pmu_resource,
-					    pmu_resource_num);
-	if (ret != 0)
-		goto err1;
-
-	ret = platform_device_add(pmu_dev);
-	if (ret != 0)
-		goto err1;
-
-	for (i = 0; i < pmu_dev->num_resources; ++i) {
-		ret = set_irq_affinity(platform_get_irq(pmu_dev, i), i);
-
-		if (ret)
-			goto err2;
-	}
-
-	return 0;
-
-err2:
-	if (!IS_ERR(pmu_dev))
-		platform_device_del(pmu_dev);
-err1:
-	if (!IS_ERR(pmu_dev))
-		platform_device_put(pmu_dev);
-
-	pmu_dev = NULL;
-
-	return ret;
-}
-#endif
-
 static int new_kernel_allocate_pmu_non_prm(void)
 {
 	int i;
@@ -366,29 +268,6 @@ err1:
 	return ret;
 }
 
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0))
-static int allocate_pmu_non_prm(void)
-{
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 34)) && (LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0))
-	pmu_dev = reserve_pmu(ARM_PMU_DEVICE_CPU);
-	if (IS_ERR(pmu_dev) || (pmu_dev == NULL)) {
-		printk(KERN_ALERT "[CPA] warning: unable to reserve PMU: error = %ld\n", PTR_ERR(pmu_dev));
-		return -ENODEV;
-	}
-
-	init_pmu(ARM_PMU_DEVICE_CPU);
-
-	if (pmu_dev->num_resources < 1) {
-		printk(KERN_ALERT "[CPA] no irqs for PMUs defined\n");
-		return -ENODEV;
-	}
-
-	return 0;
-#else
-	return -ENODEV;
-#endif
-}
-#endif
 #endif /* PRM_SUPPORT */
 
 /*
@@ -402,26 +281,7 @@ int allocate_pmu(void)
 
 /* In the new kernel version, PMU related code has been merge into perf,
  * we need implement this code and call it directly  */
-#if defined(LINUX_VERSION_CODE) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0))
 	return new_kernel_allocate_pmu_non_prm();
-#else
-
-	int ret;
-
-	ret = allocate_pmu_non_prm();
-
-	if (ret != 0) {
-		raw_allocate_pmu = true;
-		/* It is possible that pmu device is not registered by PMU
-		 * or CONFIG_CPU_HAS_PMU is not enabled
-		 * so in such case, we need to do the things by ourselves
-		 */
-		ret = raw_allocate_pmu_non_prm();
-	} else
-		raw_allocate_pmu = false;
-
-	return ret;
-#endif
 #endif
 }
 
@@ -475,7 +335,9 @@ static int register_pmu_isr_non_prm(pmu_isr_t px_pmu_isr)
 	int err = -ENODEV;
 
 	if (IS_ERR(pmu_dev) || (pmu_dev == NULL)) {
-		/*return raw_register_pmu_isr(g_pmu_irq_num, px_pmu_isr, pmu_dev_id);*/
+		/* return raw_register_pmu_isr(g_pmu_irq_num, px_pmu_isr,
+		 *			       pmu_dev_id);
+		 */
 		return -EFAULT;
 	}
 
@@ -491,7 +353,9 @@ static int register_pmu_isr_non_prm(pmu_isr_t px_pmu_isr)
 
 	err = pmu_request_irq_func(irq, px_pmu_isr);
 
-/* Add IRQF_PERCPU to avoid PMU interrupts migrations when hotplug events happened */
+/* Add IRQF_PERCPU to avoid PMU interrupts migrations when hotplug events
+ * happened
+ */
 #elif defined(PX_SOC_PXA1088) || defined(PX_SOC_PXAEDEN)
 
 	err = request_irq(irq, px_pmu_isr,
