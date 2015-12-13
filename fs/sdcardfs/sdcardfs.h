@@ -1,17 +1,17 @@
 /*
  * fs/sdcardfs/sdcardfs.h
  *
- * The sdcardfs v2.0 
- *   This file system replaces the sdcard daemon on Android 
- *   On version 2.0, some of the daemon functions have been ported  
+ * The sdcardfs v2.0
+ *   This file system replaces the sdcard daemon on Android
+ *   On version 2.0, some of the daemon functions have been ported
  *   to support the multi-user concepts of Android 4.4
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
- *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
+ *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
- *                      
+ *
  * This program has been developed as a stackable file system based on
- * the WrapFS which written by 
+ * the WrapFS which written by
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -55,7 +55,7 @@
 
 #define SDCARDFS_DIRENT_SIZE 256
 
-/* temporary static uid settings for development */ 
+/* temporary static uid settings for development */
 #define AID_ROOT             0	/* uid for accessing /mnt/sdcard & extSdcard */
 #define AID_MEDIA_RW      1023	/* internal media storage write access */
 
@@ -74,30 +74,36 @@
 		(x)->i_mode = ((x)->i_mode & S_IFMT) | SDCARDFS_I(x)->d_mode;\
 	} while (0)
 
-/* OVERRIDE_CRED() and REVERT_CRED() 
- * 	OVERRID_CRED() 
- * 		backup original task->cred
- * 		and modifies task->cred->fsuid/fsgid to specified value.
+/* OVERRIDE_CRED() and REVERT_CRED()
+ *	OVERRID_CRED()
+ *		backup original task->cred
+ *		and modifies task->cred->fsuid/fsgid to specified value.
  *	REVERT_CRED()
- * 		restore original task->cred->fsuid/fsgid.
- * These two macro should be used in pair, and OVERRIDE_CRED() should be 
+ *		restore original task->cred->fsuid/fsgid.
+ * These two macro should be used in pair, and OVERRIDE_CRED() should be
  * placed at the beginning of a function, right after variable declaration.
  */
-#define OVERRIDE_CRED(sdcardfs_sbi, saved_cred)		\
-	saved_cred = override_fsids(sdcardfs_sbi);	\
-	if (!saved_cred) { return -ENOMEM; }
+#define OVERRIDE_CRED(sdcardfs_sbi, saved_cred) \
+	do { \
+		saved_cred = override_fsids(sdcardfs_sbi); \
+		if (!saved_cred) \
+			return -ENOMEM; \
+	} while (0)
 
-#define OVERRIDE_CRED_PTR(sdcardfs_sbi, saved_cred)	\
-	saved_cred = override_fsids(sdcardfs_sbi);	\
-	if (!saved_cred) { return ERR_PTR(-ENOMEM); }
+#define OVERRIDE_CRED_PTR(sdcardfs_sbi, saved_cred) \
+	do { \
+		saved_cred = override_fsids(sdcardfs_sbi); \
+		if (!saved_cred) \
+			return ERR_PTR(-ENOMEM); \
+	} while (0)
 
 #define REVERT_CRED(saved_cred)	revert_fsids(saved_cred)
 
 #define DEBUG_CRED()		\
-	printk("KAKJAGI: %s:%d fsuid %d fsgid %d\n", 	\
-		__FUNCTION__, __LINE__, 		\
-		(int)current->cred->fsuid, 		\
-		(int)current->cred->fsgid); 
+	printk(KERN_DEBUG "KAKJAGI: %s:%d fsuid %d fsgid %d\n",	\
+		__func__, __LINE__,			\
+		(int)current->cred->fsuid,		\
+		(int)current->cred->fsgid);
 
 /* Android 4.4 support */
 
@@ -137,9 +143,9 @@ struct sdcardfs_sb_info;
 struct sdcardfs_mount_options;
 
 /* Do not directly use this function. Use OVERRIDE_CRED() instead. */
-const struct cred * override_fsids(struct sdcardfs_sb_info* sbi);
+const struct cred *override_fsids(struct sdcardfs_sb_info *sbi);
 /* Do not directly use this function, use REVERT_CRED() instead. */
-void revert_fsids(const struct cred * old_cred);
+void revert_fsids(const struct cred *old_cred);
 
 /* operations vectors defined in specific files */
 extern const struct file_operations sdcardfs_main_fops;
@@ -179,7 +185,7 @@ struct sdcardfs_inode_info {
 	userid_t userid;
 	uid_t d_uid;
 	gid_t d_gid;
-	mode_t d_mode; 
+	mode_t d_mode;
 
 	struct inode vfs_inode;
 };
@@ -204,7 +210,7 @@ struct sdcardfs_mount_options {
 /* sdcardfs super-block data in memory */
 struct sdcardfs_sb_info {
 	struct super_block *lower_sb;
-	/* derived perm policy : some of options have been added 
+	/* derived perm policy : some of options have been added
 	 * to sdcardfs_mount_options (Android 4.4 support) */
 	struct sdcardfs_mount_options options;
 	spinlock_t lock;	/* protects obbpath */
@@ -277,7 +283,7 @@ static inline void pathcpy(struct path *dst, const struct path *src)
 }
 
 /* sdcardfs_get_pname functions calls path_get()
- * therefore, the caller must call "proper" path_put functions 
+ * therefore, the caller must call "proper" path_put functions
  */
 #define SDCARDFS_DENT_FUNC(pname) \
 static inline void sdcardfs_get_##pname(const struct dentry *dent, \
@@ -315,7 +321,7 @@ static inline void sdcardfs_put_reset_##pname(const struct dentry *dent) \
 { \
 	struct path pname; \
 	spin_lock(&SDCARDFS_D(dent)->lock); \
-	if(SDCARDFS_D(dent)->pname.dentry) { \
+	if (SDCARDFS_D(dent)->pname.dentry) { \
 		pathcpy(&pname, &SDCARDFS_D(dent)->pname); \
 		SDCARDFS_D(dent)->pname.dentry = NULL; \
 		SDCARDFS_D(dent)->pname.mnt = NULL; \
@@ -324,16 +330,16 @@ static inline void sdcardfs_put_reset_##pname(const struct dentry *dent) \
 	} else \
 		spin_unlock(&SDCARDFS_D(dent)->lock); \
 	return; \
-} 
+}
 
-SDCARDFS_DENT_FUNC(lower_path) 
-SDCARDFS_DENT_FUNC(orig_path)  
+SDCARDFS_DENT_FUNC(lower_path)
+SDCARDFS_DENT_FUNC(orig_path)
 
 static inline int has_graft_path(const struct dentry *dent)
 {
 	int ret = 0;
 
-	spin_lock(&SDCARDFS_D(dent)->lock); 
+	spin_lock(&SDCARDFS_D(dent)->lock);
 	if (SDCARDFS_D(dent)->orig_path.dentry != NULL)
 		ret = 1;
 	spin_unlock(&SDCARDFS_D(dent)->lock);
@@ -344,39 +350,42 @@ static inline int has_graft_path(const struct dentry *dent)
 static inline void sdcardfs_get_real_lower(const struct dentry *dent,
 						struct path *real_lower)
 {
-	/* in case of a local obb dentry 
-	 * the orig_path should be returned 
+	/* in case of a local obb dentry
+	 * the orig_path should be returned
 	 */
-	if(has_graft_path(dent)) 
+	if (has_graft_path(dent))
 		sdcardfs_get_orig_path(dent, real_lower);
-	else 
+	else
 		sdcardfs_get_lower_path(dent, real_lower);
 }
 
 static inline void sdcardfs_put_real_lower(const struct dentry *dent,
 						struct path *real_lower)
 {
-	if(has_graft_path(dent)) 
+	if (has_graft_path(dent))
 		sdcardfs_put_orig_path(dent, real_lower);
-	else 
+	else
 		sdcardfs_put_lower_path(dent, real_lower);
 }
 
 /* for packagelist.c */
 extern int get_caller_has_rw_locked(void *pkgl_id, derive_t derive);
 extern appid_t get_appid(void *pkgl_id, const char *app_name);
-extern int check_caller_access_to_name(struct inode *parent_node, const char* name,
-                                        derive_t derive, int w_ok, int has_rw);
+extern int check_caller_access_to_name(struct inode *parent_node,
+				       const char *name, derive_t derive,
+				       int w_ok, int has_rw);
 extern int open_flags_to_access_mode(int open_flags);
-extern void * packagelist_create(gid_t write_gid);
+extern void *packagelist_create(gid_t write_gid);
 extern void packagelist_destroy(void *pkgl_id);
 extern int packagelist_init(void);
 extern void packagelist_exit(void);
 
 /* for derived_perm.c */
-extern void setup_derived_state(struct inode *inode, perm_t perm, 
-			userid_t userid, uid_t uid, gid_t gid, mode_t mode);
-extern void get_derived_permission(struct dentry *parent, struct dentry *dentry);
+extern void setup_derived_state(struct inode *inode, perm_t perm,
+				userid_t userid, uid_t uid,
+				gid_t gid, mode_t mode);
+extern void get_derived_permission(struct dentry *parent,
+				   struct dentry *dentry);
 extern void update_derived_permission(struct dentry *dentry);
 extern int need_graft_path(struct dentry *dentry);
 extern int is_base_obbpath(struct dentry *dentry);
@@ -397,35 +406,36 @@ static inline void unlock_dir(struct dentry *dir)
 	dput(dir);
 }
 
-static inline int prepare_dir(const char *path_s, uid_t uid, gid_t gid, mode_t mode)
+static inline int prepare_dir(const char *path_s, uid_t uid,
+			      gid_t gid, mode_t mode)
 {
 	int err;
 	struct dentry *dent;
 	struct path path;
 	struct iattr attrs;
-	
+
 	dent = kern_path_create(AT_FDCWD, path_s, &path, LOOKUP_DIRECTORY);
-	
+
 	if (IS_ERR(dent)) {
 		err = PTR_ERR(dent);
 		if (err == -EEXIST)
 			err = 0;
 		return err;
 	}
-	
+
 	err = mnt_want_write(path.mnt);
-	if (err) 
+	if (err)
 		goto out;
-	
+
 	err = vfs_mkdir(path.dentry->d_inode, dent, mode);
 	if (err) {
 		if (err == -EEXIST)
 			err = 0;
 		goto out_drop;
 	}
-	
-	attrs.ia_uid = uid; 
-	attrs.ia_gid = gid; 
+
+	attrs.ia_uid = uid;
+	attrs.ia_gid = gid;
 	attrs.ia_valid = ATTR_UID | ATTR_GID;
 	mutex_lock(&dent->d_inode->i_mutex);
 	notify_change(dent, &attrs);
@@ -434,7 +444,7 @@ static inline int prepare_dir(const char *path_s, uid_t uid, gid_t gid, mode_t m
 out_drop:
 	mnt_drop_write(path.mnt);
 
-out: 
+out:
 	dput(dent);
 	/* parent dentry locked by kern_path_create */
 	mutex_unlock(&path.dentry->d_inode->i_mutex);
@@ -446,7 +456,8 @@ out:
  * Return 1, if a disk has enough free space, otherwise 0.
  * We assume that any files can not be overwritten.
  */
-static inline int check_min_free_space(struct dentry *dentry, size_t size, int dir)
+static inline int check_min_free_space(struct dentry *dentry,
+				       size_t size, int dir)
 {
 	int err;
 	struct path lower_path;
@@ -459,29 +470,29 @@ static inline int check_min_free_space(struct dentry *dentry, size_t size, int d
 		sdcardfs_get_lower_path(dentry, &lower_path);
 		err = vfs_statfs(&lower_path, &statfs);
 		sdcardfs_put_lower_path(dentry, &lower_path);
-	
+
 		if (unlikely(err))
 			return 0;
-	
+
 		/* Invalid statfs informations. */
 		if (unlikely(statfs.f_bsize == 0))
 			return 0;
-	
+
 		/* if you are checking directory, set size to f_bsize. */
 		if (unlikely(dir))
 			size = statfs.f_bsize;
-	
+
 		/* available size */
 		avail = statfs.f_bavail * statfs.f_bsize;
-	
+
 		/* not enough space */
 		if ((u64)size > avail)
 			return 0;
-	
+
 		/* enough space */
 		if ((avail - size) > (sbi->options.reserved_mb * 1024 * 1024))
 			return 1;
-	
+
 		return 0;
 	} else
 		return 1;

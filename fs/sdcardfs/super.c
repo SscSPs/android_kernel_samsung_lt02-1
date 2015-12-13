@@ -2,11 +2,11 @@
  * fs/sdcardfs/super.c
  *
  * Copyright (c) 2013 Samsung Electronics Co. Ltd
- *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun, 
+ *   Authors: Daeho Jeong, Woojoong Lee, Seunghwan Hyun,
  *               Sunghwan Yun, Sungjong Seo
- *                      
+ *
  * This program has been developed as a stackable file system based on
- * the WrapFS which written by 
+ * the WrapFS which written by
  *
  * Copyright (c) 1998-2011 Erez Zadok
  * Copyright (c) 2009     Shrikar Archak
@@ -35,18 +35,16 @@ static void sdcardfs_put_super(struct super_block *sb)
 	spd = SDCARDFS_SB(sb);
 	if (!spd)
 		return;
-
-	if(spd->obbpath_s) {
-		kfree(spd->obbpath_s);
+	kfree(spd->obbpath_s);
+	if (spd->obbpath_s)
 		path_put(&spd->obbpath);
-	}
 
 	/* decrement lower super references */
 	s = sdcardfs_lower_super(sb);
 	sdcardfs_set_lower_super(sb, NULL);
 	atomic_dec(&s->s_active);
 
-	if(spd->pkgl_id)
+	if (spd->pkgl_id)
 		packagelist_destroy(spd->pkgl_id);
 
 	kfree(spd);
@@ -70,15 +68,16 @@ static int sdcardfs_statfs(struct dentry *dentry, struct kstatfs *buf)
 			printk(KERN_ERR "Returned block size is zero.\n");
 			return -EINVAL;
 		}
-	
-		min_blocks = ((sbi->options.reserved_mb * 1024 * 1024)/buf->f_bsize);
+
+		min_blocks = ((sbi->options.reserved_mb * 1024 * 1024)
+			      / buf->f_bsize);
 		buf->f_blocks -= min_blocks;
-	
+
 		if (buf->f_bavail > min_blocks)
 			buf->f_bavail -= min_blocks;
 		else
 			buf->f_bavail = 0;
-	
+
 		/* Make reserved blocks invisiable to media storage */
 		buf->f_bfree = buf->f_bavail;
 	}
@@ -93,7 +92,8 @@ static int sdcardfs_statfs(struct dentry *dentry, struct kstatfs *buf)
  * @flags: numeric mount options
  * @options: mount options string
  */
-static int sdcardfs_remount_fs(struct super_block *sb, int *flags, char *options)
+static int sdcardfs_remount_fs(struct super_block *sb, int *flags,
+			       char *options)
 {
 	int err = 0;
 

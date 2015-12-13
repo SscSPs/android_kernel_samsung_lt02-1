@@ -667,7 +667,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 
 0x0e01, //BURST_START
 
-//G Value 
+//G Value
 0x4238,
 0x42e3,
 0x426c,
@@ -1162,7 +1162,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x0e00, //BURST_END
 0x0e01, //BURST_START
 
-//R Value 
+//R Value
 0x4254,
 0x4285,
 0x4221,
@@ -1657,7 +1657,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x0e00, //BURST_END
 0x0e01, //BURST_START
 
-//B Value 
+//B Value
 0x423e,
 0x4293,
 0x429d,
@@ -2359,7 +2359,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 
 0x1800,//Check Flicker Lock Off
 
-0x3600, //EXP Unit 
+0x3600, //EXP Unit
 0x3708,
 0x3898,
 
@@ -2478,7 +2478,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 // D9 Page (Capture/Preview)
 ///////////////////////////////////////////////////////////////////////////////
 0x03d9,
-0x7ce0, 
+0x7ce0,
 0x8c20,	//en_ramp_gain_auto
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -3613,14 +3613,14 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x7728,	// CMC_Dark2_LumTh6
 0x7840,	// CMC_Dark2_LumTh7
 
-0x7915,// CMC_Dark2_LumGain1_R    CMC SP R gain     
-0x7a18,// CMC_Dark2_LumGain2_R                      
-0x7b1e,// CMC_Dark2_LumGain3_R                      
-0x7c1f,// CMC_Dark2_LumGain4_R                      
-0x7d20,// CMC_Dark2_LumGain5_R                      
-0x7e20,// CMC_Dark2_LumGain6_R                      
-0x7f20,// CMC_Dark2_LumGain7_R                      
-0x8020,// CMC_Dark2_LumGain8_R    20 = x1.          
+0x7915,// CMC_Dark2_LumGain1_R    CMC SP R gain
+0x7a18,// CMC_Dark2_LumGain2_R
+0x7b1e,// CMC_Dark2_LumGain3_R
+0x7c1f,// CMC_Dark2_LumGain4_R
+0x7d20,// CMC_Dark2_LumGain5_R
+0x7e20,// CMC_Dark2_LumGain6_R
+0x7f20,// CMC_Dark2_LumGain7_R
+0x8020,// CMC_Dark2_LumGain8_R    20 = x1.
 
 0x8115,// CMC_Dark2_LumGain1_G    CMC SP G gain
 0x8218,// CMC_Dark2_LumGain2_G
@@ -4729,19 +4729,19 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x1003,
 0x1111, //11 page
 0x1211,
-0x1377, //Outdoor 1111 add 720p 
+0x1377, //Outdoor 1111 add 720p
 0x1414,
-0x1500, //Outdoor 1114 add 720p 
+0x1500, //Outdoor 1114 add 720p
 0x1615,
-0x1781, //Outdoor 1115 add 720p 
+0x1781, //Outdoor 1115 add 720p
 0x1816,
-0x1904, //Outdoor 1116 add 720p 
+0x1904, //Outdoor 1116 add 720p
 0x1a17,
-0x1b58, //Outdoor 1117 add 720p 
+0x1b58, //Outdoor 1117 add 720p
 0x1c18,
-0x1d30, //Outdoor 1118 add 720p 
+0x1d30, //Outdoor 1118 add 720p
 0x1e19,
-0x1f12, //Outdoor 1119 add 720p 
+0x1f12, //Outdoor 1119 add 720p
 0x2037,
 0x2100, //Outdoor 1137
 0x2238,
@@ -4769,19 +4769,19 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x3843,
 0x3900, //Outdoor 1143
 0x3a49,
-0x3b06, //Outdoor 1149 add 720p 
+0x3b06, //Outdoor 1149 add 720p
 0x3c4a,
-0x3d0a, //Outdoor 114a add 720p 
+0x3d0a, //Outdoor 114a add 720p
 0x3e4b,
-0x3f12, //Outdoor 114b add 720p 
+0x3f12, //Outdoor 114b add 720p
 0x404c,
-0x411c, //Outdoor 114c add 720p 
+0x411c, //Outdoor 114c add 720p
 0x424d,
-0x4324, //Outdoor 114d add 720p 
+0x4324, //Outdoor 114d add 720p
 0x444e,
-0x4540, //Outdoor 114e add 720p 
+0x4540, //Outdoor 114e add 720p
 0x464f,
-0x4780, //Outdoor 114f add 720p 
+0x4780, //Outdoor 114f add 720p
 0x4850,
 0x4936,//Outdoor 1150
 0x4a51,
@@ -4899,15 +4899,15 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0xbaae,
 0xbb35, //Outdoor 11ae //Bayer SP Edge8
 0xbcb7,
-0xbd22, //Outdoor 11b7 add 720p 
+0xbd22, //Outdoor 11b7 add 720p
 0xbeb8,
-0xbf22, //Outdoor 11b8 add 720p 
+0xbf22, //Outdoor 11b8 add 720p
 0xc0b9,
-0xc121, //Outdoor 11b9 add 720p 
+0xc121, //Outdoor 11b9 add 720p
 0xc2ba,
-0xc31e, //Outdoor 11ba add 720p 
+0xc31e, //Outdoor 11ba add 720p
 0xc4bb,
-0xc51c, //Outdoor 11bb add 720p 
+0xc51c, //Outdoor 11bb add 720p
 0xc6bc,
 0xc71a,//Outdoor 11bc add 720p
 0xc8c7,
@@ -5615,21 +5615,21 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x1003,
 0x1111, //11 page
 0x1211,
-0x1377, //Indoor 1111 add 720p 
+0x1377, //Indoor 1111 add 720p
 0x1414,
-0x1504, //Indoor 1114 add 720p 
+0x1504, //Indoor 1114 add 720p
 0x1615,
-0x1744, //Indoor 1115 add 720p 
+0x1744, //Indoor 1115 add 720p
 0x1816,
-0x1944, //Indoor 1116 add 720p 
+0x1944, //Indoor 1116 add 720p
 0x1a17,
-0x1b58, //Indoor 1117 add 720p 
+0x1b58, //Indoor 1117 add 720p
 0x1c18,
-0x1d30, //Indoor 1118 add 720p 
+0x1d30, //Indoor 1118 add 720p
 0x1e19,
-0x1f12, //Indoor 1119 add 720p 
+0x1f12, //Indoor 1119 add 720p
 0x2037,
-0x2107, //Indoor 1137 
+0x2107, //Indoor 1137
 0x2238,
 0x2300, //Indoor 1138 //Pre flat R1 LumL
 0x2439,
@@ -5655,7 +5655,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x3843,
 0x3900, //Indoor 1143
 0x3a49,
-0x3b06, //Indoor 1149 add 720p 
+0x3b06, //Indoor 1149 add 720p
 0x3c4a,
 0x3d0a, //Indoor 114a add 720p
 0x3e4b,
@@ -5669,7 +5669,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x464f,
 0x4780, //Indoor 114f add 720p
 0x4850,
-0x493f, //Indoor 1150 
+0x493f, //Indoor 1150
 0x4a51,
 0x4b3f,//Indoor 1151
 0x4c52,
@@ -5785,17 +5785,17 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0xbaae,
 0xbb28,//Indoor 11ae //Bayer SP Edge8
 0xbcb7,
-0xbd22, //Indoor 11b7 add 720p 
+0xbd22, //Indoor 11b7 add 720p
 0xbeb8,
-0xbf22, //Indoor 11b8 add 720p 
+0xbf22, //Indoor 11b8 add 720p
 0xc0b9,
-0xc121, //Indoor 11b9 add 720p 
+0xc121, //Indoor 11b9 add 720p
 0xc2ba,
-0xc31e, //Indoor 11ba add 720p 
+0xc31e, //Indoor 11ba add 720p
 0xc4bb,
-0xc51c, //Indoor 11bb add 720p 
+0xc51c, //Indoor 11bb add 720p
 0xc6bc,
-0xc71a, //Indoor 11bc add 720p 
+0xc71a, //Indoor 11bc add 720p
 0xc8c7,
 0xc920, //Indoor 11c7 //Bayer SP STD1
 0xcac8,
@@ -6502,19 +6502,19 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x1003,
 0x1111, //11 page
 0x1211,
-0x1377, //Dark1 1111 add 720p 
+0x1377, //Dark1 1111 add 720p
 0x1414,
-0x1504, //Dark1 1114 add 720p 
+0x1504, //Dark1 1114 add 720p
 0x1615,
-0x1744, //Dark1 1115 add 720p 
+0x1744, //Dark1 1115 add 720p
 0x1816,
-0x1944, //Dark1 1116 add 720p 
+0x1944, //Dark1 1116 add 720p
 0x1a17,
-0x1b58, //Dark1 1117 add 720p 
+0x1b58, //Dark1 1117 add 720p
 0x1c18,
-0x1d30, //Dark1 1118 add 720p 
+0x1d30, //Dark1 1118 add 720p
 0x1e19,
-0x1f12, //Dark1 1119 add 720p 
+0x1f12, //Dark1 1119 add 720p
 0x2037,
 0x211f, //Dark1 1137 //Pre Flat rate B[4:1]
 0x2238,
@@ -6542,21 +6542,21 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x3843,
 0x3900, //Dark1 1143
 0x3a49,
-0x3b06, //Dark1 1149 add 720p 
+0x3b06, //Dark1 1149 add 720p
 0x3c4a,
-0x3d0a, //Dark1 114a add 720p 
+0x3d0a, //Dark1 114a add 720p
 0x3e4b,
-0x3f12, //Dark1 114b add 720p 
+0x3f12, //Dark1 114b add 720p
 0x404c,
-0x411c, //Dark1 114c add 720p 
+0x411c, //Dark1 114c add 720p
 0x424d,
-0x4324, //Dark1 114d add 720p 
+0x4324, //Dark1 114d add 720p
 0x444e,
-0x4540, //Dark1 114e add 720p 
+0x4540, //Dark1 114e add 720p
 0x464f,
-0x4780, //Dark1 114f add 720p 
+0x4780, //Dark1 114f add 720p
 0x4850,
-0x493f, //Dark1 1150 
+0x493f, //Dark1 1150
 0x4a51,
 0x4b3f, //Dark1 1151
 0x4c52,
@@ -6672,17 +6672,17 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0xbaae,
 0xbb20, //Dark1 11ae //Bayer SP Edge8
 0xbcb7,
-0xbd22, //Dark1 11b7 add 720p 
+0xbd22, //Dark1 11b7 add 720p
 0xbeb8,
-0xbf22, //Dark1 11b8 add 720p 
+0xbf22, //Dark1 11b8 add 720p
 0xc0b9,
-0xc121, //Dark1 11b9 add 720p 
+0xc121, //Dark1 11b9 add 720p
 0xc2ba,
-0xc31e, //Dark1 11ba add 720p 
+0xc31e, //Dark1 11ba add 720p
 0xc4bb,
-0xc51c, //Dark1 11bb add 720p 
+0xc51c, //Dark1 11bb add 720p
 0xc6bc,
-0xc71a, //Dark1 11bc add 720p 
+0xc71a, //Dark1 11bc add 720p
 0xc8c7,
 0xc912, //Dark1 11c7 //Bayer SP STD1
 0xcac8,
@@ -7442,7 +7442,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 0x464f,
 0x4780, //Dark2 114f add 720p
 0x4850,
-0x493f, //Dark2 1150 
+0x493f, //Dark2 1150
 0x4a51,
 0x4b3f, //Dark2 1151
 0x4c52,
@@ -8269,7 +8269,7 @@ tagCamReg16_t sr352_Init_Reg[] = {
 // MIPI TX Setting  //PCLK 54MHz
 //--------------------------------------------------------------------------//
 0x0305,  // Page05
-0x1100,  // lvds_ctl_2 //Phone set not continuous           
+0x1100,  // lvds_ctl_2 //Phone set not continuous
 0x1200,  // crc_ctl
 0x1300,  // serial_ctl
 0x1400,  // ser_out_ctl_1
@@ -10051,7 +10051,7 @@ tagCamReg16_t sr352_Enterpreview_640x480[] ={
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10121,7 +10121,7 @@ tagCamReg16_t sr352_Enterpreview_640x480[] ={
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10144,8 +10144,8 @@ tagCamReg16_t sr352_Enterpreview_640x480[] ={
 0xa401, //height
 0xa5e0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10171,7 +10171,7 @@ tagCamReg16_t sr352_Enterpreview_720x480[] ={
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10241,7 +10241,7 @@ tagCamReg16_t sr352_Enterpreview_720x480[] ={
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10264,8 +10264,8 @@ tagCamReg16_t sr352_Enterpreview_720x480[] ={
 0xa401, //height
 0xa5e0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10291,7 +10291,7 @@ tagCamReg16_t sr352_Enterpreview_800x480[] =
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10362,7 +10362,7 @@ tagCamReg16_t sr352_Enterpreview_800x480[] =
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10385,8 +10385,8 @@ tagCamReg16_t sr352_Enterpreview_800x480[] =
 0xa401, //height
 0xa5e0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10413,7 +10413,7 @@ tagCamReg16_t sr352_Enterpreview_1024x576[] =
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10483,7 +10483,7 @@ tagCamReg16_t sr352_Enterpreview_1024x576[] =
 0xff01, //delay 10ms
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10506,8 +10506,8 @@ tagCamReg16_t sr352_Enterpreview_1024x576[] =
 0xa402, //height
 0xa540,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10534,7 +10534,7 @@ tagCamReg16_t sr352_Enterpreview_1024x640[] =
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10604,7 +10604,7 @@ tagCamReg16_t sr352_Enterpreview_1024x640[] =
 0xff01, //delay 10ms
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10627,8 +10627,8 @@ tagCamReg16_t sr352_Enterpreview_1024x640[] =
 0xa402, //height
 0xa580,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10655,7 +10655,7 @@ tagCamReg16_t sr352_Enterpreview_1024x768[] =
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10726,7 +10726,7 @@ tagCamReg16_t sr352_Enterpreview_1024x768[] =
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10771,7 +10771,7 @@ tagCamReg16_t sr352_preview_176_144[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10794,8 +10794,8 @@ tagCamReg16_t sr352_preview_176_144[] =
 0xa400,
 0xa590,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10821,7 +10821,7 @@ tagCamReg16_t sr352_preview_320_240[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10844,8 +10844,8 @@ tagCamReg16_t sr352_preview_320_240[] =
 0xa400, //height
 0xa5f0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10872,7 +10872,7 @@ tagCamReg16_t sr352_preview_352_288[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10895,8 +10895,8 @@ tagCamReg16_t sr352_preview_352_288[] =
 0xa401, //height
 0xa520,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10922,7 +10922,7 @@ tagCamReg16_t sr352_preview_528_432[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10945,8 +10945,8 @@ tagCamReg16_t sr352_preview_528_432[] =
 0xa401, //height
 0xa5b0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -10970,7 +10970,7 @@ tagCamReg16_t sr352_preview_640_480[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -10993,8 +10993,8 @@ tagCamReg16_t sr352_preview_640_480[] =
 0xa401, //height
 0xa5e0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -11020,7 +11020,7 @@ tagCamReg16_t sr352_preview_704_576[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -11043,8 +11043,8 @@ tagCamReg16_t sr352_preview_704_576[] =
 0xa402, //height
 0xa540,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -11071,7 +11071,7 @@ tagCamReg16_t sr352_preview_720_480[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -11094,8 +11094,8 @@ tagCamReg16_t sr352_preview_720_480[] =
 0xa401, //height
 0xa5e0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -11122,7 +11122,7 @@ tagCamReg16_t sr352_preview_800_480[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -11145,8 +11145,8 @@ tagCamReg16_t sr352_preview_800_480[] =
 0xa401, //height
 0xa5e0,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -11173,7 +11173,7 @@ tagCamReg16_t sr352_preview_800_600[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -11196,8 +11196,8 @@ tagCamReg16_t sr352_preview_800_600[] =
 0xa402, //height
 0xa558,
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -11224,7 +11224,7 @@ tagCamReg16_t sr352_preview_1024_576[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -11249,8 +11249,8 @@ tagCamReg16_t sr352_preview_1024_576[] =
 0xa600,	//fw scaler col start
 0xa700, //fw scaler row start
 
-0xa100, //zoom step 
-0xa0c0, //fw scaler on  
+0xa100, //zoom step
+0xa0c0, //fw scaler on
 
 0x0319,
 0x1007, //hw scaler on
@@ -11277,7 +11277,7 @@ tagCamReg16_t sr352_preview_1024_768[] =
 {
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	// Sleep On
@@ -19340,7 +19340,7 @@ tagCamReg16_t sr352_recording_50Hz_30fps[] = {
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	//Sleep on
@@ -19352,7 +19352,7 @@ tagCamReg16_t sr352_recording_50Hz_30fps[] = {
 0x7f00,	// DMA off
 0x7e01,	// DMA set
 
-0x0316, // dark color 
+0x0316, // dark color
 0x103f,
 
 //--------------------------------------------------------------------------//
@@ -19378,9 +19378,9 @@ tagCamReg16_t sr352_recording_50Hz_30fps[] = {
 0x1101,	//AE Reset
 0xff01,
 0x4C00,//SW ExpMin	 = 8800
-0x4D00,	
-0x4E22,	
-0x4F60,	
+0x4D00,
+0x4E22,
+0x4F60,
 
 0x0320,//HW ExpMin  = 8800
 0x2800,
@@ -19424,7 +19424,7 @@ tagCamReg16_t sr352_recording_50Hz_25fps[] = {
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	//Sleep on
@@ -19436,7 +19436,7 @@ tagCamReg16_t sr352_recording_50Hz_25fps[] = {
 0x7f00,	// DMA off
 0x7e01,	// DMA set
 
-0x0316, // dark color 
+0x0316, // dark color
 0x103f,
 
 //--------------------------------------------------------------------------//
@@ -19462,9 +19462,9 @@ tagCamReg16_t sr352_recording_50Hz_25fps[] = {
 0x1101, // B[1]Initial Speed Up, B[0]AE Reset
 0xff01,
 0x4C00,//SW ExpMin	 = 8800
-0x4D00,	
-0x4E22,	
-0x4F60,	
+0x4D00,
+0x4E22,
+0x4F60,
 
 0x0320,//HW ExpMin  = 8800
 0x2800,
@@ -19509,7 +19509,7 @@ tagCamReg16_t sr352_recording_50Hz_15fps[] = {
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	//Sleep on
@@ -19521,7 +19521,7 @@ tagCamReg16_t sr352_recording_50Hz_15fps[] = {
 0x7f00,	// DMA off
 0x7e01,	// DMA set
 
-0x0316, // dark color 
+0x0316, // dark color
 0x103f,
 
 //--------------------------------------------------------------------------//
@@ -19547,9 +19547,9 @@ tagCamReg16_t sr352_recording_50Hz_15fps[] = {
 0x1101, // B[1]Initial Speed Up, B[0]AE Reset
 0xff01,
 0x4C00,//SW ExpMin	 = 8800
-0x4D00,	
-0x4E22,	
-0x4F60,	
+0x4D00,
+0x4E22,
+0x4F60,
 
 0x0320,//HW ExpMin  = 8800
 0x2800,
@@ -19595,7 +19595,7 @@ tagCamReg16_t sr352_recording_50Hz_modeOff[] = {
 
 0x03c1,
 0x1006, // ssd tranfer disable
-0xff01, 
+0xff01,
 
 0x0300,
 0x0101,	//Sleep on
@@ -19610,7 +19610,7 @@ tagCamReg16_t sr352_recording_50Hz_modeOff[] = {
 //--------------------------------------------------------------------------//
 //Variable mode setting
 //--------------------------------------------------------------------------//
-0x0316, 
+0x0316,
 0x107f,
 
 ///////////////////////////////////////////
@@ -19628,9 +19628,9 @@ tagCamReg16_t sr352_recording_50Hz_modeOff[] = {
 0x1101,	//AE Reset
 0xff01,
 0x4C00,//SW ExpMin	 = 8800
-0x4D00,	
-0x4E22,	
-0x4F60,	
+0x4D00,
+0x4E22,
+0x4F60,
 
 0x0320,//HW ExpMin  = 8800
 0x2800,
@@ -19774,11 +19774,11 @@ tagCamReg16_t sr352_bright_p4[] =
 /*=================================
  *CAMERA_SATURATION_-2 (1/5) m2   *
  ==================================*/
-tagCamReg16_t sr352_saturation_m2[]= 
+tagCamReg16_t sr352_saturation_m2[]=
 {
 //level -2
 0x03d3,
-0x7bc0,	// Cb offset 
+0x7bc0,	// Cb offset
 0x7cc0,	// Cr offset
 };
 
@@ -19789,7 +19789,7 @@ tagCamReg16_t sr352_saturation_m1[] =
 {
 //level -1
 0x03d3,
-0x7ba0,	// Cb offset 
+0x7ba0,	// Cb offset
 0x7ca0,	// Cr offset
 };
 
@@ -19800,7 +19800,7 @@ tagCamReg16_t sr352_saturation_0[] =
 {
 //level 0
 0x03d3,
-0x7b00,	// Cb offset 
+0x7b00,	// Cb offset
 0x7c00,	// Cr offset
 };
 
@@ -19811,7 +19811,7 @@ tagCamReg16_t sr352_saturation_p1[] =
 {
 //level 1
 0x03d3,
-0x7b20,	// Cb offset 
+0x7b20,	// Cb offset
 0x7c20,	// Cr offset
 };
 
@@ -19822,73 +19822,73 @@ tagCamReg16_t sr352_saturation_p2[] =
 {
 //level 2
 0x03d3,
-0x7b40,	// Cb offset 
+0x7b40,	// Cb offset
 0x7c40,	// Cr offset
 };
 
 /*=================================
  *CAMERA_CONTRAST_-2 (1/5) m2   *
  ==================================*/
-tagCamReg16_t sr352_contrast_m2[]= 
+tagCamReg16_t sr352_contrast_m2[]=
 {
 //level -2
 0x0310,
 0x1302, //Contrast enable
 
 0x0310,
-0x4860, //Contrast level 
+0x4860, //Contrast level
 };
 
 /*=================================
  *CAMERA_CONTRAST_-1 (2/5) m1   *
  ==================================*/
-tagCamReg16_t sr352_contrast_m1[]= 
+tagCamReg16_t sr352_contrast_m1[]=
 {
 //level -1
 0x0310,
 0x1302, //Contrast enable
 
 0x0310,
-0x4870, //Contrast level 
+0x4870, //Contrast level
 };
 
 /*=================================
  *CAMERA_CONTRAST_0 (3/5) default   *
  ==================================*/
-tagCamReg16_t sr352_contrast_0[]= 
+tagCamReg16_t sr352_contrast_0[]=
 {
 //level 0
 0x0310,
 0x1300, //Contrast disable
 
 0x0310,
-0x4800, //Contrast level 
+0x4800, //Contrast level
 };
 
 /*=================================
  *CAMERA_CONTRAST_1 (4/5) p1   *
  ==================================*/
-tagCamReg16_t sr352_contrast_p1[]= 
+tagCamReg16_t sr352_contrast_p1[]=
 {
 //level 1
 0x0310,
 0x1302, //Contrast enable
 
 0x0310,
-0x4890, //Contrast level 
+0x4890, //Contrast level
 };
 
 /*=================================
  *CAMERA_CONTRAST_2 (5/5) p2   *
  ==================================*/
-tagCamReg16_t sr352_contrast_p2[]= 
+tagCamReg16_t sr352_contrast_p2[]=
 {
 //level 2
 0x0310,
 0x1302, //Contrast enable
 
 0x0310,
-0x48a0, //Contrast level 
+0x48a0, //Contrast level
 };
 
 tagCamReg16_t sr352_effect_none[] =
@@ -19969,7 +19969,7 @@ tagCamReg16_t sr352_wb_cloudy[] =
 	0x1052, //AWB Off
 	0x1220, //Adaptive e0, manual 20
 	0x1504,
-	0x03ca, 
+	0x03ca,
 	0x9506, //R Min
 	0x96a0,
 	0x9706, //R Max
@@ -19993,7 +19993,7 @@ tagCamReg16_t sr352_wb_fluorescent[] =
 	0x1052, //AWB Off
 	0x1220, //Adaptive e0, manual 20
 	0x1504,
-	0x03ca, 
+	0x03ca,
 	0x9505, //R Min
 	0x9600,
 	0x9705, //R Max
@@ -20017,7 +20017,7 @@ tagCamReg16_t sr352_wb_incandescent[] =
 	0x1052, //AWB Off
 	0x1220, //Adaptive e0, manual 20
 	0x1504,
-	0x03ca, 
+	0x03ca,
 	0x9504, //R Min
 	0x9600,
 	0x9704, //R Max
@@ -20040,8 +20040,8 @@ tagCamReg16_t sr352_wb_sunny[] =
 	0x03c8,
 	0x1052, //AWB Off
 	0x1220, //Adaptive e0, manual 20
-	0x1504,	
-	0x03ca, 
+	0x1504,
+	0x03ca,
 	0x9505, //R Min
 	0x9680,
 	0x9705, //R Max
@@ -20072,16 +20072,16 @@ tagCamReg16_t sr352_SceneOff[] =
 	0x03D3,
 	0x108f, //EV option on
 	0x11fe, //Function On
-	
+
 	0x0310,
 	0x1210, //Y Ofs On
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
+	0x7180, //Digital gain max
 
 	0x03c7,
 	0x3608, //Band100 Max 8fps
@@ -20189,18 +20189,18 @@ tagCamReg16_t sr352_SceneOff[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00, //SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320, //HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1403, //d gain on
-	
+
 
 	0x0300,
 	0x0100, //sleep off
@@ -20218,25 +20218,25 @@ tagCamReg16_t sr352_Landscape[] =
 	0xff19, //delay 250ms
 
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -20343,18 +20343,18 @@ tagCamReg16_t sr352_Landscape[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-	
+
 	0x0300,
 	0x0100, //sleep off
 
@@ -20371,25 +20371,25 @@ tagCamReg16_t sr352_Party[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x5182, //pga_max_total
 	0x525c, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -20497,18 +20497,18 @@ tagCamReg16_t sr352_Party[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-	
+
 
 	0x0300,
 	0x0100, //sleep off
@@ -20527,25 +20527,25 @@ tagCamReg16_t sr352_Sunset[] =
 	0xff19, //delay 250ms
 
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -20632,7 +20632,7 @@ tagCamReg16_t sr352_Sunset[] =
 	0x03c8,
 	0x12a0, //Adaptive e0, manual a0
 
-	0x03ca, 
+	0x03ca,
 
 	0x9506, //R Min
 	0x96a0,
@@ -20646,7 +20646,7 @@ tagCamReg16_t sr352_Sunset[] =
 	0x9ee0,
 	0x9f06, //B Max
 	0xa000,
-  
+
 	//Sharpness 0
 	0x03de, //DE Page(Outdoor)
 	0xd954, //Outdoor 11cf //Bayer Post STD gain Neg/Pos
@@ -20667,18 +20667,18 @@ tagCamReg16_t sr352_Sunset[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-  
+
 	0x0300,
 	0x0100, //sleep off
 
@@ -20695,25 +20695,25 @@ tagCamReg16_t sr352_Dawn[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -20813,8 +20813,8 @@ tagCamReg16_t sr352_Dawn[] =
 	0x9e80,
 	0x9f08, //B Max
 	0xa0a0,
-	
-	
+
+
 	//Sharpness 0
 	0x03de, //DE Page(Outdoor)
 	0xd954, //Outdoor 11cf //Bayer Post STD gain Neg/Pos
@@ -20835,18 +20835,18 @@ tagCamReg16_t sr352_Dawn[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-  
+
 	0x0300,
 	0x0100, //sleep off
 
@@ -20862,25 +20862,25 @@ tagCamReg16_t sr352_Fall[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -20987,18 +20987,18 @@ tagCamReg16_t sr352_Fall[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-	
+
 	0x0300,
 	0x0100, //sleep off
 
@@ -21016,16 +21016,16 @@ tagCamReg16_t sr352_Nightshot[] =
 	0x0300,
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
-	
-	0x03D3, 
+
+	0x03D3,
 	0x108f, //EV option on
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1210, //Y Ofs On
 
@@ -21034,8 +21034,8 @@ tagCamReg16_t sr352_Nightshot[] =
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x71ba, //Digital gain max 
-	
+	0x71ba, //Digital gain max
+
 	0x03c7,
 	0x3604, //Max 4fps
 	0x3704, //Max 4fps
@@ -21148,18 +21148,18 @@ tagCamReg16_t sr352_Nightshot[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-	
+
 	0x0300,
 	0x0100, //sleep off
 
@@ -21177,25 +21177,25 @@ tagCamReg16_t sr352_Backlight[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -21294,20 +21294,20 @@ tagCamReg16_t sr352_Backlight[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
 
 	0x0300,
-	0x0100, //sleep off	
+	0x0100, //sleep off
 };
 
 /*===========================================*/
@@ -21320,25 +21320,25 @@ tagCamReg16_t sr352_Candle[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 	0x03c7,
 	0x3608, //Max 8fps
 	0x3708, //Max 8fps
@@ -21425,7 +21425,7 @@ tagCamReg16_t sr352_Candle[] =
 	0x03c8,
 	0x12a0, //Adaptive e0, manual a0
 
-	0x03ca, 
+	0x03ca,
 
 	0x9506, //R Min
 	0x96a0,
@@ -21440,7 +21440,7 @@ tagCamReg16_t sr352_Candle[] =
 	0x9f06, //B Max
 	0xa000,
 
-	
+
 	//Sharpness 0
 	0x03de, //DE Page(Outdoor)
 	0xd954, //Outdoor 11cf //Bayer Post STD gain Neg/Pos
@@ -21461,18 +21461,18 @@ tagCamReg16_t sr352_Candle[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
 	0x2922,
 	0x2a60,
-	
+
 	0x0310,
   0x1402, // d gain off
-	
+
 	0x0300,
 	0x0100, //sleep off
 
@@ -21489,21 +21489,21 @@ tagCamReg16_t sr352_Beach[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x11fe, //Y target On
-	
-	
+
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x5120, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 0x03c7,
 0x3608, //Max 8fps
 0x3708, //Max 8fps
@@ -21610,9 +21610,9 @@ tagCamReg16_t sr352_Beach[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
@@ -21636,16 +21636,16 @@ tagCamReg16_t sr352_Sports[] =
 	0x0300,
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
-	
-	0x03D3, 
+
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
 
@@ -21654,8 +21654,8 @@ tagCamReg16_t sr352_Sports[] =
 
 	0x51ff, //pga_max_total
 	0x5248, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 0x03c7,
 0x361e, //Max 30fps
 0x371e, //Max 30fps
@@ -21762,9 +21762,9 @@ tagCamReg16_t sr352_Sports[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
@@ -21790,25 +21790,25 @@ tagCamReg16_t sr352_Firework[] =
 	0x0110, //frame sleep on
 	0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 0x03c7,
 0x3604, //Max 4fps
 0x3704, //Max 4fps
@@ -21921,9 +21921,9 @@ tagCamReg16_t sr352_Firework[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
@@ -21948,25 +21948,25 @@ tagCamReg16_t sr352_Portrait[] =
 0x0110, //frame sleep on
 0xff19, //delay 250ms
 
-	0x03D3, 
+	0x03D3,
 	0x108d, //EV option off
 	0x117e, //Y target Off
-	
+
 	0x03d8,
 	0xcc34,
 	0x03dd,
 	0xbf34,
-	
+
 	0x0310,
 	0x1200, //Y Ofs Off
-	
+
 	0x0320,
 	0x1220, //AE Digital gain Off
 
 	0x51ff, //pga_max_total
 	0x5220, //pga_min_total
-	0x7180, //Digital gain max 
-	
+	0x7180, //Digital gain max
+
 
 0x03c7,
 0x3608, //Max 8fps
@@ -22074,9 +22074,9 @@ tagCamReg16_t sr352_Portrait[] =
 	0x1101, //AE Reset
 	0xff01,
 	0x4C00,//SW ExpMin	 = 8800
-	0x4D00,	
-	0x4E22,	
-	0x4F60,	
+	0x4D00,
+	0x4E22,
+	0x4F60,
 
 	0x0320,//HW ExpMin  = 8800
 	0x2800,
@@ -22160,7 +22160,7 @@ tagCamReg16_t sr352_metering_matrix[] = {
 	0xD111,
 	0xD211,
 	0xD311,
-	
+
 };
 
 tagCamReg16_t sr352_metering_center[] = {
@@ -22234,7 +22234,7 @@ tagCamReg16_t sr352_metering_center[] = {
 
 tagCamReg16_t sr352_metering_spot[] = {
 
-	
+
 	//Spot weight set________________
 	0x03c6, //1 line
 	0x9E00,
@@ -22299,13 +22299,13 @@ tagCamReg16_t sr352_metering_spot[] = {
 	0xD100,
 	0xD200,
 	0xD300,
-	
+
 };
 
 tagCamReg16_t sr352_stream_stop[] = {
 	0x03c1,
 	0x1006, // ssd tranfer disable
-	0xff01, 
+	0xff01,
 
 	0x0300,
 	0x0101,	//Sleep of frame sync type | Mipi frame
@@ -22318,12 +22318,12 @@ tagCamReg16_t sr352_stream_stop[] = {
 
 tagCamReg16_t sr352_DTP_On[] = {
 	0x0310,
-	0x2f79, 
+	0x2f79,
 };
 
 tagCamReg16_t sr352_DTP_Off[] = {
 	0x0310,
-	0x2f00, 
+	0x2f00,
 };
 
 tagCamReg16_t sr352_setting[] = {
@@ -22375,19 +22375,19 @@ tagCamReg16_t sr352_setting[] = {
 0x7082, // 50hz 82, 60hz 02
 0xff01,
 0x4C00,//SW ExpMin	 = 8800
-0x4D00,	
-0x4E22,	
-0x4F60,	
+0x4D00,
+0x4E22,
+0x4F60,
 
 0x4400, //Start ExpTime 120fps
-0x4506,	
-0x46d9,	
-0x4720,	
+0x4506,
+0x46d9,
+0x4720,
 
 0xa748, //Start ExpTime 120fps float
-0xa8db,	
-0xa924,	
-0xaa00,	
+0xa8db,
+0xa924,
+0xaa00,
 
 0x0320, //HW ExpMin  = 8800
 0x2800,
@@ -22448,19 +22448,19 @@ tagCamReg16_t sr352_setting_60hz[] = {
 0x7002, // 50hz 82, 60hz 02
 0xff01,
 0x4C00,//SW ExpMin	 = 8800
-0x4D00,	
-0x4E22,	
-0x4F60,	
+0x4D00,
+0x4E22,
+0x4F60,
 
 0x4400, //Start ExpTime 120fps
-0x4506,	
-0x46d9,	
-0x4720,	
+0x4506,
+0x46d9,
+0x4720,
 
 0xa748, //Start ExpTime 120fps float
-0xa8db,	
-0xa924,	
-0xaa00,	
+0xa8db,
+0xa924,
+0xaa00,
 
 0x0320, //HW ExpMin  = 8800
 0x2800,
