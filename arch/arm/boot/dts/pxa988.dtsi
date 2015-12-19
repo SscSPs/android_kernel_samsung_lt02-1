@@ -1,0 +1,190 @@
+/*
+ * Copyright (C) 2013 Marvell Technology Group Ltd.
+ * Author: Chao Xie <chao.xie@xxxxxxxxxxx>
+ * Neil Zhang <zhangwm@xxxxxxxxxxx>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * publishhed by the Free Software Foundation.
+ */
+
+/include/ "skeleton.dtsi"
+
+/ {
+	interrupt-parent = <&gic>;
+
+	aliases {
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		i2c0 = &twsi1;
+		i2c1 = &twsi2;
+	};
+
+	cpus {
+		cpu@0 {
+			compatible = "arm,cortex-a9";
+			next-level-cache = <&L2>;
+		};
+		cpu@1 {
+			compatible = "arm,cortex-a9";
+			next-level-cache = <&L2>;
+		};
+	};
+
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		interrupt-parent = <&gic>;
+		ranges;
+
+		gic: interrupt-controller@d1dfe100 {
+			compatible = "arm,cortex-a9-gic";
+			#interrupt-cells = <3>;
+			#address-cells = <1>;
+			interrupt-controller;
+			reg = <0xd1dff000 0x1000>,
+			<0xd1dfe100 0x0100>;
+		};
+
+		L2: l2-cache-controller@d1dfb000 {
+			compatible = "arm,pl310-cache";
+			reg = <0xd1dfb000 0x1000>;
+			arm,data-latency = <2 1 1>;
+			arm,tag-latency = <2 1 1>;
+			arm,pwr-dynamic-clk-gating;
+			arm,pwr-standby-mode;
+			cache-unified;
+			cache-level = <2>;
+		};
+
+		local-timer@d1dfe600 {
+			compatible = "arm,cortex-a9-twd-timer";
+			reg = <0xd1dfe600 0x20>;
+			interrupts = <1 13 0x304>;
+		};
+
+		axi@d4200000 { /* AXI */
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0xd4200000 0xd4200000 0x00200000>;
+
+			intc: wakeupgen@d4282000 {
+				compatible = "marvell,mmp-intc";
+				reg = <0xd4282000 0x1000>;
+				marvell,intc-wakeup = <0x114 0x3
+				0x144 0x3>;
+			};
+
+		};
+
+		apb@d4000000 { /* APB */
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0xd4000000 0xd4000000 0x00200000>;
+
+			timer0: timer@d4014000 {
+				compatible = "marvell,mmp-timer";
+				reg = <0xd4014000 0x100>;
+				interrupts = <0 13 0x4>;
+			};
+
+			uart1: uart@d4017000 {
+				compatible = "marvell,mmp-uart";
+				reg = <0xd4017000 0x1000>;
+				interrupts = <0 27 0x4>;
+				status = "disabled";
+			};
+
+			uart2: uart@d4018000 {
+				compatible = "marvell,mmp-uart";
+				reg = <0xd4018000 0x1000>;
+				interrupts = <0 28 0x4>;
+				status = "disabled";
+			};
+
+			uart3: uart@d4036000 {
+				compatible = "marvell,mmp-uart";
+				reg = <0xd4036000 0x1000>;
+				interrupts = <0 59 0x4>;
+				status = "disabled";
+			};
+
+			gpio@d4019000 {
+				compatible = "marvell,mmp-gpio";
+				#address-cells = <1>;
+				#size-cells = <1>;
+				reg = <0xd4019000 0x1000>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				interrupts = <49>;
+				interrupt-names = "gpio_mux";
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				ranges;
+
+				gcb0: gpio@d4019000 {
+					reg = <0xd4019000 0x4>;
+				};
+
+				gcb1: gpio@d4019004 {
+					reg = <0xd4019004 0x4>;
+				};
+
+				gcb2: gpio@d4019008 {
+					reg = <0xd4019008 0x4>;
+				};
+
+				gcb3: gpio@d4019100 {
+					reg = <0xd4019100 0x4>;
+				};
+			};
+
+			twsi1: i2c@d4011000 {
+				compatible = "marvell,mmp-twsi";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0xd4011000 0x1000>;
+				interrupts = <0 7 0x4>;
+				marvell,i2c-fast-mode;
+				status = "disabled";
+			};
+
+			twsi2: i2c@d4037000 {
+				compatible = "marvell,mmp-twsi";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0xd4037000 0x1000>;
+				interrupts = <0 54 0x4>;
+				status = "disabled";
+			};
+
+			rtc: rtc@d4010000 {
+				compatible = "marvell,mmp-rtc";
+				reg = <0xd4010000 0x1000>;
+				interrupts = <0 5 0x4>,<0 6 0x4>;
+				interrupt-names = "rtc 1Hz", "rtc alarm";
+				status = "disabled";
+			};
+			pmx: pinmux@d401e000 {
+				compatible = "pinconf-single";
+				reg = <0xd401e000 0x330>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+				#gpio-range-cells = <3>;
+				ranges;
+
+				pinctrl-single,register-width = <32>;
+				pinctrl-single,function-mask = <7>;
+
+				range: gpio-range {
+					#pinctrl-single,gpio-range-cells = <3>;
+				};
+			};
+		};
+	};
+};

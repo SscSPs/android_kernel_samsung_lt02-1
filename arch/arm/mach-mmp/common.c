@@ -11,6 +11,10 @@
 #include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/of.h>
+#include <linux/io.h>
+#include <linux/ioport.h>
+#include <linux/of_address.h>
 
 #include <asm/page.h>
 #include <asm/mach/map.h>
@@ -36,6 +40,11 @@ static struct map_desc standard_io_desc[] __initdata = {
 		.virtual	= (unsigned long)AXI_VIRT_BASE,
 		.length		= AXI_PHYS_SIZE,
 		.type		= MT_DEVICE,
+	}, { /* Above {} section added post patch series: TODO check */
+		.pfn = __phys_to_pfn(MMP_CORE_PERIPH_PHYS_BASE),
+		.virtual = (unsigned long)MMP_CORE_PERIPH_VIRT_BASE,
+		.length = MMP_CORE_PERIPH_PHYS_SIZE,
+		.type = MT_DEVICE,
 	},
 };
 

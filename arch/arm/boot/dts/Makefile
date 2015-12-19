@@ -233,6 +233,7 @@ dtb-$(CONFIG_MACH_MESON8) += \
 dtb-$(CONFIG_ARCH_MMP) += \
 	pxa168-aspenite.dtb \
 	pxa910-dkb.dtb \
+	pxa988-dkb.dtb \
 	mmp2-brownstone.dtb
 dtb-$(CONFIG_MACH_MESON8B) += \
 	meson8b-mxq.dtb \
