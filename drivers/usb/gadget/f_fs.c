@@ -1897,6 +1897,8 @@ static int __ffs_data_got_strings(struct ffs_data *ffs,
 		t = d->stringtab;
 		s = d->strings;
 		strings = s;
+
+		kfree(d);
 	}
 
 	/* For each language */
