@@ -621,6 +621,10 @@ static ssize_t trace_info_show(struct kobject *kobj,
 
 	return ret;
 }
+	mutex_unlock(&tracer.mutex);
+
+	return ret;
+}
 
 static struct kobj_attribute trace_info_attr =
 	__ATTR(trace_info, 0444, trace_info_show, NULL);
