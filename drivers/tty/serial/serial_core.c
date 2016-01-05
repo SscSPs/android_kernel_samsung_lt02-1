@@ -163,7 +163,6 @@ static int uart_port_startup(struct tty_struct *tty, struct uart_state *state,
 	if (retval == 0) {
 		if (uart_console(uport) && uport->cons->cflag) {
 			tty->termios->c_cflag = uport->cons->cflag;
-			uport->cons->cflag = 0;
 		}
 		/*
 		 * Initialise the hardware port settings.
@@ -1959,16 +1958,17 @@ int uart_resume_port(struct uart_driver *drv, struct uart_port *uport)
 	 */
 	if (uart_console(uport)) {
 		/*
-		 * First try to use the console cflag setting.
+		 * First try to use the tty termios setting.
 		 */
-		memset(&termios, 0, sizeof(struct ktermios));
-		termios.c_cflag = uport->cons->cflag;
-
-		/*
-		 * If that's unset, use the tty termios setting.
-		 */
-		if (port->tty && port->tty->termios && termios.c_cflag == 0)
+		if (port->tty && port->tty->termios)
 			termios = *(port->tty->termios);
+		else {
+		/*
+			 * If unavailable, use the console cflag setting.
+		 */
+			memset(&termios, 0, sizeof(struct ktermios));
+			termios.c_cflag = uport->cons->cflag;
+		}
 
 		if (console_suspend_enabled)
 			uart_change_pm(state, 0);
