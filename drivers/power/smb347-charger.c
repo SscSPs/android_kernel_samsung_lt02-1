@@ -859,18 +859,13 @@ static int smb347_hw_init(struct smb347_charger *smb)
 		return ret;
 
 	/*
-	 * Program the platform specific configuration values to the device
-	 * first.
+	 * Enable/disable interrupts for:
+	 *	- under voltage
+	 *	- termination current reached
+	 *	- charger error
 	 */
-	ret = smb347_set_charge_current(smb);
-	if (ret < 0)
-		goto fail;
-
-	ret = smb347_set_current_limits(smb);
-	if (ret < 0)
-		goto fail;
-
-	ret = smb347_set_voltage_limits(smb);
+	if (enable) {
+		ret = smb347_write(smb, CFG_FAULT_IRQ, CFG_FAULT_IRQ_DCIN_UV);
 	if (ret < 0)
 		goto fail;
 
@@ -881,32 +876,19 @@ static int smb347_hw_init(struct smb347_charger *smb)
 		goto fail;
 #endif // HACK
 
-	/* If USB charging is disabled we put the USB in suspend mode */
-	if (!smb->pdata->use_usb) {
-		ret = smb347_read(smb, CMD_A);
+		ret = smb347_read(smb, CFG_PIN);
 		if (ret < 0)
 			goto fail;
 
-		ret |= CMD_A_SUSPEND_ENABLED;
+		ret |= CFG_PIN_EN_CHARGER_ERROR;
 
-		ret = smb347_write(smb, CMD_A, ret);
-		if (ret < 0)
-			goto fail;
-	}
-
-	ret = smb347_read(smb, CFG_OTHER);
+		ret = smb347_write(smb, CFG_PIN, ret);
+	} else {
+		ret = smb347_write(smb, CFG_FAULT_IRQ, 0);
 	if (ret < 0)
 		goto fail;
 
-	/*
-	 * If configured by platform data, we enable hardware Auto-OTG
-	 * support for driving VBUS. Otherwise we disable it.
-	 */
-	ret &= ~CFG_OTHER_RID_MASK;
-	if (smb->pdata->use_usb_otg)
-		ret |= CFG_OTHER_RID_ENABLED_AUTO_OTG;
-
-	ret = smb347_write(smb, CFG_OTHER, ret);
+		ret = smb347_write(smb, CFG_STATUS_IRQ, 0);
 	if (ret < 0)
 		goto fail;
 
@@ -953,14 +935,7 @@ static int smb347_hw_init(struct smb347_charger *smb)
 	ret &= ~CFG_PIN_EN_APSD_IRQ;
 
 	ret = smb347_write(smb, CFG_PIN, ret);
-	if (ret < 0)
-		goto fail;
-
-	ret = smb347_update_status(smb);
-	if (ret < 0)
-		goto fail;
-
-	ret = smb347_update_online(smb);
+	}
 
 	if ((smb->pdata->irq_gpio >= 0) &&
 	    !smb->pdata->disable_stat_interrupts) {
@@ -985,10 +960,11 @@ static int smb347_hw_init(struct smb347_charger *smb)
 			goto fail;
 	}
 
-fail:
-	smb347_set_writable(smb, false);
-	return ret;
-}
+	/* If configured by platform data, disable AUTOMATIC RECHARGE */
+	if (smb->pdata->disable_automatic_recharge) {
+		ret = smb347_read(smb, CFG_CHARGE_CONTROL);
+		if (ret < 0)
+			goto fail;
 
 static int smb347_mains_get_property(struct power_supply *psy,
 				     enum power_supply_property prop,
@@ -1056,6 +1032,19 @@ static int smb347_mains_set_property(struct power_supply *psy,
 	}
 
 	return -EINVAL;
+}
+
+static int smb347_mains_property_is_writeable(struct power_supply *psy,
+					     enum power_supply_property prop)
+{
+	switch (prop) {
+	case POWER_SUPPLY_PROP_CURRENT_MAX:
+		return 1;
+	default:
+		break;
+	}
+
+	return 0;
 }
 
 static int smb347_mains_property_is_writeable(struct power_supply *psy,
