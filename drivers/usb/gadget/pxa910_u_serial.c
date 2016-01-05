@@ -27,7 +27,7 @@
 #include <linux/slab.h>
 #include <linux/export.h>
 
-#include "u_serial.h"
+#include "pxa910_u_serial.h"
 
 
 /*
@@ -79,10 +79,10 @@
  * consider it a NOP.  A third layer is provided by the TTY code.
  */
 #define QUEUE_SIZE		16
-#define WRITE_BUF_SIZE		8192		/* TX only */
+#define PXA910_WRITE_BUF_SIZE	(8192*2)		/* TX only */
 
 /* circular buffer */
-struct gs_buf {
+struct pxa910_gs_buf {
 	unsigned		buf_size;
 	char			*buf_buf;
 	char			*buf_get;
@@ -93,10 +93,10 @@ struct gs_buf {
  * The port structure holds info for each port, one for each minor number
  * (and thus for each /dev/ node).
  */
-struct gs_port {
+struct pxa910_gs_port {
 	spinlock_t		port_lock;	/* guard port_* access */
 
-	struct gserial		*port_usb;
+	struct pxa910_gserial	*port_usb;
 	struct tty_struct	*port_tty;
 
 	unsigned		open_count;
@@ -115,7 +115,7 @@ struct gs_port {
 	struct list_head	write_pool;
 	int write_started;
 	int write_allocated;
-	struct gs_buf		port_write_buf;
+	struct pxa910_gs_buf		port_write_buf;
 	wait_queue_head_t	drain_wait;	/* wait while writes drain */
 
 	/* REVISIT this state ... */
@@ -123,23 +123,26 @@ struct gs_port {
 };
 
 /* increase N_PORTS if you need more */
-#define N_PORTS		4
-static struct portmaster {
+#define PXA910_N_PORTS		4
+static struct pxa910_portmaster {
 	struct mutex	lock;			/* protect open/close */
-	struct gs_port	*port;
-} ports[N_PORTS];
-static unsigned	n_ports;
+	struct pxa910_gs_port	*port;
+} pxa910_ports[PXA910_N_PORTS];
+
+static unsigned n_modem_ports;
+static unsigned n_diag_ports;
 
 #define GS_CLOSE_TIMEOUT		15		/* seconds */
 
 
-
+#ifndef pr_vdebug
 #ifdef VERBOSE_DEBUG
 #define pr_vdebug(fmt, arg...) \
 	pr_debug(fmt, ##arg)
 #else
 #define pr_vdebug(fmt, arg...) \
 	({ if (0) pr_debug(fmt, ##arg); })
+#endif
 #endif
 
 /*-------------------------------------------------------------------------*/
@@ -151,7 +154,7 @@ static unsigned	n_ports;
  *
  * Allocate a circular buffer and all associated memory.
  */
-static int gs_buf_alloc(struct gs_buf *gb, unsigned size)
+static int pxa910_gs_buf_alloc(struct pxa910_gs_buf *gb, unsigned size)
 {
 	gb->buf_buf = kmalloc(size, GFP_KERNEL);
 	if (gb->buf_buf == NULL)
@@ -169,7 +172,7 @@ static int gs_buf_alloc(struct gs_buf *gb, unsigned size)
  *
  * Free the buffer and all associated memory.
  */
-static void gs_buf_free(struct gs_buf *gb)
+static void pxa910_gs_buf_free(struct pxa910_gs_buf *gb)
 {
 	kfree(gb->buf_buf);
 	gb->buf_buf = NULL;
@@ -180,7 +183,7 @@ static void gs_buf_free(struct gs_buf *gb)
  *
  * Clear out all data in the circular buffer.
  */
-static void gs_buf_clear(struct gs_buf *gb)
+static void pxa910_gs_buf_clear(struct pxa910_gs_buf *gb)
 {
 	gb->buf_get = gb->buf_put;
 	/* equivalent to a get of all data available */
@@ -192,7 +195,7 @@ static void gs_buf_clear(struct gs_buf *gb)
  * Return the number of bytes of data written into the circular
  * buffer.
  */
-static unsigned gs_buf_data_avail(struct gs_buf *gb)
+static unsigned pxa910_gs_buf_data_avail(struct pxa910_gs_buf *gb)
 {
 	return (gb->buf_size + gb->buf_put - gb->buf_get) % gb->buf_size;
 }
@@ -203,7 +206,7 @@ static unsigned gs_buf_data_avail(struct gs_buf *gb)
  * Return the number of bytes of space available in the circular
  * buffer.
  */
-static unsigned gs_buf_space_avail(struct gs_buf *gb)
+static unsigned pxa910_gs_buf_space_avail(struct pxa910_gs_buf *gb)
 {
 	return (gb->buf_size + gb->buf_get - gb->buf_put - 1) % gb->buf_size;
 }
@@ -217,11 +220,11 @@ static unsigned gs_buf_space_avail(struct gs_buf *gb)
  * Return the number of bytes copied.
  */
 static unsigned
-gs_buf_put(struct gs_buf *gb, const char *buf, unsigned count)
+pxa910_gs_buf_put(struct pxa910_gs_buf *gb, const char *buf, unsigned count)
 {
 	unsigned len;
 
-	len  = gs_buf_space_avail(gb);
+	len  = pxa910_gs_buf_space_avail(gb);
 	if (count > len)
 		count = len;
 
@@ -253,11 +256,11 @@ gs_buf_put(struct gs_buf *gb, const char *buf, unsigned count)
  * Return the number of bytes copied.
  */
 static unsigned
-gs_buf_get(struct gs_buf *gb, char *buf, unsigned count)
+pxa910_gs_buf_get(struct pxa910_gs_buf *gb, char *buf, unsigned count)
 {
 	unsigned len;
 
-	len = gs_buf_data_avail(gb);
+	len = pxa910_gs_buf_data_avail(gb);
 	if (count > len)
 		count = len;
 
@@ -291,7 +294,7 @@ gs_buf_get(struct gs_buf *gb, char *buf, unsigned count)
  * usb_request or NULL if there is an error.
  */
 struct usb_request *
-gs_alloc_req(struct usb_ep *ep, unsigned len, gfp_t kmalloc_flags)
+pxa910_gs_alloc_req(struct usb_ep *ep, unsigned len, gfp_t kmalloc_flags)
 {
 	struct usb_request *req;
 
@@ -299,7 +302,11 @@ gs_alloc_req(struct usb_ep *ep, unsigned len, gfp_t kmalloc_flags)
 
 	if (req != NULL) {
 		req->length = len;
+#ifdef CONFIG_PXA910_1G_DDR_WORKAROUND
+		req->buf = kmalloc(len, kmalloc_flags | GFP_DMA);
+#else
 		req->buf = kmalloc(len, kmalloc_flags);
+#endif
 		if (req->buf == NULL) {
 			usb_ep_free_request(ep, req);
 			return NULL;
@@ -314,7 +321,7 @@ gs_alloc_req(struct usb_ep *ep, unsigned len, gfp_t kmalloc_flags)
  *
  * Free a usb_request and its buffer.
  */
-void gs_free_req(struct usb_ep *ep, struct usb_request *req)
+void pxa910_gs_free_req(struct usb_ep *ep, struct usb_request *req)
 {
 	kfree(req->buf);
 	usb_ep_free_request(ep, req);
@@ -330,15 +337,15 @@ void gs_free_req(struct usb_ep *ep, struct usb_request *req)
  * Called with port_lock held.
  */
 static unsigned
-gs_send_packet(struct gs_port *port, char *packet, unsigned size)
+pxa910_gs_send_packet(struct pxa910_gs_port *port, char *packet, unsigned size)
 {
 	unsigned len;
 
-	len = gs_buf_data_avail(&port->port_write_buf);
+	len = pxa910_gs_buf_data_avail(&port->port_write_buf);
 	if (len < size)
 		size = len;
 	if (size != 0)
-		size = gs_buf_get(&port->port_write_buf, packet, size);
+		size = pxa910_gs_buf_get(&port->port_write_buf, packet, size);
 	return size;
 }
 
@@ -353,16 +360,22 @@ gs_send_packet(struct gs_port *port, char *packet, unsigned size)
  *
  * Context: caller owns port_lock; port_usb is non-null.
  */
-static int gs_start_tx(struct gs_port *port)
+static int pxa910_gs_start_tx(struct pxa910_gs_port *port)
 /*
 __releases(&port->port_lock)
 __acquires(&port->port_lock)
 */
 {
-	struct list_head	*pool = &port->write_pool;
-	struct usb_ep		*in = port->port_usb->in;
+	struct list_head	*pool;
+	struct usb_ep		*in;
 	int			status = 0;
 	bool			do_tty_wake = false;
+
+	if (NULL == port)
+		return 0;
+
+	pool = &port->write_pool;
+	in = port->port_usb->in;
 
 	while (!list_empty(pool)) {
 		struct usb_request	*req;
@@ -372,7 +385,7 @@ __acquires(&port->port_lock)
 			break;
 
 		req = list_entry(pool->next, struct usb_request, list);
-		len = gs_send_packet(port, req->buf, in->maxpacket);
+		len = pxa910_gs_send_packet(port, req->buf, in->maxpacket);
 		if (len == 0) {
 			wake_up_interruptible(&port->drain_wait);
 			break;
@@ -381,7 +394,8 @@ __acquires(&port->port_lock)
 
 		req->length = len;
 		list_del(&req->list);
-		req->zero = (gs_buf_data_avail(&port->port_write_buf) == 0);
+		req->zero =
+			(pxa910_gs_buf_data_avail(&port->port_write_buf) == 0);
 
 		pr_vdebug(PREFIX "%d: tx len=%d, 0x%02x 0x%02x 0x%02x ...\n",
 				port->port_num, len, *((u8 *)req->buf),
@@ -412,6 +426,9 @@ __acquires(&port->port_lock)
 			break;
 	}
 
+	if (do_tty_wake && port->port_usb)
+		wake_up_interruptible(&port->port_usb->port_send);
+
 	if (do_tty_wake && port->port_tty)
 		tty_wakeup(port->port_tty);
 	return status;
@@ -420,14 +437,20 @@ __acquires(&port->port_lock)
 /*
  * Context: caller owns port_lock, and port_usb is set
  */
-static unsigned gs_start_rx(struct gs_port *port)
+static unsigned pxa910_gs_start_rx(struct pxa910_gs_port *port)
 /*
 __releases(&port->port_lock)
 __acquires(&port->port_lock)
 */
 {
-	struct list_head	*pool = &port->read_pool;
-	struct usb_ep		*out = port->port_usb->out;
+	struct list_head	*pool;
+	struct usb_ep		*out;
+
+	if (NULL == port)
+		return 0;
+
+	pool = &port->read_pool;
+	out = port->port_usb->out;
 
 	while (!list_empty(pool)) {
 		struct usb_request	*req;
@@ -468,6 +491,7 @@ __acquires(&port->port_lock)
 	return port->read_started;
 }
 
+#if 0
 /*
  * RX tasklet takes data out of the RX queue and hands it up to the TTY
  * layer until it refuses to take any more data (or is throttled back).
@@ -478,9 +502,9 @@ __acquires(&port->port_lock)
  * So QUEUE_SIZE packets plus however many the FIFO holds (usually two)
  * can be buffered before the TTY layer's buffers (currently 64 KB).
  */
-static void gs_rx_push(unsigned long _port)
+static void pxa910_gs_rx_push(unsigned long _port)
 {
-	struct gs_port		*port = (void *)_port;
+	struct pxa910_gs_port		*port = (void *)_port;
 	struct tty_struct	*tty;
 	struct list_head	*queue = &port->read_queue;
 	bool			disconnect = false;
@@ -577,14 +601,15 @@ recycle:
 
 	/* If we're still connected, refill the USB RX queue. */
 	if (!disconnect && port->port_usb)
-		gs_start_rx(port);
+		pxa910_gs_start_rx(port);
 
 	spin_unlock_irq(&port->port_lock);
 }
+#endif
 
-static void gs_read_complete(struct usb_ep *ep, struct usb_request *req)
+static void pxa910_gs_read_complete(struct usb_ep *ep, struct usb_request *req)
 {
-	struct gs_port	*port = ep->driver_data;
+	struct pxa910_gs_port	*port = ep->driver_data;
 
 	/* Queue all received data until the tty layer is ready for it. */
 	spin_lock(&port->port_lock);
@@ -593,9 +618,10 @@ static void gs_read_complete(struct usb_ep *ep, struct usb_request *req)
 	spin_unlock(&port->port_lock);
 }
 
-static void gs_write_complete(struct usb_ep *ep, struct usb_request *req)
+static void
+pxa910_gs_write_complete(struct usb_ep *ep, struct usb_request *req)
 {
-	struct gs_port	*port = ep->driver_data;
+	struct pxa910_gs_port	*port = ep->driver_data;
 
 	spin_lock(&port->port_lock);
 	list_add(&req->list, &port->write_pool);
@@ -609,7 +635,7 @@ static void gs_write_complete(struct usb_ep *ep, struct usb_request *req)
 		/* FALL THROUGH */
 	case 0:
 		/* normal completion */
-		gs_start_tx(port);
+		pxa910_gs_start_tx(port);
 		break;
 
 	case -ESHUTDOWN:
@@ -621,7 +647,7 @@ static void gs_write_complete(struct usb_ep *ep, struct usb_request *req)
 	spin_unlock(&port->port_lock);
 }
 
-static void gs_free_requests(struct usb_ep *ep, struct list_head *head,
+static void pxa910_gs_free_requests(struct usb_ep *ep, struct list_head *head,
 							 int *allocated)
 {
 	struct usb_request	*req;
@@ -629,13 +655,13 @@ static void gs_free_requests(struct usb_ep *ep, struct list_head *head,
 	while (!list_empty(head)) {
 		req = list_entry(head->next, struct usb_request, list);
 		list_del(&req->list);
-		gs_free_req(ep, req);
+		pxa910_gs_free_req(ep, req);
 		if (allocated)
 			(*allocated)--;
 	}
 }
 
-static int gs_alloc_requests(struct usb_ep *ep, struct list_head *head,
+static int pxa910_gs_alloc_requests(struct usb_ep *ep, struct list_head *head,
 		void (*fn)(struct usb_ep *, struct usb_request *),
 		int *allocated)
 {
@@ -648,7 +674,7 @@ static int gs_alloc_requests(struct usb_ep *ep, struct list_head *head,
 	 * be as speedy as we might otherwise be.
 	 */
 	for (i = 0; i < n; i++) {
-		req = gs_alloc_req(ep, ep->maxpacket, GFP_ATOMIC);
+		req = pxa910_gs_alloc_req(ep, ep->maxpacket, GFP_ATOMIC);
 		if (!req)
 			return list_empty(head) ? -ENOMEM : 0;
 		req->complete = fn;
@@ -668,7 +694,7 @@ static int gs_alloc_requests(struct usb_ep *ep, struct list_head *head,
  * this port.  If nothing is listening on the host side, we may
  * be pointlessly filling up our TX buffers and FIFO.
  */
-static int gs_start_io(struct gs_port *port)
+static int pxa910_gs_start_io(struct pxa910_gs_port *port)
 {
 	struct list_head	*head = &port->read_pool;
 	struct usb_ep		*ep = port->port_usb->out;
@@ -681,28 +707,28 @@ static int gs_start_io(struct gs_port *port)
 	 * configurations may use different endpoints with a given port;
 	 * and high speed vs full speed changes packet sizes too.
 	 */
-	status = gs_alloc_requests(ep, head, gs_read_complete,
+	status = pxa910_gs_alloc_requests(ep, head, pxa910_gs_read_complete,
 		&port->read_allocated);
 	if (status)
 		return status;
 
-	status = gs_alloc_requests(port->port_usb->in, &port->write_pool,
-			gs_write_complete, &port->write_allocated);
+	status = pxa910_gs_alloc_requests(port->port_usb->in, &port->write_pool,
+			pxa910_gs_write_complete, &port->write_allocated);
 	if (status) {
-		gs_free_requests(ep, head, &port->read_allocated);
+		pxa910_gs_free_requests(ep, head, &port->read_allocated);
 		return status;
 	}
 
 	/* queue read requests */
 	port->n_read = 0;
-	started = gs_start_rx(port);
+	started = pxa910_gs_start_rx(port);
 
 	/* unblock any pending writes into our circular buffer */
 	if (started) {
 		tty_wakeup(port->port_tty);
 	} else {
-		gs_free_requests(ep, head, &port->read_allocated);
-		gs_free_requests(port->port_usb->in, &port->write_pool,
+		pxa910_gs_free_requests(ep, head, &port->read_allocated);
+		pxa910_gs_free_requests(port->port_usb->in, &port->write_pool,
 			&port->write_allocated);
 		status = -EIO;
 	}
@@ -719,15 +745,26 @@ static int gs_start_io(struct gs_port *port)
  * That link is broken *only* by TTY close(), and all driver methods
  * know that.
  */
-static int gs_open(struct tty_struct *tty, struct file *file)
+static int pxa910_gs_open(struct tty_struct *tty, struct file *file)
 {
-	int		port_num = tty->index;
-	struct gs_port	*port;
-	int		status;
+	int port_num;
+	struct pxa910_gs_port *port;
+	int status;
+	char *ttydiag = "ttydiag";
+	char *ttymodem = "ttymodem";
+
+	if (!strcmp(ttymodem, tty->driver->name))
+		port_num = 0;
+
+	if (!strcmp(ttydiag, tty->driver->name))
+		port_num = 1;
+
+	if ((port_num < 0) || (port_num >= ((int)n_modem_ports + (int)n_modem_ports)))
+		return -ENXIO;
 
 	do {
-		mutex_lock(&ports[port_num].lock);
-		port = ports[port_num].port;
+		mutex_lock(&pxa910_ports[port_num].lock);
+		port = pxa910_ports[port_num].port;
 		if (!port)
 			status = -ENODEV;
 		else {
@@ -749,7 +786,7 @@ static int gs_open(struct tty_struct *tty, struct file *file)
 			}
 			spin_unlock_irq(&port->port_lock);
 		}
-		mutex_unlock(&ports[port_num].lock);
+		mutex_unlock(&pxa910_ports[port_num].lock);
 
 		switch (status) {
 		default:
@@ -760,7 +797,7 @@ static int gs_open(struct tty_struct *tty, struct file *file)
 			break;
 		case -EBUSY:
 			/* wait for EAGAIN task to finish */
-			msleep(1);
+			usleep_range(1000, 1500);
 			/* REVISIT could have a waitchannel here, if
 			 * concurrent open performance is important
 			 */
@@ -775,7 +812,8 @@ static int gs_open(struct tty_struct *tty, struct file *file)
 	if (port->port_write_buf.buf_buf == NULL) {
 
 		spin_unlock_irq(&port->port_lock);
-		status = gs_buf_alloc(&port->port_write_buf, WRITE_BUF_SIZE);
+		status = pxa910_gs_buf_alloc(&port->port_write_buf,
+						PXA910_WRITE_BUF_SIZE);
 		spin_lock_irq(&port->port_lock);
 
 		if (status) {
@@ -800,10 +838,10 @@ static int gs_open(struct tty_struct *tty, struct file *file)
 
 	/* if connected, start the I/O stream */
 	if (port->port_usb) {
-		struct gserial	*gser = port->port_usb;
+		struct pxa910_gserial	*gser = port->port_usb;
 
 		pr_debug("gs_open: start ttyGS%d\n", port->port_num);
-		gs_start_io(port);
+		pxa910_gs_start_io(port);
 
 		if (gser->connect)
 			gser->connect(gser);
@@ -818,22 +856,23 @@ exit_unlock_port:
 	return status;
 }
 
-static int gs_writes_finished(struct gs_port *p)
+static int pxa910_gs_writes_finished(struct pxa910_gs_port *p)
 {
 	int cond;
 
 	/* return true on disconnect or empty buffer */
 	spin_lock_irq(&p->port_lock);
-	cond = (p->port_usb == NULL) || !gs_buf_data_avail(&p->port_write_buf);
+	cond = (p->port_usb == NULL) ||
+		!pxa910_gs_buf_data_avail(&p->port_write_buf);
 	spin_unlock_irq(&p->port_lock);
 
 	return cond;
 }
 
-static void gs_close(struct tty_struct *tty, struct file *file)
+static void pxa910_gs_close(struct tty_struct *tty, struct file *file)
 {
-	struct gs_port *port = tty->driver_data;
-	struct gserial	*gser;
+	struct pxa910_gs_port *port = tty->driver_data;
+	struct pxa910_gserial	*gser;
 
 	spin_lock_irq(&port->port_lock);
 
@@ -860,10 +899,10 @@ static void gs_close(struct tty_struct *tty, struct file *file)
 	/* wait for circular write buffer to drain, disconnect, or at
 	 * most GS_CLOSE_TIMEOUT seconds; then discard the rest
 	 */
-	if (gs_buf_data_avail(&port->port_write_buf) > 0 && gser) {
+	if (pxa910_gs_buf_data_avail(&port->port_write_buf) > 0 && gser) {
 		spin_unlock_irq(&port->port_lock);
 		wait_event_interruptible_timeout(port->drain_wait,
-					gs_writes_finished(port),
+					pxa910_gs_writes_finished(port),
 					GS_CLOSE_TIMEOUT * HZ);
 		spin_lock_irq(&port->port_lock);
 		gser = port->port_usb;
@@ -874,9 +913,9 @@ static void gs_close(struct tty_struct *tty, struct file *file)
 	 * let the push tasklet fire again until we're re-opened.
 	 */
 	if (gser == NULL)
-		gs_buf_free(&port->port_write_buf);
+		pxa910_gs_buf_free(&port->port_write_buf);
 	else
-		gs_buf_clear(&port->port_write_buf);
+		pxa910_gs_buf_clear(&port->port_write_buf);
 
 	tty->driver_data = NULL;
 	port->port_tty = NULL;
@@ -891,29 +930,39 @@ exit:
 	spin_unlock_irq(&port->port_lock);
 }
 
-static int gs_write(struct tty_struct *tty, const unsigned char *buf, int count)
+static int
+pxa910_gs_write(struct tty_struct *tty, const unsigned char *buf, int count)
 {
-	struct gs_port	*port = tty->driver_data;
+	struct pxa910_gs_port	*port = tty->driver_data;
 	unsigned long	flags;
 	int		status;
 
 	pr_vdebug("gs_write: ttyGS%d (%p) writing %d bytes\n",
 			port->port_num, tty, count);
 
+	if (port == NULL) {
+		pr_err("pxa910_gs_write: port is NULL!\n");
+		return -EPERM;
+	}
+
 	spin_lock_irqsave(&port->port_lock, flags);
 	if (count)
-		count = gs_buf_put(&port->port_write_buf, buf, count);
+		count = pxa910_gs_buf_put(&port->port_write_buf, buf, count);
 	/* treat count == 0 as flush_chars() */
 	if (port->port_usb)
-		status = gs_start_tx(port);
+		status = pxa910_gs_start_tx(port);
 	spin_unlock_irqrestore(&port->port_lock, flags);
 
+	if (!count) {
+		pr_vdebug("%s: buffer full!\n", __func__);
+		return -EAGAIN;
+	}
 	return count;
 }
 
-static int gs_put_char(struct tty_struct *tty, unsigned char ch)
+static int pxa910_gs_put_char(struct tty_struct *tty, unsigned char ch)
 {
-	struct gs_port	*port = tty->driver_data;
+	struct pxa910_gs_port	*port = tty->driver_data;
 	unsigned long	flags;
 	int		status;
 
@@ -921,34 +970,34 @@ static int gs_put_char(struct tty_struct *tty, unsigned char ch)
 		port->port_num, tty, ch, __builtin_return_address(0));
 
 	spin_lock_irqsave(&port->port_lock, flags);
-	status = gs_buf_put(&port->port_write_buf, &ch, 1);
+	status = pxa910_gs_buf_put(&port->port_write_buf, &ch, 1);
 	spin_unlock_irqrestore(&port->port_lock, flags);
 
 	return status;
 }
 
-static void gs_flush_chars(struct tty_struct *tty)
+static void pxa910_gs_flush_chars(struct tty_struct *tty)
 {
-	struct gs_port	*port = tty->driver_data;
+	struct pxa910_gs_port	*port = tty->driver_data;
 	unsigned long	flags;
 
 	pr_vdebug("gs_flush_chars: (%d,%p)\n", port->port_num, tty);
 
 	spin_lock_irqsave(&port->port_lock, flags);
 	if (port->port_usb)
-		gs_start_tx(port);
+		pxa910_gs_start_tx(port);
 	spin_unlock_irqrestore(&port->port_lock, flags);
 }
 
-static int gs_write_room(struct tty_struct *tty)
+static int pxa910_gs_write_room(struct tty_struct *tty)
 {
-	struct gs_port	*port = tty->driver_data;
+	struct pxa910_gs_port	*port = tty->driver_data;
 	unsigned long	flags;
 	int		room = 0;
 
 	spin_lock_irqsave(&port->port_lock, flags);
 	if (port->port_usb)
-		room = gs_buf_space_avail(&port->port_write_buf);
+		room = pxa910_gs_buf_space_avail(&port->port_write_buf);
 	spin_unlock_irqrestore(&port->port_lock, flags);
 
 	pr_vdebug("gs_write_room: (%d,%p) room=%d\n",
@@ -957,14 +1006,14 @@ static int gs_write_room(struct tty_struct *tty)
 	return room;
 }
 
-static int gs_chars_in_buffer(struct tty_struct *tty)
+static int pxa910_gs_chars_in_buffer(struct tty_struct *tty)
 {
-	struct gs_port	*port = tty->driver_data;
+	struct pxa910_gs_port	*port = tty->driver_data;
 	unsigned long	flags;
 	int		chars = 0;
 
 	spin_lock_irqsave(&port->port_lock, flags);
-	chars = gs_buf_data_avail(&port->port_write_buf);
+	chars = pxa910_gs_buf_data_avail(&port->port_write_buf);
 	spin_unlock_irqrestore(&port->port_lock, flags);
 
 	pr_vdebug("gs_chars_in_buffer: (%d,%p) chars=%d\n",
@@ -974,9 +1023,9 @@ static int gs_chars_in_buffer(struct tty_struct *tty)
 }
 
 /* undo side effects of setting TTY_THROTTLED */
-static void gs_unthrottle(struct tty_struct *tty)
+static void pxa910_gs_unthrottle(struct tty_struct *tty)
 {
-	struct gs_port		*port = tty->driver_data;
+	struct pxa910_gs_port		*port = tty->driver_data;
 	unsigned long		flags;
 
 	spin_lock_irqsave(&port->port_lock, flags);
@@ -991,13 +1040,13 @@ static void gs_unthrottle(struct tty_struct *tty)
 	spin_unlock_irqrestore(&port->port_lock, flags);
 }
 
-static int gs_break_ctl(struct tty_struct *tty, int duration)
+static int pxa910_gs_break_ctl(struct tty_struct *tty, int duration)
 {
-	struct gs_port	*port = tty->driver_data;
+	struct pxa910_gs_port	*port = tty->driver_data;
 	int		status = 0;
-	struct gserial	*gser;
+	struct pxa910_gserial	*gser;
 
-	pr_vdebug("gs_break_ctl: ttyGS%d, send break (%d) \n",
+	pr_vdebug("gs_break_ctl: ttyGS%d, send break (%d)\n",
 			port->port_num, duration);
 
 	spin_lock_irq(&port->port_lock);
@@ -1009,28 +1058,30 @@ static int gs_break_ctl(struct tty_struct *tty, int duration)
 	return status;
 }
 
-static const struct tty_operations gs_tty_ops = {
-	.open =			gs_open,
-	.close =		gs_close,
-	.write =		gs_write,
-	.put_char =		gs_put_char,
-	.flush_chars =		gs_flush_chars,
-	.write_room =		gs_write_room,
-	.chars_in_buffer =	gs_chars_in_buffer,
-	.unthrottle =		gs_unthrottle,
-	.break_ctl =		gs_break_ctl,
+static const struct tty_operations pxa910_gs_tty_ops = {
+	.open =			pxa910_gs_open,
+	.close =		pxa910_gs_close,
+	.write =		pxa910_gs_write,
+	.put_char =		pxa910_gs_put_char,
+	.flush_chars =		pxa910_gs_flush_chars,
+	.write_room =		pxa910_gs_write_room,
+	.chars_in_buffer =	pxa910_gs_chars_in_buffer,
+	.unthrottle =		pxa910_gs_unthrottle,
+	.break_ctl =		pxa910_gs_break_ctl,
 };
 
 /*-------------------------------------------------------------------------*/
 
-static struct tty_driver *gs_tty_driver;
+static struct tty_driver *gs_modem_tty_driver;
+static struct tty_driver *gs_diag_tty_driver;
 
+#if 0
 static int
-gs_port_alloc(unsigned port_num, struct usb_cdc_line_coding *coding)
+pxa910_gs_port_alloc(unsigned port_num, struct usb_cdc_line_coding *coding)
 {
-	struct gs_port	*port;
+	struct pxa910_gs_port	*port;
 
-	port = kzalloc(sizeof(struct gs_port), GFP_KERNEL);
+	port = kzalloc(sizeof(struct pxa910_gs_port), GFP_KERNEL);
 	if (port == NULL)
 		return -ENOMEM;
 
@@ -1047,7 +1098,7 @@ gs_port_alloc(unsigned port_num, struct usb_cdc_line_coding *coding)
 	port->port_num = port_num;
 	port->port_line_coding = *coding;
 
-	ports[port_num].port = port;
+	pxa910_ports[port_num].port = port;
 
 	return 0;
 }
@@ -1071,7 +1122,7 @@ gs_port_alloc(unsigned port_num, struct usb_cdc_line_coding *coding)
  *
  * Returns negative errno or zero.
  */
-int gserial_setup(struct usb_gadget *g, unsigned count)
+int pxa910_gserial_setup(struct usb_gadget *g, unsigned count)
 {
 	unsigned			i;
 	struct usb_cdc_line_coding	coding;
@@ -1149,8 +1200,9 @@ fail:
 	gs_tty_driver = NULL;
 	return status;
 }
+#endif
 
-static int gs_closed(struct gs_port *port)
+static int pxa910_gs_closed(struct pxa910_gs_port *port)
 {
 	int cond;
 
@@ -1160,6 +1212,7 @@ static int gs_closed(struct gs_port *port)
 	return cond;
 }
 
+#if 0
 /**
  * gserial_cleanup - remove TTY-over-USB driver and devices
  * Context: may sleep
@@ -1172,10 +1225,10 @@ static int gs_closed(struct gs_port *port)
  * that had previously been connected, so that there is never any
  * I/O pending when it's called.
  */
-void gserial_cleanup(void)
+void pxa910_gserial_cleanup(void)
 {
 	unsigned	i;
-	struct gs_port	*port;
+	struct pxa910_gs_port	*port;
 
 	if (!gs_tty_driver)
 		return;
@@ -1202,12 +1255,13 @@ void gserial_cleanup(void)
 	}
 	n_ports = 0;
 
-	tty_unregister_driver(gs_tty_driver);
-	put_tty_driver(gs_tty_driver);
-	gs_tty_driver = NULL;
+	tty_unregister_driver(pxa910_gs_tty_driver);
+	put_tty_driver(pxa910_gs_tty_driver);
+	pxa910_gs_tty_driver = NULL;
 
 	pr_debug("%s: cleaned up ttyGS* support\n", __func__);
 }
+#endif
 
 /**
  * gserial_connect - notify TTY I/O glue that USB link is active
@@ -1230,17 +1284,20 @@ void gserial_cleanup(void)
  * Returns negative errno or zero.
  * On success, ep->driver_data will be overwritten.
  */
-int gserial_connect(struct gserial *gser, u8 port_num)
+int pxa910_gserial_connect(struct pxa910_gserial *gser, u8 port_num)
 {
-	struct gs_port	*port;
+	struct pxa910_gs_port	*port;
 	unsigned long	flags;
 	int		status;
 
-	if (!gs_tty_driver || port_num >= n_ports)
+	if (port_num >= (n_modem_ports + n_diag_ports))
+		return -ENXIO;
+
+	if (!gs_modem_tty_driver || !gs_diag_tty_driver)
 		return -ENXIO;
 
 	/* we "know" gserial_cleanup() hasn't been called */
-	port = ports[port_num].port;
+	port = pxa910_ports[port_num].port;
 
 	/* activate the endpoints */
 	status = usb_ep_enable(gser->in);
@@ -1270,7 +1327,7 @@ int gserial_connect(struct gserial *gser, u8 port_num)
 	 */
 	if (port->open_count) {
 		pr_debug("gserial_connect: start ttyGS%d\n", port->port_num);
-		gs_start_io(port);
+		pxa910_gs_start_io(port);
 		if (gser->connect)
 			gser->connect(gser);
 	} else {
@@ -1299,9 +1356,9 @@ fail_out:
  * On return, the state is as if gserial_connect() had never been called;
  * there is no active USB I/O on these endpoints.
  */
-void gserial_disconnect(struct gserial *gser)
+void pxa910_gserial_disconnect(struct pxa910_gserial *gser)
 {
-	struct gs_port	*port = gser->ioport;
+	struct pxa910_gs_port	*port = gser->ioport;
 	unsigned long	flags;
 
 	if (!port)
@@ -1332,10 +1389,10 @@ void gserial_disconnect(struct gserial *gser)
 	/* finally, free any unused/unusable I/O buffers */
 	spin_lock_irqsave(&port->port_lock, flags);
 	if (port->open_count == 0 && !port->openclose)
-		gs_buf_free(&port->port_write_buf);
-	gs_free_requests(gser->out, &port->read_pool, NULL);
-	gs_free_requests(gser->out, &port->read_queue, NULL);
-	gs_free_requests(gser->in, &port->write_pool, NULL);
+		pxa910_gs_buf_free(&port->port_write_buf);
+	pxa910_gs_free_requests(gser->out, &port->read_pool, NULL);
+	pxa910_gs_free_requests(gser->out, &port->read_queue, NULL);
+	pxa910_gs_free_requests(gser->in, &port->write_pool, NULL);
 
 	port->read_allocated = port->read_started =
 		port->write_allocated = port->write_started = 0;
