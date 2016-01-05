@@ -849,6 +849,17 @@ static int print_wakeup_source_stats(struct seq_file *m,
 	return ret;
 }
 
+void print_active_wakeup_events(void)
+{
+	struct wakeup_source *ws;
+
+	rcu_read_lock();
+	list_for_each_entry_rcu(ws, &wakeup_sources, entry)
+		if (ws->active)
+			pr_info("Active wakeup event %s\n", ws->name);
+	rcu_read_unlock();
+}
+
 /**
  * wakeup_sources_stats_show - Print wakeup sources statistics information.
  * @m: seq_file to print the statistics into.
