@@ -2250,6 +2250,7 @@ int snd_soc_dapm_new_widgets(struct snd_soc_dapm_context *dapm)
 				return -ENOMEM;
 			}
 		}
+		}
 
 		switch(w->id) {
 		case snd_soc_dapm_switch:
