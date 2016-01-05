@@ -242,6 +242,10 @@ int ion_share_dma_buf_fd(struct ion_client *client, struct ion_handle *handle);
  */
 struct ion_handle *ion_import_dma_buf(struct ion_client *client, int fd);
 
+bool ion_handle_validate(struct ion_client *client, struct ion_handle *handle);
+
+struct vm_area_struct *pxa_ion_find_vma(struct ion_buffer *buffer);
+
 #endif /* __KERNEL__ */
 
 /**
@@ -258,7 +262,7 @@ struct ion_handle *ion_import_dma_buf(struct ion_client *client, int fd);
  * @align:		required alignment of the allocation
  * @heap_id_mask:	mask of heap ids to allocate from
  * @flags:		flags passed to heap
- * @handle:		pointer that will be populated with a cookie to use to 
+ * @handle:		pointer that will be populated with a cookie to use to
  *			refer to this allocation
  *
  * Provided by userspace as an argument to the ioctl
@@ -292,6 +296,27 @@ struct ion_fd_data {
  */
 struct ion_handle_data {
 	struct ion_handle *handle;
+};
+
+/**
+ * struct ion_buffer_name_data - passed to/from userspace for a name/fd pair
+ * @fd:		a file descriptor of the buffer exported
+ * @name:	optional name of the buffer
+ */
+#define ION_BUFFER_NAME_LEN	16
+struct ion_buffer_name_data {
+	int fd;
+	char name[ION_BUFFER_NAME_LEN];
+};
+
+/**
+ * struct ion_phys_data - passed to/from userspace for a fd/addr pair
+ * @fd:		a file descriptor of the buffer exported
+ * @addr:	phys or dma address of the buffer
+ */
+struct ion_phys_data {
+	int fd;
+	unsigned long addr;
 };
 
 /**
@@ -372,5 +397,19 @@ struct ion_custom_data {
  * passes appropriate userdata for that ioctl
  */
 #define ION_IOC_CUSTOM		_IOWR(ION_IOC_MAGIC, 6, struct ion_custom_data)
+
+/**
+ * DOC: ION_IOC_NAME - assign a name to the buffer
+ *
+ * Takes an ion_buffer_name_data with share_fd and a string name.
+ */
+#define ION_IOC_NAME	_IOWR(ION_IOC_MAGIC, 8, struct ion_buffer_name_data)
+
+/**
+ * DOC: ION_IOC_PHYS - get the physical address or iova of the buffer
+ *
+ * Takes an ion_phys_data with share_fd and returns the address.
+ */
+#define ION_IOC_PHYS		_IOWR(ION_IOC_MAGIC, 9, struct ion_phys_data)
 
 #endif /* _LINUX_ION_H */

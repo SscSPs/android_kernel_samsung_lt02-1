@@ -248,6 +248,20 @@ static inline int freezable_schedule_hrtimeout_range(ktime_t *expires,
 }
 
 /*
+  * Like schedule_hrtimeout_range(), but should not block the freezer.  Do not
+  * call this with locks held.
+  */
+static inline int freezable_schedule_hrtimeout_range(ktime_t *expires,
+		unsigned long delta, const enum hrtimer_mode mode)
+{
+	int __retval;
+	freezer_do_not_count();
+	__retval = schedule_hrtimeout_range(expires, delta, mode);
+	freezer_count();
+	return __retval;
+}
+
+/*
  * Freezer-friendly wrappers around wait_event_interruptible(),
  * wait_event_killable() and wait_event_interruptible_timeout(), originally
  * defined in <linux/wait.h>
