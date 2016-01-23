@@ -43,6 +43,98 @@ static inline int cpu_is_pxa910(void)
 #define cpu_is_pxa910()	(0)
 #endif
 
+/* cpu_is_pxa988() is shared on both pxa988 and pxa986 */
+#ifdef CONFIG_CPU_PXA988
+static inline int cpu_is_pxa988(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		(((mmp_chip_id & 0xffff) == 0xc988) ||
+		((mmp_chip_id & 0xffff) == 0xc928));
+}
+static inline int cpu_is_pxa988_z1(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xf0c928);
+}
+static inline int cpu_is_pxa988_z2(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xf1c988);
+}
+static inline int cpu_is_pxa988_z3(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xf2c988);
+}
+static inline int cpu_is_pxa988_a0(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xa0c928);
+}
+static inline int cpu_is_pxa986(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		(((mmp_chip_id & 0xffff) == 0xc986) ||
+		((mmp_chip_id & 0xffff) == 0xc926));
+}
+static inline int cpu_is_pxa986_z1(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xf0c926);
+}
+static inline int cpu_is_pxa986_z2(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xf1c986);
+}
+static inline int cpu_is_pxa986_z3(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xf2c986);
+}
+static inline int cpu_is_pxa986_a0(void)
+{
+	return (((read_cpuid_id() >> 4) & 0xfff) == 0xc09) &&
+		((mmp_chip_id & 0xffffff) == 0xa0c926);
+}
+static inline int cpu_is_pxa1088(void)
+{
+	return 0;
+}
+
+static inline int cpu_is_pxa1L88(void)
+{
+	return 0;
+}
+
+#define PXA98X_Z1       0x00
+#define PXA98X_Z2       0x01
+#define PXA98X_Z3       0x02
+#define PXA98X_A0       0xA0
+
+static inline int cpu_pxa98x_stepping(void)
+{
+	if ((mmp_chip_id & 0xf00000) == 0xf00000)
+		return (mmp_chip_id & 0xf0000) >> 16;
+
+	return (mmp_chip_id & 0xff0000) >> 16;
+}
+#else
+#define cpu_is_pxa988()		(0)
+#define cpu_is_pxa988_z1()	(0)
+#define cpu_is_pxa988_z2()	(0)
+#define cpu_is_pxa988_z3()	(0)
+#define cpu_is_pxa988_a0()	(0)
+#define cpu_is_pxa986()		(0)
+#define cpu_is_pxa986_z1()	(0)
+#define cpu_is_pxa986_z2()	(0)
+#define cpu_is_pxa986_z3()	(0)
+#define cpu_is_pxa986_a0()	(0)
+#define cpu_is_pxa1088()	(0)
+#define cpu_is_pxa1L88()	(0)
+#define cpu_pxa98x_stepping()	(0)
+#endif
+
 #ifdef CONFIG_CPU_MMP2
 static inline int cpu_is_mmp2(void)
 {
