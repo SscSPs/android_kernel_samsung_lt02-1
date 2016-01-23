@@ -190,8 +190,8 @@ static struct resource pxa988_resource_rtc[] = {
 		.end	= 0xd401003f,
 		.flags	= IORESOURCE_MEM,
 	}, {
-		.start	= IRQ_PXA910_RTC_INT,
-		.end	= IRQ_PXA910_RTC_INT,
+		.start	= IRQ_PXA988_RTC_INT,
+		.end	= IRQ_PXA988_RTC_INT,
 		.name	= "rtc 1Hz",
 		.flags	= IORESOURCE_IRQ,
 	}, {
