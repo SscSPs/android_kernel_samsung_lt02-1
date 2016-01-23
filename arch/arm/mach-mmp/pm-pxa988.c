@@ -34,7 +34,7 @@ int pxa988_set_wake(struct irq_data *data, unsigned int on)
 	/* setting wakeup sources */
 	switch (irq) {
 	/* wakeup line 2 */
-	case IRQ_PXA988_AP_GPIO:
+	case IRQ_PXA910_AP_GPIO:
 		awucrm = MPMU_AWUCRM_WAKEUP(2);
 		apcr |= MPMU_APCR_SLPWP2;
 		break;
@@ -43,11 +43,11 @@ int pxa988_set_wake(struct irq_data *data, unsigned int on)
 		awucrm = MPMU_AWUCRM_WAKEUP(3) | MPMU_AWUCRM_KEYPRESS;
 		apcr |= MPMU_APCR_SLPWP3;
 		break;
-	case IRQ_PXA988_ROTARY:
+	case IRQ_PXA910_ROTARY:
 		awucrm = MPMU_AWUCRM_WAKEUP(3) | MPMU_AWUCRM_NEWROTARY;
 		apcr |= MPMU_APCR_SLPWP3;
 		break;
-	case IRQ_PXA988_TRACKBALL:
+	case IRQ_PXA910_TRACKBALL:
 		awucrm = MPMU_AWUCRM_WAKEUP(3) | MPMU_AWUCRM_TRACKBALL;
 		apcr |= MPMU_APCR_SLPWP3;
 		break;
@@ -56,24 +56,18 @@ int pxa988_set_wake(struct irq_data *data, unsigned int on)
 		awucrm = MPMU_AWUCRM_WAKEUP(4) | MPMU_AWUCRM_AP1_TIMER_1;
 		apcr |= MPMU_APCR_SLPWP4;
 		break;
-	case IRQ_PXA988_AP1_TIMER2:
+	case IRQ_PXA988_AP1_TIMER2_3:
+		/* AP1_TIMER_2 can be AP1_TIMER_2_3 */
 		awucrm = MPMU_AWUCRM_WAKEUP(4) | MPMU_AWUCRM_AP1_TIMER_2;
-		apcr |= MPMU_APCR_SLPWP4;
-		break;
-	case IRQ_PXA988_AP1_TIMER3:
-		awucrm = MPMU_AWUCRM_WAKEUP(4) | MPMU_AWUCRM_AP1_TIMER_3;
 		apcr |= MPMU_APCR_SLPWP4;
 		break;
 	case IRQ_PXA988_AP2_TIMER1:
 		awucrm = MPMU_AWUCRM_WAKEUP(4) | MPMU_AWUCRM_AP2_TIMER_1;
 		apcr |= MPMU_APCR_SLPWP4;
 		break;
-	case IRQ_PXA988_AP2_TIMER2:
+	case IRQ_PXA988_AP2_TIMER2_3:
+		/* AP2_TIMER_2 can be AP2_TIMER_3 */
 		awucrm = MPMU_AWUCRM_WAKEUP(4) | MPMU_AWUCRM_AP2_TIMER_2;
-		apcr |= MPMU_APCR_SLPWP4;
-		break;
-	case IRQ_PXA988_AP2_TIMER3:
-		awucrm = MPMU_AWUCRM_WAKEUP(4) | MPMU_AWUCRM_AP2_TIMER_3;
 		apcr |= MPMU_APCR_SLPWP4;
 		break;
 	case IRQ_PXA988_RTC_ALARM:
@@ -82,7 +76,7 @@ int pxa988_set_wake(struct irq_data *data, unsigned int on)
 		break;
 	/* wakeup line 5 */
 	case IRQ_PXA988_USB1:
-	case IRQ_PXA988_USB2:
+	case IRQ_PXA910_USB2:
 		awucrm = MPMU_AWUCRM_WAKEUP(5);
 		apcr |= MPMU_APCR_SLPWP5;
 		break;
