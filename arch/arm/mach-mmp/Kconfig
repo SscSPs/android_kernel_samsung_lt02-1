@@ -54,6 +54,14 @@ config MACH_TTC_DKB
 	  Say 'Y' here if you want to support the Marvell PXA910-based
 	  TTC_DKB Development Board.
 
+config MACH_LT02
+	bool "Samsung's Galaxy Tab 3 7.0\" Board"
+	depends on ARCH_MULTI_V7
+	select CPU_PXA988
+	help
+	  Say 'Y' here if you want to support the Galaxy Tab 3 7.0\"
+	  LT02 Board
+
 config MACH_BROWNSTONE
 	bool "Marvell's Brownstone Development Platform"
 	depends on ARCH_MULTI_V7
@@ -141,6 +149,12 @@ config CPU_PXA910
 	select CPU_MOHAWK
 	help
 	  Select code specific to PXA910
+
+config CPU_PXA988
+	bool
+	select MACH_MMP2_DT
+	help
+	  Select code specific to PXA988
 
 config CPU_MMP2
 	bool

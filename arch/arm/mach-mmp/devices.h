@@ -38,6 +38,16 @@ struct pxa_device_desc pxa910_device_##_name __initdata = {		\
 	.dma		= { _dma },					\
 };
 
+#define PXA988_DEVICE(_name, _drv, _id, _irq, _start, _size, _dma...)	\
+struct pxa_device_desc pxa988_device_##_name __initdata = {		\
+	.dev_name	= "pxa988-" #_name,				\
+	.drv_name	= _drv,						\
+	.id		= _id,						\
+	.irq		= IRQ_PXA988_##_irq,				\
+	.start		= _start,					\
+	.size		= _size,					\
+	.dma		= { _dma },					\
+};
 #define MMP2_DEVICE(_name, _drv, _id, _irq, _start, _size, _dma...)	\
 struct pxa_device_desc mmp2_device_##_name __initdata = {		\
 	.dev_name	= "mmp2-" #_name,				\
