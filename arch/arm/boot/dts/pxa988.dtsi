@@ -170,6 +170,7 @@
 				interrupt-names = "rtc 1Hz", "rtc alarm";
 				status = "disabled";
 			};
+
 			pmx: pinmux@d401e000 {
 				compatible = "pinconf-single";
 				reg = <0xd401e000 0x330>;
@@ -184,6 +185,24 @@
 				range: gpio-range {
 					#pinctrl-single,gpio-range-cells =
 <3>;
+				};
+			};
+
+			pmu: power-management@d0000 {
+				compatible = "marvell,pxa988-pmu", "marvell,dove-pmu", "simple-bus"; /* TODO FIX */
+				reg = <0xd0000 0x8000>, <0xd8000 0x8000>;
+				ranges = <0x00000000 0x000d0000 0x8000
+					  0x00008000 0x000d8000 0x8000>;
+				interrupts = <33>;
+				interrupt-controller;
+				#address-cells = <1>;
+				#size-cells = <1>;
+				#interrupt-cells = <1>;
+				#reset-cells = <1>;
+				divider_clk: core-clock@0064 {
+					compatible = "marvell,pxa988-divider-clock", "marvell,dove-divider-clock"; /* TODO FIX */
+					reg = <0x0064 0x8>;
+					#clock-cells = <1>;
 				};
 			};
 		};

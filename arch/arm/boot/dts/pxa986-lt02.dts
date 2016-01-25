@@ -1,0 +1,166 @@
+/*
+ *  dts file for PXA986 as found on LT02 (Galaxy Tab 3 7.0")
+ *  Copyright (C) 2016  Taylor Smock
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/*
+ * The LT02 board comes with several options
+ *
+ * Memory options:
+ *  4G
+ *
+ * NAND options:
+ *  8G NAND
+ *
+ * Audio options:
+ *  A:
+ *
+ * Touchscreen options:
+ *  I: Zinitix BT532 Touchscreen
+ *
+ * USB options:
+ *  U1: fsa9480 micro USB
+ *
+ * WiFi options:
+ *  W: Marvell SD8787
+ *
+ * GPIOs used on LT02
+ *  128 volup_key
+ *  129 voldown_key
+ *  133 battery-irq
+ *  140 headset com detect
+ *  141 home_key
+ *  218 sdhci-pxav3.0 cd
+ *  220 proximity_int
+ *  221 fsa9480 micro USB
+ *  222 bt532_ts_device
+ *  252 88pm805
+ *
+ * Drivers of interest:
+ * mwifiex -- WiFi
+ * bt_mrvl -- Bluetooth
+ * 88PM80x -- RTC support
+ * RTC_DRV_SA1100 -- RTC support
+ * 88pm80x-onkey -- On Key reporting
+ * 88PM800 -- Voltage regulator chip
+ * 88PM860x -- Backlight bindings
+ * GP2AP020A00F -- Light/Proximity sensor
+ * BMC150 (may need BMA222E/BMM050) -- Accelerometer
+ * etnaviv -- DRM graphics driver
+ * UIO_CODA7542 -- multiformat video decoder engine (not mainlined)
+ * STC3115/SMB358 -- battery driver (not mainlined)
+ * video_mmp -- camera?
+ * SR130PC10/SR352 -- camera? (not mainlined)
+ * SND_MMP_SOC -- sound
+ * SND_PXA988_SOC -- sound (not mainlined)
+ * MMP_TDMA -- audio
+ * CONFIG_SND_SOC_EMEI_DKB -- sound (not mainlined)
+ * HID_SAMSUNG -- IR?
+ * CONFIG_MMC_SDHCI_PXAV3 -- storage card support
+ */
+
+/dts-v1/;
+/include/ "pxa988.dtsi"
+
+/ {
+	model = "Samsung LT02 Tablet";
+	compatible = "samsung,pxa986-lt02", "marvell,pxa986", "marvell,pxa988";
+
+	chosen {
+		bootargs = "earlyprintk rw androidboot.console=ttyS1 console=ttyS1,115200 panic_debug";
+		initrd-start = "<0x01100000>"; /* 17825792 */
+		initrd-end = "<0x011F4240>";   /* 18825792 (or 1m)*/
+	};
+
+	memory {
+		device_type = "memory";
+		reg = <0x0000000 0x80000000>; /* TODO check */
+	};
+	soc {
+		apb@d4000000 {
+			uart1: uart@d4017000 {
+				status = "okay";
+			};
+
+			uart2: uart@d4018000 {
+				status = "okay";
+			};
+
+			uart3: uart@d4036000 {
+				status = "okay";
+			};
+
+			twsi1: i2c@d4011000 {
+				status = "okay";
+			};
+
+			twsi2: i2c@d4037000 {
+				status = "okay";
+			};
+
+			rtc: rtc@d4010000 {
+				status = "okay";
+			};
+		};
+	};
+
+	domains {
+		gpu_domain: gpu-domain {
+			#power-domain-cells = <0>;
+			marvell,pmu_pwr_mask = <0x00000004>;
+			marvell,pmu_iso_mask = <0x00000002>;
+		};
+	};
+
+	gpu: gpu@C0400000 {
+		clocks = <&divider_clk 1>;
+		clock-names = "core";
+		compatible = "vivante,gc";
+		interrupts = <40>;
+		power-domains = <&gpu_domain>;
+		reg = <0xC0400000 0x2000>;
+		status = "okay";
+	};
+
+	gpu-subsystem {
+		compatible = "marvell,dove-gpu-subsystem";
+		cores = <&gpu>;
+		status = "okay";
+	};
+
+	/* Sound card (pxa2xx) */
+	pcm {
+		compatible = "mrvl,pxa-pcm-audio";
+		#address-cells = <0>;
+		#size-cells = <0>;
+		status = "okay";
+	};
+
+	/* Proximity/Light Sensor */
+//	gp2ap020a00f@00000039 {
+//		compatible = "sharp,gp2ap020a00f";
+//		reg = <0x00000039 0x2000>; /* TODO check */
+//		interrupts = <220 0>; /* TODO check */
+//		vled-supply = <2>; /* TODO check */
+//	};
+};
+
+/* Marvell SD8787 WLAN/BT */
+/*&sdio1 {
+	status = "okay";
+	non-removable;
+};*/
