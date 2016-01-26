@@ -18,7 +18,8 @@
  */
 
 /*
- * The LT02 board comes with several options
+ * The LT02 board comes with several options.
+ * At this point, use CONFIG_ARM_APPENDED_DTB.
  *
  * Memory options:
  *  4G
@@ -106,6 +107,132 @@
 
 			twsi1: i2c@d4011000 {
 				status = "okay";
+				/* Voltage Regulator TODO right twsi? */
+				pmic: 88pm800@30 {
+					compatible = "marvell,88pm800", "marvell,88pm805";
+					reg = <0x30>; /* TODO check reg */
+
+					regulators {
+						buck1 { /* vcc_main */
+							regulator-min-microvolt = <600000>;
+							regulator-max-microvolt = <3950000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						buck2 { /* v_buck2 */
+							regulator-min-microvolt = <600000>;
+							regulator-max-microvolt = <3950000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						buck3 { /* v_buck3 */
+							regulator-min-microvolt = <600000>;
+							regulator-max-microvolt = <3950000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						buck4 { /* v_rf_vdd */
+							regulator-min-microvolt = <600000>;
+							regulator-max-microvolt = <3950000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						buck5 { /* v_cam_c */
+							regulator-min-microvolt = <600000>;
+							regulator-max-microvolt = <3950000>;
+						};
+						ldo1 { /* v_ldo1 */
+							regulator-min-microvolt = <600000>;
+							regulator-max-microvolt = <1500000>;
+						};
+						ldo2 { /* v_micbias */
+							regulator-min-microvolt = <1700000>;
+							regulator-max-microvolt = <2800000>;
+							regulator-boot-on;
+						};
+						ldo3 { /* v_analog_2v8 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						ldo4 { /* v_usim1 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo5 { /* v_usb_3v1 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						ldo6 { /* vled_ic: VLED_IC_1.9V for IRDA */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo7 { /* v_vramp_2v8 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						ldo8 { /* v_ldo8: V_3M_A2.8V for Main CAM */
+							regulator-min-microvolt = <1800000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo9 { /* v_wib_3v3 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo10 { /* v_proxy_2v85 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo11: ldo11 { /* v_cam_io: V_CAM_IO_1.8V for CAM */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo12 { /* vqmmc: sdhci-pxav3.0 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo13 { /* vmmc: sdhci-pxav3.0 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo14 { /* v_ldo14_3v: VREG_L16_LVDS_3P3 for LVDS */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+						};
+						ldo15 { /* v_proxy_led_3v3 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+						};
+						ldo16 { /* v_lvds_1v2 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+						};
+						ldo17 { /* v_lvds_1v8 */
+							regulator-min-microvolt = <1200000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+						};
+						ldo18 { /* v_ldo18 */
+							regulator-min-microvolt = <1700000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+						ldo19 { /* v_gps_1v8 */
+							regulator-min-microvolt = <1700000>;
+							regulator-max-microvolt = <3300000>;
+							regulator-boot-on;
+							regulator-always-on;
+						};
+					};
+				};
 			};
 
 			twsi2: i2c@d4037000 {
@@ -151,12 +278,12 @@
 	};
 
 	/* Proximity/Light Sensor */
-//	gp2ap020a00f@00000039 {
-//		compatible = "sharp,gp2ap020a00f";
-//		reg = <0x00000039 0x2000>; /* TODO check */
-//		interrupts = <220 0>; /* TODO check */
-//		vled-supply = <2>; /* TODO check */
-//	};
+	gp2ap020a00f@00000039 {
+		compatible = "sharp,gp2ap020a00f";
+		reg = <0x00000039 0x2000>; /* TODO check */
+		interrupts = <220 0>; /* TODO check */
+		vled-supply = <&ldo11>; /* TODO check */
+	};
 };
 
 /* Marvell SD8787 WLAN/BT */
