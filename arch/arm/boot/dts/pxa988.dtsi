@@ -23,11 +23,11 @@
 
 	cpus {
 		cpu@0 {
-			compatible = "arm,cortex-a9";
+			compatible = "marvell,pj4b", "arm,cortex-a9";
 			next-level-cache = <&L2>;
 		};
 		cpu@1 {
-			compatible = "arm,cortex-a9";
+			compatible = "marvell,pj4b", "arm,cortex-a9";
 			next-level-cache = <&L2>;
 		};
 	};
