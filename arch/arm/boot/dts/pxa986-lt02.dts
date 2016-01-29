@@ -75,7 +75,7 @@
  */
 
 /dts-v1/;
-/include/ "pxa988.dtsi"
+#include "pxa988.dtsi"
 
 / {
 	model = "Samsung LT02 Tablet";
