@@ -5,10 +5,11 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
- * publishhed by the Free Software Foundation.
+ * published by the Free Software Foundation.
  */
 
-/include/ "skeleton.dtsi"
+#include "skeleton.dtsi"
+#include <dt-bindings/clock/marvell,pxa988.h>
 
 / {
 	interrupt-parent = <&gic>;
@@ -205,6 +206,16 @@
 					#clock-cells = <1>;
 				};
 			};
+		};
+		soc_clocks: clocks {
+			compatible = "marvell,pxa988-clock";
+			reg = <0xd4050000 0x1000>,
+			      <0xd4282800 0x400>,
+			      <0xd4015000 0x1000>,
+			      <0xd403b000 0x1000>;
+			reg-names = "mpmu", "apmu", "apbc", "apbcp";
+			#clock-cells = <1>;
+			#reset-cells = <1>;
 		};
 	};
 };

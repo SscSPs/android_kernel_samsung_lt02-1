@@ -8,7 +8,7 @@
  */
 
 /dts-v1/;
-/include/ "pxa988.dtsi"
+#include "pxa988.dtsi"
 
 / {
 	model = "Marvell PXA988 DKB Development Board";
